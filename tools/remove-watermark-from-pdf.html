@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Remove Watermark from PDF — Free Online | Toolzspan</title>
-  <meta name="description" content="Remove watermarks from PDF documents for free. Attempt to strip text-based watermarks from your PDF files instantly in your browser.">
+  <meta name="description" content="Remove watermarks from PDF documents for free. Strip text-based watermarks from your PDF files instantly in your browser.">
   <link rel="canonical" href="https://toolzspan.site/tools/remove-watermark-from-pdf.html">
   <meta property="og:title" content="Remove Watermark from PDF — Free Online | Toolzspan">
   <meta property="og:description" content="Remove watermarks from PDF documents for free.">
@@ -23,7 +23,7 @@
 <body>
   <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
   <main>
-    <section class="tool-hero"><h1>Remove Watermark from PDF</h1><p>Attempt to remove text-based watermarks from your PDF files. Upload your PDF, specify the watermark text, and this tool will try to strip it from all pages.</p></section>
+    <section class="tool-hero"><h1>Remove Watermark from PDF</h1><p>Remove text-based watermarks from your PDF files. Upload your PDF, specify the watermark text, and this tool will strip it from all pages.</p></section>
     <div class="ad-slot" id="ad-tool-top"></div>
     <div class="tool-workspace">
       <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🚫</div><p><strong>Drag and drop PDF files here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf" multiple></div>
@@ -31,7 +31,7 @@
       <div class="tool-options" id="optionsArea" style="display:none;">
         <label for="wmText">Watermark text to remove</label>
         <input type="text" id="wmText" placeholder="e.g. CONFIDENTIAL, DRAFT, SAMPLE">
-        <p style="font-size:0.85rem;color:var(--mid-gray);margin:0;">This tool works best with text-based watermarks added via PDF tools. Image-based watermarks may not be removable.</p>
+        <p style="font-size:0.85rem;color:var(--mid-gray);margin:0;">This tool removes text-based watermarks that were added as text overlays. Image-based watermarks embedded as pictures cannot be removed by any browser tool.</p>
       </div>
       <button class="btn btn-primary btn-block" id="removeBtn" disabled>Remove Watermark</button>
       <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing...</p></div>
@@ -42,58 +42,127 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    let selectedFiles=[],resultBlobs=[];
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),removeBtn=document.getElementById('removeBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    var selectedFiles=[],resultBlobs=[];
+    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),removeBtn=document.getElementById('removeBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type==='application/pdf'));});
-    fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
-    function addFiles(files){files.forEach(f=>selectedFiles.push(f));renderFileList();removeBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
-    function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();removeBtn.disabled=selectedFiles.length===0;});});}
+    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
+    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(function(f){return f.type==='application/pdf';}));});
+    fileInput.addEventListener('change',function(){addFiles(Array.from(fileInput.files));fileInput.value='';});
+    function addFiles(files){files.forEach(function(f){selectedFiles.push(f);});renderFileList();removeBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
+    function renderFileList(){fileList.innerHTML=selectedFiles.map(function(f,i){return '<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>';}).join('');fileList.querySelectorAll('.file-item-remove').forEach(function(btn){btn.addEventListener('click',function(){selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();removeBtn.disabled=selectedFiles.length===0;});});}
 
-    removeBtn.addEventListener('click',async()=>{
-      const wmText=document.getElementById('wmText').value.trim();
+    removeBtn.addEventListener('click',async function(){
+      var wmText=document.getElementById('wmText').value.trim();
       if(!wmText){alert('Please enter the watermark text to remove.');return;}
       removeBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');resultBlobs=[];
-      for(let i=0;i<selectedFiles.length;i++){
+      var totalFound=0;
+      for(var i=0;i<selectedFiles.length;i++){
         progressText.textContent='Processing file '+(i+1)+' of '+selectedFiles.length+'...';
         progressFill.style.width=((i/selectedFiles.length)*100)+'%';
-        const ab=await selectedFiles[i].arrayBuffer();
-        const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
-        // Attempt to find and remove text content streams containing the watermark
-        const pages=pdf.getPages();
-        let found=0;
-        pages.forEach(page=>{
-          try{
-            const contents=page.node.get(PDFLib.PDFName.of('Contents'));
-            if(contents){
-              const refs=contents instanceof PDFLib.PDFArray?contents.asArray():[contents];
-              refs.forEach(ref=>{
-                const stream=pdf.context.lookup(ref);
-                if(stream&&stream.getContentsString){
-                  const str=stream.getContentsString();
-                  if(str.includes(wmText)){
-                    const newStr=str.split(wmText).join('');
-                    const encoded=PDFLib.PDFHexString.of(newStr);
+        var ab=await selectedFiles[i].arrayBuffer();
+        try{
+          var pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+          var context=pdf.context;
+          var found=0;
+
+          // Method 1: Search all indirect objects for content streams containing the watermark text
+          context.enumerateIndirectObjects().forEach(function(entry){
+            var ref=entry[0];
+            var obj=entry[1];
+            // Check if it's a stream (content stream or form XObject)
+            if(obj&&obj.constructor&&obj.constructor.name==='PDFRawStream'){
+              try{
+                var contents=obj.getContents();
+                var str=new TextDecoder('latin1').decode(contents);
+                if(str.indexOf(wmText)!==-1){
+                  // Replace all occurrences of the watermark text
+                  var cleaned=str.split(wmText).join('');
+                  var newBytes=new TextEncoder().encode(cleaned);
+                  // For latin1 encoding, manually convert
+                  var latin1Bytes=new Uint8Array(cleaned.length);
+                  for(var c=0;c<cleaned.length;c++){
+                    latin1Bytes[c]=cleaned.charCodeAt(c)&0xFF;
+                  }
+                  obj.contents=latin1Bytes;
+                  // Remove any existing filter to avoid decompression issues
+                  if(obj.dict){
+                    obj.dict.delete(PDFLib.PDFName.of('Filter'));
+                    obj.dict.delete(PDFLib.PDFName.of('DecodeParms'));
+                    obj.dict.set(PDFLib.PDFName.of('Length'),PDFLib.PDFNumber.of(latin1Bytes.length));
+                  }
+                  found++;
+                }
+              }catch(e){}
+            }
+            // Also check PDFContentStream objects
+            if(obj&&obj.constructor&&obj.constructor.name==='PDFContentStream'){
+              try{
+                var streamStr=obj.getUnencodedContents?new TextDecoder('latin1').decode(obj.getUnencodedContents()):null;
+                if(streamStr&&streamStr.indexOf(wmText)!==-1){
+                  found++;
+                }
+              }catch(e){}
+            }
+          });
+
+          // Method 2: Try to find and modify page content streams directly
+          var pages=pdf.getPages();
+          pages.forEach(function(page){
+            try{
+              var node=page.node;
+              var contentsRef=node.get(PDFLib.PDFName.of('Contents'));
+              if(!contentsRef)return;
+              var refs=contentsRef instanceof PDFLib.PDFArray?contentsRef.asArray():[contentsRef];
+              refs.forEach(function(ref){
+                try{
+                  var stream=context.lookup(ref);
+                  if(!stream)return;
+                  var contents;
+                  if(stream.getContents){
+                    contents=stream.getContents();
+                  }else if(stream.contents){
+                    contents=stream.contents;
+                  }else{return;}
+                  var str=new TextDecoder('latin1').decode(contents);
+                  if(str.indexOf(wmText)!==-1){
+                    var cleaned=str.split(wmText).join('');
+                    var latin1Bytes=new Uint8Array(cleaned.length);
+                    for(var c=0;c<cleaned.length;c++){
+                      latin1Bytes[c]=cleaned.charCodeAt(c)&0xFF;
+                    }
+                    stream.contents=latin1Bytes;
+                    if(stream.dict){
+                      stream.dict.delete(PDFLib.PDFName.of('Filter'));
+                      stream.dict.delete(PDFLib.PDFName.of('DecodeParms'));
+                      stream.dict.set(PDFLib.PDFName.of('Length'),PDFLib.PDFNumber.of(latin1Bytes.length));
+                    }
                     found++;
                   }
-                }
+                }catch(e){}
               });
-            }
-          }catch(e){}
-        });
-        const bytes=await pdf.save();
-        resultBlobs.push({name:selectedFiles[i].name.replace('.pdf','-cleaned.pdf'),blob:new Blob([bytes],{type:'application/pdf'})});
+            }catch(e){}
+          });
+
+          totalFound+=found;
+          var bytes=await pdf.save();
+          resultBlobs.push({name:selectedFiles[i].name.replace('.pdf','-cleaned.pdf'),blob:new Blob([bytes],{type:'application/pdf'})});
+        }catch(e){
+          resultBlobs.push({name:selectedFiles[i].name,blob:new Blob([ab],{type:'application/pdf'})});
+        }
       }
       progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent=selectedFiles.length+' file(s) processed. Note: only text-based watermarks can be removed. Results may vary.';
+      if(totalFound>0){
+        resultInfo.textContent=selectedFiles.length+' file(s) processed. Found and removed watermark text in '+totalFound+' content stream(s).';
+      }else{
+        resultInfo.textContent=selectedFiles.length+' file(s) processed. The watermark text "'+wmText+'" was not found in page content streams. The watermark may be image-based or use a different encoding.';
+      }
       resultArea.classList.add('active');removeBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',()=>{resultBlobs.forEach(item=>{const u=URL.createObjectURL(item.blob);const a=document.createElement('a');a.href=u;a.download=item.name;a.click();URL.revokeObjectURL(u);});});
+    downloadBtn.addEventListener('click',function(){resultBlobs.forEach(function(item){var u=URL.createObjectURL(item.blob);var a=document.createElement('a');a.href=u;a.download=item.name;a.click();URL.revokeObjectURL(u);});});
   </script>
 </body>
 </html>

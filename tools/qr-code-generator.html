@@ -44,28 +44,45 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script>
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    const generateBtn=document.getElementById('generateBtn'),qrText=document.getElementById('qrText'),qrSize=document.getElementById('qrSize'),qrOutput=document.getElementById('qrOutput'),resultArea=document.getElementById('resultArea'),downloadBtn=document.getElementById('downloadBtn');
-    let qrDataUrl=null;
 
-    generateBtn.addEventListener('click',async()=>{
-      const text=qrText.value.trim();
+    var generateBtn=document.getElementById('generateBtn');
+    var qrText=document.getElementById('qrText');
+    var qrSize=document.getElementById('qrSize');
+    var qrOutput=document.getElementById('qrOutput');
+    var resultArea=document.getElementById('resultArea');
+    var downloadBtn=document.getElementById('downloadBtn');
+    var qrDataUrl=null;
+
+    generateBtn.addEventListener('click',function(){
+      var text=qrText.value.trim();
       if(!text){alert('Please enter a URL or text.');return;}
-      qrOutput.innerHTML='';resultArea.style.display='none';
-      const size=parseInt(qrSize.value);
-      const canvas=document.createElement('canvas');
-      await QRCode.toCanvas(canvas,text,{width:size,margin:2,color:{dark:'#0A1628',light:'#FFFFFF'}});
-      qrOutput.appendChild(canvas);
-      qrDataUrl=canvas.toDataURL('image/png');
-      resultArea.style.display='block';
-      resultArea.classList.add('active');
+      if(typeof QRCode==='undefined'){alert('QR Code library is still loading. Please wait a moment and try again.');return;}
+      qrOutput.innerHTML='';
+      resultArea.style.display='none';
+      var size=parseInt(qrSize.value);
+      var canvas=document.createElement('canvas');
+      generateBtn.disabled=true;
+      generateBtn.textContent='Generating...';
+      QRCode.toCanvas(canvas,text,{width:size,margin:2,color:{dark:'#0A1628',light:'#FFFFFF'}},function(err){
+        generateBtn.disabled=false;
+        generateBtn.textContent='Generate QR Code';
+        if(err){
+          alert('Error generating QR code: '+err.message);
+          return;
+        }
+        qrOutput.appendChild(canvas);
+        qrDataUrl=canvas.toDataURL('image/png');
+        resultArea.style.display='block';
+        resultArea.classList.add('active');
+      });
     });
 
-    downloadBtn.addEventListener('click',()=>{
+    downloadBtn.addEventListener('click',function(){
       if(!qrDataUrl)return;
-      const a=document.createElement('a');a.href=qrDataUrl;a.download='qr-code.png';a.click();
+      var a=document.createElement('a');a.href=qrDataUrl;a.download='qr-code.png';a.click();
     });
   </script>
 </body>

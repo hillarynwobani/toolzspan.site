@@ -51,34 +51,61 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),applyBtn=document.getElementById('applyBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
-    let srcFile=null,pdfBlob=null;
+    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),applyBtn=document.getElementById('applyBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    var srcFile=null,pdfBlob=null;
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
-    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
-    async function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';const ab=await f.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});document.getElementById('editPage').max=pdf.getPageCount();optionsArea.style.display='block';applyBtn.disabled=false;}
+    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
+    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');var f=Array.from(e.dataTransfer.files).find(function(f){return f.type==='application/pdf';});if(f)loadFile(f);});
+    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    async function loadFile(f){
+      srcFile=f;
+      fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';
+      try{
+        var ab=await f.arrayBuffer();
+        var pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+        document.getElementById('editPage').max=pdf.getPageCount();
+        optionsArea.style.display='block';
+        applyBtn.disabled=false;
+      }catch(e){
+        alert('Error loading PDF: '+e.message);
+      }
+    }
 
-    const colorMap={black:PDFLib.rgb(0,0,0),red:PDFLib.rgb(1,0,0),blue:PDFLib.rgb(0,0,1),green:PDFLib.rgb(0,0.5,0)};
-    applyBtn.addEventListener('click',async()=>{
-      const text=document.getElementById('editText').value;if(!text){alert('Please enter text.');return;}
+    applyBtn.addEventListener('click',async function(){
+      var text=document.getElementById('editText').value;
+      if(!text){alert('Please enter text.');return;}
+      // Build color map here so PDFLib is guaranteed to be loaded
+      var colorMap={
+        black:PDFLib.rgb(0,0,0),
+        red:PDFLib.rgb(1,0,0),
+        blue:PDFLib.rgb(0,0,1),
+        green:PDFLib.rgb(0,0.5,0)
+      };
       applyBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
       progressText.textContent='Adding text...';progressFill.style.width='50%';
-      const ab=await srcFile.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
-      const font=await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
-      const pageNum=parseInt(document.getElementById('editPage').value)-1;
-      const page=pdf.getPage(Math.max(0,Math.min(pageNum,pdf.getPageCount()-1)));
-      page.drawText(text,{x:parseInt(document.getElementById('editX').value),y:parseInt(document.getElementById('editY').value),size:parseInt(document.getElementById('editSize').value),font:font,color:colorMap[document.getElementById('editColor').value]||colorMap.black});
-      const bytes=await pdf.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
-      progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent='Text added to page '+(pageNum+1)+'.';
-      resultArea.classList.add('active');applyBtn.disabled=false;
+      try{
+        var ab=await srcFile.arrayBuffer();
+        var pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+        var font=await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+        var pageNum=parseInt(document.getElementById('editPage').value)-1;
+        var page=pdf.getPage(Math.max(0,Math.min(pageNum,pdf.getPageCount()-1)));
+        page.drawText(text,{x:parseInt(document.getElementById('editX').value),y:parseInt(document.getElementById('editY').value),size:parseInt(document.getElementById('editSize').value),font:font,color:colorMap[document.getElementById('editColor').value]||colorMap.black});
+        var bytes=await pdf.save();
+        pdfBlob=new Blob([bytes],{type:'application/pdf'});
+        progressFill.style.width='100%';progressText.textContent='Done!';
+        resultInfo.textContent='Text added to page '+(pageNum+1)+'.';
+        resultArea.classList.add('active');
+      }catch(e){
+        alert('Error editing PDF: '+e.message);
+        progressText.textContent='Error occurred.';
+      }
+      applyBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','-edited.pdf');a.click();URL.revokeObjectURL(u);});
+    downloadBtn.addEventListener('click',function(){var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','-edited.pdf');a.click();URL.revokeObjectURL(u);});
   </script>
 </body>
 </html>
