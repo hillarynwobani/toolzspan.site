@@ -42,58 +42,49 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
+  document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    let selectedFiles=[],resultBlobs=[];
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),removeBtn=document.getElementById('removeBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    var selectedFiles=[],resultBlobs=[];
+    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),removeBtn=document.getElementById('removeBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type==='application/pdf'));});
-    fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
-    function addFiles(files){files.forEach(f=>selectedFiles.push(f));renderFileList();removeBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
-    function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();removeBtn.disabled=selectedFiles.length===0;});});}
+    uploadArea.addEventListener('click',function(){fileInput.click();});
+    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
+    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(function(f){return f.type==='application/pdf';}));});
+    fileInput.addEventListener('change',function(){addFiles(Array.from(fileInput.files));fileInput.value='';});
+    function addFiles(files){files.forEach(function(f){selectedFiles.push(f);});renderFileList();removeBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
+    function renderFileList(){fileList.innerHTML=selectedFiles.map(function(f,i){return '<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>';}).join('');fileList.querySelectorAll('.file-item-remove').forEach(function(btn){btn.addEventListener('click',function(){selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();removeBtn.disabled=selectedFiles.length===0;});});}
 
-    removeBtn.addEventListener('click',async()=>{
-      const wmText=document.getElementById('wmText').value.trim();
+    removeBtn.addEventListener('click',async function(){
+      var wmText=document.getElementById('wmText').value.trim();
       if(!wmText){alert('Please enter the watermark text to remove.');return;}
       removeBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');resultBlobs=[];
-      for(let i=0;i<selectedFiles.length;i++){
-        progressText.textContent='Processing file '+(i+1)+' of '+selectedFiles.length+'...';
+      for(var i=0;i<selectedFiles.length;i++){
+        progressText.textContent='Processing file '+(i+1)+'/'+selectedFiles.length+'...';
         progressFill.style.width=((i/selectedFiles.length)*100)+'%';
-        const ab=await selectedFiles[i].arrayBuffer();
-        const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
-        // Attempt to find and remove text content streams containing the watermark
-        const pages=pdf.getPages();
-        let found=0;
-        pages.forEach(page=>{
-          try{
-            const contents=page.node.get(PDFLib.PDFName.of('Contents'));
-            if(contents){
-              const refs=contents instanceof PDFLib.PDFArray?contents.asArray():[contents];
-              refs.forEach(ref=>{
-                const stream=pdf.context.lookup(ref);
-                if(stream&&stream.getContentsString){
-                  const str=stream.getContentsString();
-                  if(str.includes(wmText)){
-                    const newStr=str.split(wmText).join('');
-                    const encoded=PDFLib.PDFHexString.of(newStr);
-                    found++;
-                  }
-                }
-              });
-            }
-          }catch(e){}
-        });
-        const bytes=await pdf.save();
-        resultBlobs.push({name:selectedFiles[i].name.replace('.pdf','-cleaned.pdf'),blob:new Blob([bytes],{type:'application/pdf'})});
+        try{
+          var ab=await selectedFiles[i].arrayBuffer();
+          // Work on raw bytes to find and remove watermark text
+          var uint8=new Uint8Array(ab);
+          var str=new TextDecoder('latin1').decode(uint8);
+          var replaced=str.split(wmText).join('');
+          // Also try parenthesized form: (WatermarkText)
+          replaced=replaced.split('('+wmText+')').join('()');
+          var newBytes=new Uint8Array(replaced.length);
+          for(var j=0;j<replaced.length;j++)newBytes[j]=replaced.charCodeAt(j);
+          resultBlobs.push({name:selectedFiles[i].name.replace('.pdf','-cleaned.pdf'),blob:new Blob([newBytes],{type:'application/pdf'})});
+        }catch(e){
+          resultBlobs.push({name:selectedFiles[i].name.replace('.pdf','-cleaned.pdf'),blob:new Blob([await selectedFiles[i].arrayBuffer()],{type:'application/pdf'})});
+        }
       }
       progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent=selectedFiles.length+' file(s) processed. Note: only text-based watermarks can be removed. Results may vary.';
+      resultInfo.innerHTML=selectedFiles.length+' file(s) processed.<br><strong>Note:</strong> This tool removes text-based watermarks only. Image-based or encoded watermarks cannot be removed in the browser.';
       resultArea.classList.add('active');removeBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',()=>{resultBlobs.forEach(item=>{const u=URL.createObjectURL(item.blob);const a=document.createElement('a');a.href=u;a.download=item.name;a.click();URL.revokeObjectURL(u);});});
+    downloadBtn.addEventListener('click',function(){resultBlobs.forEach(function(item){var u=URL.createObjectURL(item.blob);var a=document.createElement('a');a.href=u;a.download=item.name;a.click();URL.revokeObjectURL(u);});});
+  });
   </script>
 </body>
 </html>

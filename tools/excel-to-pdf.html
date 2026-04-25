@@ -37,60 +37,65 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
+  document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    let srcFile=null,pdfBlob=null;
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    var srcFile=null,pdfBlob=null;
+    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
-    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    uploadArea.addEventListener('click',function(){fileInput.click();});
+    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
+    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
     function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
 
-    convertBtn.addEventListener('click',async()=>{
+    convertBtn.addEventListener('click',async function(){
       convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
       progressText.textContent='Reading spreadsheet...';progressFill.style.width='30%';
-      const ab=await srcFile.arrayBuffer();
-      const workbook=XLSX.read(ab,{type:'array'});
-      const pdfDoc=await PDFLib.PDFDocument.create();
-      const font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-      const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-      let sheetCount=0;
-      for(const sheetName of workbook.SheetNames){
-        progressText.textContent='Converting sheet: '+sheetName+'...';
-        progressFill.style.width=(30+(sheetCount/workbook.SheetNames.length)*60)+'%';
-        const sheet=workbook.Sheets[sheetName];
-        const data=XLSX.utils.sheet_to_json(sheet,{header:1});
-        if(data.length===0)continue;
-        // Calculate column widths
-        const colCount=Math.max(...data.map(r=>r.length));
-        const cellW=Math.min(100,Math.floor((792-80)/Math.max(colCount,1)));
-        const fontSize=Math.min(10,Math.max(6,Math.floor(cellW/8)));
-        let page=pdfDoc.addPage([792,612]);
-        let y=580;
-        // Sheet title
-        page.drawText(sheetName,{x:40,y:y,size:14,font:fontBold,color:PDFLib.rgb(0.12,0.44,1)});
-        y-=24;
-        data.forEach((row,ri)=>{
-          if(y<40){page=pdfDoc.addPage([792,612]);y=580;}
-          const f=ri===0?fontBold:font;
-          for(let c=0;c<Math.min(colCount,7);c++){
-            const val=row[c]!==undefined?String(row[c]).substring(0,15):'';
-            page.drawText(val,{x:40+c*cellW,y:y,size:fontSize,font:f,color:PDFLib.rgb(0,0,0)});
+      try{
+        var ab=await srcFile.arrayBuffer();
+        var workbook=XLSX.read(ab,{type:'array'});
+        var pdfDoc=await PDFLib.PDFDocument.create();
+        var font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+        var fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        var sheetCount=0,maxRows=500;
+        for(var si=0;si<workbook.SheetNames.length;si++){
+          var sheetName=workbook.SheetNames[si];
+          progressText.textContent='Converting: '+sheetName+'...';
+          progressFill.style.width=(30+(si/workbook.SheetNames.length)*60)+'%';
+          var sheet=workbook.Sheets[sheetName];
+          var data=XLSX.utils.sheet_to_json(sheet,{header:1});
+          if(data.length===0)continue;
+          data=data.slice(0,maxRows);
+          var colCount=Math.max.apply(null,data.map(function(r){return r.length;}));
+          var cellW=Math.min(100,Math.floor((792-80)/Math.max(colCount,1)));
+          var fontSize=Math.min(10,Math.max(6,Math.floor(cellW/8)));
+          var page=pdfDoc.addPage([792,612]);var y=580;
+          page.drawText(sheetName,{x:40,y:y,size:14,font:fontBold,color:PDFLib.rgb(0.12,0.44,1)});
+          y-=24;
+          for(var ri=0;ri<data.length;ri++){
+            if(y<40){page=pdfDoc.addPage([792,612]);y=580;}
+            var f=ri===0?fontBold:font;
+            for(var c=0;c<Math.min(colCount,7);c++){
+              var val=data[ri][c]!==undefined?String(data[ri][c]).substring(0,15):'';
+              page.drawText(val,{x:40+c*cellW,y:y,size:fontSize,font:f,color:PDFLib.rgb(0,0,0)});
+            }
+            y-=fontSize*1.8;
           }
-          y-=fontSize*1.8;
-        });
-        sheetCount++;
-      }
-      const bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
-      progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent=sheetCount+' sheet(s) converted to PDF — '+formatSize(bytes.length);
-      resultArea.classList.add('active');convertBtn.disabled=false;
+          sheetCount++;
+        }
+        var bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+        progressFill.style.width='100%';progressText.textContent='Done!';
+        resultInfo.textContent=sheetCount+' sheet(s) converted — '+formatSize(bytes.length);
+        resultArea.classList.add('active');
+      }catch(err){progressText.textContent='Error: '+err.message;}
+      convertBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.xlsx?$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
+    downloadBtn.addEventListener('click',function(){if(!pdfBlob)return;var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.xlsx?$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
+  });
   </script>
 </body>
 </html>
