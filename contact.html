@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Toolzspan</title>
+  <meta name="description" content="Get in touch with the Toolzspan team. Send us your questions, feedback, or suggestions using our contact form.">
+  <link rel="canonical" href="https://toolzspan.site/contact.html">
+  <meta property="og:title" content="Contact Us — Toolzspan">
+  <meta property="og:description" content="Get in touch with the Toolzspan team. Send us your questions, feedback, or suggestions.">
+  <meta property="og:url" content="https://toolzspan.site/contact.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact Us — Toolzspan">
+  <meta name="twitter:description" content="Get in touch with the Toolzspan team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Contact form enhancements */
+    .contact-success,
+    .contact-error {
+      display: none;
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      text-align: center;
+      animation: fadeSlideIn 0.4s ease;
+    }
+    .contact-success {
+      background: linear-gradient(135deg, rgba(0, 198, 167, 0.08), rgba(30, 111, 255, 0.06));
+      border: 1px solid var(--accent-teal);
+      color: var(--deep-navy);
+    }
+    .contact-success.active,
+    .contact-error.active {
+      display: block;
+    }
+    .contact-error {
+      background: rgba(231, 76, 60, 0.06);
+      border: 1px solid #E74C3C;
+      color: #c0392b;
+    }
+    .contact-success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+    .contact-success h3,
+    .contact-error h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+    .contact-success p,
+    .contact-error p {
+      font-size: 0.95rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .btn-loading {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: btnSpin 0.6s linear infinite;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .form-group input.input-error,
+    .form-group textarea.input-error {
+      border-color: #E74C3C;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    }
+    .field-error {
+      color: #E74C3C;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.active {
+      display: block;
+    }
+    @keyframes btnSpin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Toolzspan",
+    "url": "https://toolzspan.site/contact.html",
+    "description": "Contact the Toolzspan team with questions or feedback."
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a>
+      <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button>
+      <nav class="nav-menu" id="navMenu">
+        <a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="ad-slot" id="ad-contact-top"><!-- AdSense ad unit --></div>
+    <div class="page-content">
+      <h1>Contact Us</h1>
+      <p>Have a question, found a bug, or just want to say hello? Fill out the form below and we will get back to you as soon as we can.</p>
+
+      <!-- Success message -->
+      <div class="contact-success" id="contactSuccess">
+        <div class="contact-success-icon">✅</div>
+        <h3>Message Sent!</h3>
+        <p>Thank you for reaching out. We have received your message and will get back to you shortly.</p>
+      </div>
+
+      <!-- Error message -->
+      <div class="contact-error" id="contactError">
+        <h3>Something went wrong</h3>
+        <p id="contactErrorText">Your message could not be sent. Please try again or email us directly.</p>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="6f988c0c-2c2b-4cc4-b8ee-cd51009a196a">
+        <!-- Web3Forms subject line -->
+        <input type="hidden" name="subject" value="New message from Toolzspan Contact Form">
+        <!-- Web3Forms redirect (stay on page) -->
+        <input type="hidden" name="redirect" value="https://toolzspan.site/contact.html">
+        <!-- Honeypot spam protection — hidden from real users -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none !important" tabindex="-1" autocomplete="off">
+
+        <div class="form-group">
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" required placeholder="Your name" autocomplete="name">
+          <div class="field-error" id="nameError">Please enter your name.</div>
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" required placeholder="your@email.com" autocomplete="email">
+          <div class="field-error" id="emailError">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" required placeholder="How can we help?"></textarea>
+          <div class="field-error" id="messageError">Please enter your message.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="contactSubmit">Send Message</button>
+      </form>
+    </div>
+    <div class="ad-slot" id="ad-contact-bottom"><!-- AdSense ad unit --></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('navMenu').classList.toggle('active');
+    });
+
+    // Contact form handling with Web3Forms
+    (function() {
+      var form = document.getElementById('contactForm');
+      var submitBtn = document.getElementById('contactSubmit');
+      var successEl = document.getElementById('contactSuccess');
+      var errorEl = document.getElementById('contactError');
+      var errorText = document.getElementById('contactErrorText');
+      var nameInput = document.getElementById('contact-name');
+      var emailInput = document.getElementById('contact-email');
+      var messageInput = document.getElementById('contact-message');
+      var nameError = document.getElementById('nameError');
+      var emailError = document.getElementById('emailError');
+      var messageError = document.getElementById('messageError');
+
+      // Simple email regex
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Clear field error on input
+      [nameInput, emailInput, messageInput].forEach(function(input) {
+        input.addEventListener('input', function() {
+          this.classList.remove('input-error');
+          var errorDiv = document.getElementById(this.id.replace('contact-', '') + 'Error');
+          if (errorDiv) errorDiv.classList.remove('active');
+        });
+      });
+
+      function validateForm() {
+        var valid = true;
+
+        if (!nameInput.value.trim()) {
+          nameInput.classList.add('input-error');
+          nameError.classList.add('active');
+          valid = false;
+        }
+
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+          emailInput.classList.add('input-error');
+          emailError.classList.add('active');
+          valid = false;
+        }
+
+        if (!messageInput.value.trim()) {
+          messageInput.classList.add('input-error');
+          messageError.classList.add('active');
+          valid = false;
+        }
+
+        return valid;
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Reset messages
+        successEl.classList.remove('active');
+        errorEl.classList.remove('active');
+
+        // Validate
+        if (!validateForm()) return;
+
+        // Set loading state
+        submitBtn.classList.add('btn-loading');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        // Collect form data
+        var formData = new FormData(form);
+        var jsonData = {};
+        formData.forEach(function(value, key) {
+          jsonData[key] = value;
+        });
+
+        // Submit to Web3Forms API
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          // Reset button
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.textContent = 'Send Message';
+          submitBtn.disabled = false;
+
+          if (data.success) {
+            // Show success, hide form
+            form.style.display = 'none';
+            successEl.classList.add('active');
+            form.reset();
+          } else {
+            // Show error
+            errorText.textContent = data.message || 'Your message could not be sent. Please try again.';
+            errorEl.classList.add('active');
+          }
+        })
+        .catch(function(err) {
+          // Reset button
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.textContent = 'Send Message';
+          submitBtn.disabled = false;
+
+          // Show error
+          errorText.textContent = 'A network error occurred. Please check your connection and try again.';
+          errorEl.classList.add('active');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Page Remover — Free Online | Toolzspan</title>
+  <meta name="description" content="Remove unwanted pages from a PDF for free. Delete specific pages from any PDF document instantly in your browser.">
+  <link rel="canonical" href="https://toolzspan.site/tools/pdf-page-remover.html">
+  <meta property="og:title" content="PDF Page Remover — Free Online | Toolzspan">
+  <meta property="og:description" content="Remove unwanted pages from a PDF for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/pdf-page-remover.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PDF Page Remover","url":"https://toolzspan.site/tools/pdf-page-remover.html","description":"Remove unwanted pages from a PDF for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>PDF Page Remover</h1><p>Remove unwanted pages from your PDF document. Select which pages to delete and download the cleaned-up file instantly.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🗑️</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
+      <div class="file-list" id="fileList"></div>
+      <div class="tool-options" id="optionsArea" style="display:none;">
+        <label for="removePages">Pages to remove (e.g. 2, 4, 6-8)</label>
+        <input type="text" id="removePages" placeholder="e.g. 2, 4, 6-8">
+        <p style="font-size:0.85rem;color:var(--mid-gray);margin:0;">Total pages: <strong id="totalPages">0</strong></p>
+      </div>
+      <button class="btn btn-primary btn-block" id="removeBtn" disabled>Remove Pages</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing...</p></div>
+      <div class="result-area" id="resultArea"><h3>Pages Removed</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download PDF</button></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-page-rotator.html" class="related-tool-link">PDF Page Rotator</a><a href="pdf-splitter.html" class="related-tool-link">PDF Splitter</a><a href="pdf-merger.html" class="related-tool-link">PDF Merger</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),removeBtn=document.getElementById('removeBtn'),optionsArea=document.getElementById('optionsArea'),removePages=document.getElementById('removePages'),totalPagesEl=document.getElementById('totalPages'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    let srcFile=null,pdfBlob=null,pageCount=0;
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    async function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';const ab=await f.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});pageCount=pdf.getPageCount();totalPagesEl.textContent=pageCount;optionsArea.style.display='block';removeBtn.disabled=false;}
+
+    function parseRemoveIndices(str,max){
+      const set=new Set();
+      str.split(',').forEach(part=>{part=part.trim();const m=part.match(/^(\d+)\s*-\s*(\d+)$/);if(m){for(let i=Math.max(1,parseInt(m[1]));i<=Math.min(max,parseInt(m[2]));i++)set.add(i-1);}else{const n=parseInt(part);if(n>=1&&n<=max)set.add(n-1);}});
+      return set;
+    }
+
+    removeBtn.addEventListener('click',async()=>{
+      const toRemove=parseRemoveIndices(removePages.value,pageCount);
+      if(toRemove.size===0){alert('Please specify pages to remove.');return;}
+      if(toRemove.size>=pageCount){alert('Cannot remove all pages.');return;}
+      removeBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      progressText.textContent='Removing pages...';progressFill.style.width='50%';
+      const ab=await srcFile.arrayBuffer();const srcPdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+      const newPdf=await PDFLib.PDFDocument.create();
+      const keepIndices=[];for(let i=0;i<pageCount;i++){if(!toRemove.has(i))keepIndices.push(i);}
+      const pages=await newPdf.copyPages(srcPdf,keepIndices);
+      pages.forEach(p=>newPdf.addPage(p));
+      const bytes=await newPdf.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent=toRemove.size+' page(s) removed. '+keepIndices.length+' page(s) remaining.';
+      resultArea.classList.add('active');removeBtn.disabled=false;
+    });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','-edited.pdf');a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter — Free Online | Toolzspan</title>
+  <meta name="description" content="Count words, characters, sentences, and paragraphs instantly for free. Paste or type your text and get a detailed word count in your browser.">
+  <link rel="canonical" href="https://toolzspan.site/tools/word-counter.html">
+  <meta property="og:title" content="Word Counter — Free Online | Toolzspan">
+  <meta property="og:description" content="Count words, characters, sentences, and paragraphs instantly for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/word-counter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Word Counter","url":"https://toolzspan.site/tools/word-counter.html","description":"Count words, characters, sentences, and paragraphs for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>Word Counter</h1><p>Count words, characters, sentences, and paragraphs in your text instantly. Just type or paste your content below and see the results in real time.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <textarea class="counter-textarea" id="textInput" placeholder="Type or paste your text here..."></textarea>
+      <div class="counter-stats">
+        <div class="counter-stat"><div class="counter-stat-value" id="wordCount">0</div><div class="counter-stat-label">Words</div></div>
+        <div class="counter-stat"><div class="counter-stat-value" id="charCount">0</div><div class="counter-stat-label">Characters</div></div>
+        <div class="counter-stat"><div class="counter-stat-value" id="charNoSpace">0</div><div class="counter-stat-label">Characters (no spaces)</div></div>
+        <div class="counter-stat"><div class="counter-stat-value" id="sentenceCount">0</div><div class="counter-stat-label">Sentences</div></div>
+        <div class="counter-stat"><div class="counter-stat-value" id="paragraphCount">0</div><div class="counter-stat-label">Paragraphs</div></div>
+        <div class="counter-stat"><div class="counter-stat-value" id="readingTime">0</div><div class="counter-stat-label">Reading time (min)</div></div>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your text never leaves your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="qr-code-generator.html" class="related-tool-link">QR Code Generator</a><a href="color-picker.html" class="related-tool-link">Color Picker</a><a href="pdf-editor.html" class="related-tool-link">PDF Editor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const textInput=document.getElementById('textInput');
+    textInput.addEventListener('input',updateCounts);
+    function updateCounts(){
+      const text=textInput.value;
+      const words=text.trim()?text.trim().split(/\s+/).length:0;
+      const chars=text.length;
+      const charsNoSpace=text.replace(/\s/g,'').length;
+      const sentences=text.trim()?text.split(/[.!?]+/).filter(s=>s.trim()).length:0;
+      const paragraphs=text.trim()?text.split(/\n\n+/).filter(p=>p.trim()).length:0;
+      const readTime=Math.max(1,Math.ceil(words/200));
+      document.getElementById('wordCount').textContent=words;
+      document.getElementById('charCount').textContent=chars;
+      document.getElementById('charNoSpace').textContent=charsNoSpace;
+      document.getElementById('sentenceCount').textContent=sentences;
+      document.getElementById('paragraphCount').textContent=paragraphs;
+      document.getElementById('readingTime').textContent=words>0?readTime:'0';
+    }
+  </script>
+</body>
+</html>

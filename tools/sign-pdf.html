@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign PDF — Free Online | Toolzspan</title>
+  <meta name="description" content="Sign PDF documents for free. Draw your signature on a canvas and place it on any page of your PDF — no sign-up required.">
+  <link rel="canonical" href="https://toolzspan.site/tools/sign-pdf.html">
+  <meta property="og:title" content="Sign PDF — Free Online | Toolzspan">
+  <meta property="og:description" content="Sign PDF documents for free. Draw your signature and add it to any PDF.">
+  <meta property="og:url" content="https://toolzspan.site/tools/sign-pdf.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Sign PDF","url":"https://toolzspan.site/tools/sign-pdf.html","description":"Sign PDF documents for free online.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+  <style>
+    .sig-canvas-wrap{border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;margin:16px 0;background:#fff;}
+    .sig-canvas-wrap canvas{width:100%;height:200px;display:block;cursor:crosshair;}
+    .sig-actions{display:flex;gap:12px;margin-bottom:16px;}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>Sign PDF</h1><p>Add your handwritten signature to any PDF document. Draw your signature, choose the page and position, then download the signed file.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🖊️</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
+      <div class="file-list" id="fileList"></div>
+      <div id="signatureSection" style="display:none;">
+        <h3 style="margin:24px 0 8px;">Draw Your Signature</h3>
+        <div class="sig-canvas-wrap"><canvas id="sigCanvas" width="600" height="200"></canvas></div>
+        <div class="sig-actions">
+          <button class="btn btn-secondary" id="clearSigBtn">Clear</button>
+        </div>
+        <div class="tool-options">
+          <label for="sigPage">Page number</label>
+          <input type="number" id="sigPage" value="1" min="1">
+          <label for="sigX">X position (from left, in points)</label>
+          <input type="number" id="sigX" value="100" min="0">
+          <label for="sigY">Y position (from bottom, in points)</label>
+          <input type="number" id="sigY" value="100" min="0">
+          <label for="sigScale">Signature size (%)</label>
+          <input type="number" id="sigScale" value="50" min="10" max="200">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" id="signBtn" disabled>Sign PDF</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Signing...</p></div>
+      <div class="result-area" id="resultArea"><h3>PDF Signed</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download Signed PDF</button></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-editor.html" class="related-tool-link">PDF Editor</a><a href="add-watermark-to-pdf.html" class="related-tool-link">Add Watermark to PDF</a><a href="pdf-compressor.html" class="related-tool-link">PDF Compressor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    let srcFile=null,pdfBlob=null;
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),signBtn=document.getElementById('signBtn'),sigSection=document.getElementById('signatureSection'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    const sigCanvas=document.getElementById('sigCanvas'),sigCtx=sigCanvas.getContext('2d');
+    let drawing=false;
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    async function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';const ab=await f.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});document.getElementById('sigPage').max=pdf.getPageCount();sigSection.style.display='block';signBtn.disabled=false;}
+
+    // Signature drawing
+    function getPos(e){const r=sigCanvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*(sigCanvas.width/r.width),y:(t.clientY-r.top)*(sigCanvas.height/r.height)};}
+    sigCanvas.addEventListener('mousedown',e=>{drawing=true;const p=getPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);});
+    sigCanvas.addEventListener('mousemove',e=>{if(!drawing)return;const p=getPos(e);sigCtx.lineWidth=2.5;sigCtx.lineCap='round';sigCtx.strokeStyle='#0A1628';sigCtx.lineTo(p.x,p.y);sigCtx.stroke();});
+    sigCanvas.addEventListener('mouseup',()=>drawing=false);
+    sigCanvas.addEventListener('mouseleave',()=>drawing=false);
+    sigCanvas.addEventListener('touchstart',e=>{e.preventDefault();drawing=true;const p=getPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);},{passive:false});
+    sigCanvas.addEventListener('touchmove',e=>{e.preventDefault();if(!drawing)return;const p=getPos(e);sigCtx.lineWidth=2.5;sigCtx.lineCap='round';sigCtx.strokeStyle='#0A1628';sigCtx.lineTo(p.x,p.y);sigCtx.stroke();},{passive:false});
+    sigCanvas.addEventListener('touchend',()=>drawing=false);
+    document.getElementById('clearSigBtn').addEventListener('click',()=>{sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);});
+
+    signBtn.addEventListener('click',async()=>{
+      signBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      progressText.textContent='Adding signature...';progressFill.style.width='50%';
+      const ab=await srcFile.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+      const sigDataUrl=sigCanvas.toDataURL('image/png');
+      const sigBytes=await fetch(sigDataUrl).then(r=>r.arrayBuffer());
+      const sigImg=await pdf.embedPng(sigBytes);
+      const pageNum=Math.max(0,parseInt(document.getElementById('sigPage').value)-1);
+      const page=pdf.getPage(Math.min(pageNum,pdf.getPageCount()-1));
+      const scale=parseInt(document.getElementById('sigScale').value)/100;
+      const w=sigImg.width*scale,h=sigImg.height*scale;
+      page.drawImage(sigImg,{x:parseInt(document.getElementById('sigX').value),y:parseInt(document.getElementById('sigY').value),width:w,height:h});
+      const bytes=await pdf.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent='Signature added to page '+(pageNum+1)+'.';
+      resultArea.classList.add('active');signBtn.disabled=false;
+    });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','-signed.pdf');a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

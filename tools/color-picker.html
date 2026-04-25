@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker — Free Online | Toolzspan</title>
+  <meta name="description" content="Pick and convert colors in HEX, RGB, and HSL formats for free. Use the visual color picker or enter values directly — no sign-up required.">
+  <link rel="canonical" href="https://toolzspan.site/tools/color-picker.html">
+  <meta property="og:title" content="Color Picker — Free Online | Toolzspan">
+  <meta property="og:description" content="Pick and convert colors in HEX, RGB, and HSL for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/color-picker.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Color Picker","url":"https://toolzspan.site/tools/color-picker.html","description":"Pick and convert colors in HEX, RGB, and HSL.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+  <style>
+    .color-preview{width:100%;height:120px;border-radius:var(--radius-md);border:1px solid var(--border-color);margin:20px 0;transition:background 0.2s;}
+    .color-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+    .color-value-group{background:var(--off-white);padding:16px;border-radius:var(--radius-sm);}
+    .color-value-group label{font-weight:600;font-size:0.85rem;display:block;margin-bottom:6px;color:var(--mid-gray);}
+    .color-value-group input{width:100%;padding:10px;border:1px solid var(--border-color);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.95rem;background:var(--white);}
+    .color-value-group .copy-btn{margin-top:6px;font-size:0.8rem;color:var(--primary-blue);cursor:pointer;font-weight:600;background:none;border:none;padding:0;}
+    .picker-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+    .picker-row input[type="color"]{width:60px;height:60px;border:none;cursor:pointer;border-radius:var(--radius-sm);background:none;}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>Color Picker</h1><p>Pick any color and get its HEX, RGB, and HSL values instantly. Use the color picker or enter a value in any format to convert between them.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="picker-row">
+        <input type="color" id="colorPicker" value="#1E6FFF">
+        <p style="margin:0;color:var(--mid-gray);">Click to pick a color, or enter a value below</p>
+      </div>
+      <div class="color-preview" id="colorPreview" style="background:#1E6FFF;"></div>
+      <div class="color-values">
+        <div class="color-value-group">
+          <label for="hexVal">HEX</label>
+          <input type="text" id="hexVal" value="#1E6FFF">
+          <button class="copy-btn" data-target="hexVal">Copy</button>
+        </div>
+        <div class="color-value-group">
+          <label for="rgbVal">RGB</label>
+          <input type="text" id="rgbVal" value="rgb(30, 111, 255)" readonly>
+          <button class="copy-btn" data-target="rgbVal">Copy</button>
+        </div>
+        <div class="color-value-group">
+          <label for="hslVal">HSL</label>
+          <input type="text" id="hslVal" value="hsl(218, 100%, 56%)" readonly>
+          <button class="copy-btn" data-target="hslVal">Copy</button>
+        </div>
+        <div class="color-value-group">
+          <label for="rgbaVal">RGBA</label>
+          <input type="text" id="rgbaVal" value="rgba(30, 111, 255, 1)" readonly>
+          <button class="copy-btn" data-target="rgbaVal">Copy</button>
+        </div>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Everything runs in your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="qr-code-generator.html" class="related-tool-link">QR Code Generator</a><a href="word-counter.html" class="related-tool-link">Word Counter</a><a href="image-compressor.html" class="related-tool-link">Image Compressor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const colorPicker=document.getElementById('colorPicker'),preview=document.getElementById('colorPreview'),hexVal=document.getElementById('hexVal'),rgbVal=document.getElementById('rgbVal'),hslVal=document.getElementById('hslVal'),rgbaVal=document.getElementById('rgbaVal');
+
+    colorPicker.addEventListener('input',()=>updateFromHex(colorPicker.value));
+    hexVal.addEventListener('change',()=>{let v=hexVal.value.trim();if(!v.startsWith('#'))v='#'+v;if(/^#[0-9a-fA-F]{6}$/.test(v)){colorPicker.value=v;updateFromHex(v);}});
+
+    function updateFromHex(hex){
+      preview.style.background=hex;hexVal.value=hex.toUpperCase();
+      const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+      rgbVal.value='rgb('+r+', '+g+', '+b+')';
+      rgbaVal.value='rgba('+r+', '+g+', '+b+', 1)';
+      const hsl=rgbToHsl(r,g,b);
+      hslVal.value='hsl('+hsl[0]+', '+hsl[1]+'%, '+hsl[2]+'%)';
+    }
+
+    function rgbToHsl(r,g,b){
+      r/=255;g/=255;b/=255;
+      const max=Math.max(r,g,b),min=Math.min(r,g,b);
+      let h,s,l=(max+min)/2;
+      if(max===min){h=s=0;}
+      else{const d=max-min;s=l>0.5?d/(2-max-min):d/(max+min);
+        switch(max){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
+      return[Math.round(h*360),Math.round(s*100),Math.round(l*100)];
+    }
+
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const input=document.getElementById(btn.dataset.target);
+        navigator.clipboard.writeText(input.value).then(()=>{btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1500);});
+      });
+    });
+    updateFromHex('#1E6FFF');
+  </script>
+</body>
+</html>

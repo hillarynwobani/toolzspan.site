@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Editor — Free Online | Toolzspan</title>
+  <meta name="description" content="Edit PDF files for free. Add text, annotations, and highlights to any PDF document directly in your browser — no sign-up required.">
+  <link rel="canonical" href="https://toolzspan.site/tools/pdf-editor.html">
+  <meta property="og:title" content="PDF Editor — Free Online | Toolzspan">
+  <meta property="og:description" content="Edit PDF files for free. Add text and annotations to any PDF.">
+  <meta property="og:url" content="https://toolzspan.site/tools/pdf-editor.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PDF Editor","url":"https://toolzspan.site/tools/pdf-editor.html","description":"Edit PDF files for free online.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>PDF Editor</h1><p>Add text to your PDF pages. Upload a PDF, type your text, choose the position and font size, then download the edited file.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">✏️</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
+      <div class="file-list" id="fileList"></div>
+      <div class="tool-options" id="optionsArea" style="display:none;">
+        <label for="editText">Text to add</label>
+        <input type="text" id="editText" placeholder="Enter your text here">
+        <label for="editPage">Page number</label>
+        <input type="number" id="editPage" value="1" min="1">
+        <label for="editX">X position (from left, in points)</label>
+        <input type="number" id="editX" value="50" min="0">
+        <label for="editY">Y position (from bottom, in points)</label>
+        <input type="number" id="editY" value="700" min="0">
+        <label for="editSize">Font size</label>
+        <input type="number" id="editSize" value="16" min="6" max="120">
+        <label for="editColor">Text color</label>
+        <select id="editColor"><option value="black">Black</option><option value="red">Red</option><option value="blue">Blue</option><option value="green">Green</option></select>
+      </div>
+      <button class="btn btn-primary btn-block" id="applyBtn" disabled>Add Text to PDF</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing...</p></div>
+      <div class="result-area" id="resultArea"><h3>Edit Complete</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download Edited PDF</button></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="add-watermark-to-pdf.html" class="related-tool-link">Add Watermark to PDF</a><a href="sign-pdf.html" class="related-tool-link">Sign PDF</a><a href="pdf-page-rotator.html" class="related-tool-link">PDF Page Rotator</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),applyBtn=document.getElementById('applyBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    let srcFile=null,pdfBlob=null;
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    async function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';const ab=await f.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});document.getElementById('editPage').max=pdf.getPageCount();optionsArea.style.display='block';applyBtn.disabled=false;}
+
+    const colorMap={black:PDFLib.rgb(0,0,0),red:PDFLib.rgb(1,0,0),blue:PDFLib.rgb(0,0,1),green:PDFLib.rgb(0,0.5,0)};
+    applyBtn.addEventListener('click',async()=>{
+      const text=document.getElementById('editText').value;if(!text){alert('Please enter text.');return;}
+      applyBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      progressText.textContent='Adding text...';progressFill.style.width='50%';
+      const ab=await srcFile.arrayBuffer();const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+      const font=await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+      const pageNum=parseInt(document.getElementById('editPage').value)-1;
+      const page=pdf.getPage(Math.max(0,Math.min(pageNum,pdf.getPageCount()-1)));
+      page.drawText(text,{x:parseInt(document.getElementById('editX').value),y:parseInt(document.getElementById('editY').value),size:parseInt(document.getElementById('editSize').value),font:font,color:colorMap[document.getElementById('editColor').value]||colorMap.black});
+      const bytes=await pdf.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent='Text added to page '+(pageNum+1)+'.';
+      resultArea.classList.add('active');applyBtn.disabled=false;
+    });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','-edited.pdf');a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

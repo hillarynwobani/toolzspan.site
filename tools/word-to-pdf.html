@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word to PDF — Free Online | Toolzspan</title>
+  <meta name="description" content="Convert Word documents to PDF for free. Upload a .doc or .docx file and download it as a PDF instantly in your browser.">
+  <link rel="canonical" href="https://toolzspan.site/tools/word-to-pdf.html">
+  <meta property="og:title" content="Word to PDF — Free Online | Toolzspan">
+  <meta property="og:description" content="Convert Word documents to PDF for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/word-to-pdf.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Word to PDF","url":"https://toolzspan.site/tools/word-to-pdf.html","description":"Convert Word documents to PDF for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>Word to PDF</h1><p>Convert your Word documents (.doc, .docx) to PDF format. Upload your file, and this tool will extract the text content and create a clean PDF document.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">📃</div><p><strong>Drag and drop a Word file here</strong></p><p>or click to browse (.doc, .docx)</p><input type="file" id="fileInput" accept=".doc,.docx"></div>
+      <div class="file-list" id="fileList"></div>
+      <button class="btn btn-primary btn-block" id="convertBtn" disabled>Convert to PDF</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Converting...</p></div>
+      <div class="result-area" id="resultArea"><h3>Conversion Complete</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download PDF</button></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-to-word.html" class="related-tool-link">PDF to Word</a><a href="pdf-compressor.html" class="related-tool-link">PDF Compressor</a><a href="pdf-editor.html" class="related-tool-link">PDF Editor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    let srcFile=null,pdfBlob=null;
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
+
+    convertBtn.addEventListener('click',async()=>{
+      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      progressText.textContent='Extracting text...';progressFill.style.width='30%';
+      const ab=await srcFile.arrayBuffer();
+      let textContent='';
+      try{
+        const result=await mammoth.extractRawText({arrayBuffer:ab});
+        textContent=result.value;
+      }catch(e){
+        // Fallback: read as text
+        textContent=new TextDecoder().decode(ab);
+      }
+      progressText.textContent='Creating PDF...';progressFill.style.width='60%';
+      const pdfDoc=await PDFLib.PDFDocument.create();
+      const font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      const fontSize=12;const margin=50;const lineHeight=fontSize*1.4;
+      const lines=textContent.split('\n');
+      let page=pdfDoc.addPage([612,792]);let y=792-margin;
+      for(const line of lines){
+        const words=line.split(' ');let currentLine='';
+        for(const word of words){
+          const test=currentLine?currentLine+' '+word:word;
+          const w=font.widthOfTextAtSize(test,fontSize);
+          if(w>612-margin*2&&currentLine){
+            if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;}
+            page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
+            y-=lineHeight;currentLine=word;
+          }else{currentLine=test;}
+        }
+        if(currentLine){
+          if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;}
+          page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
+          y-=lineHeight;
+        }
+        y-=lineHeight*0.3;
+      }
+      progressFill.style.width='90%';
+      const bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent='Word document converted to PDF — '+formatSize(bytes.length);
+      resultArea.classList.add('active');convertBtn.disabled=false;
+    });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.(docx?|txt)$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

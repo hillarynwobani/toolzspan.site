@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Image — Free Online | Toolzspan</title>
+  <meta name="description" content="Convert scanned images into editable text for free. Upload a photo of a document and extract the text using OCR — no sign-up required.">
+  <link rel="canonical" href="https://toolzspan.site/tools/scan-image.html">
+  <meta property="og:title" content="Scan Image — Free Online | Toolzspan">
+  <meta property="og:description" content="Convert scanned images into editable text for free using OCR.">
+  <meta property="og:url" content="https://toolzspan.site/tools/scan-image.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Scan Image","url":"https://toolzspan.site/tools/scan-image.html","description":"Convert scanned images into editable text using OCR.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>Scan Image</h1><p>Convert photos of documents, receipts, or handwritten notes into editable text. Upload one or more images and extract the text using OCR technology.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">📷</div><p><strong>Drag and drop images here</strong></p><p>or click to browse (JPG, PNG, WebP)</p><input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple></div>
+      <div class="file-list" id="fileList"></div>
+      <div class="tool-options" id="optionsArea" style="display:none;">
+        <label for="langSelect">OCR Language</label>
+        <select id="langSelect"><option value="eng" selected>English</option><option value="spa">Spanish</option><option value="fra">French</option><option value="deu">German</option><option value="por">Portuguese</option></select>
+      </div>
+      <button class="btn btn-primary btn-block" id="scanBtn" disabled>Extract Text</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Scanning...</p></div>
+      <div class="result-area" id="resultArea">
+        <h3>Extracted Text</h3>
+        <textarea id="ocrOutput" style="width:100%;min-height:300px;padding:16px;border:1px solid var(--border-color);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.95rem;resize:vertical;" readonly></textarea>
+        <button class="btn btn-download" id="copyBtn" style="margin-top:12px;">Copy Text</button>
+        <button class="btn btn-secondary" id="downloadTxtBtn" style="margin-top:12px;">Download as .txt</button>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="ocr-pdf.html" class="related-tool-link">OCR PDF</a><a href="image-compressor.html" class="related-tool-link">Image Compressor</a><a href="image-to-pdf.html" class="related-tool-link">Image to PDF</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    let selectedFiles=[];
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),scanBtn=document.getElementById('scanBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),ocrOutput=document.getElementById('ocrOutput');
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));});
+    fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
+    function addFiles(files){files.forEach(f=>selectedFiles.push(f));renderFileList();scanBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
+    function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();scanBtn.disabled=selectedFiles.length===0;});});}
+
+    scanBtn.addEventListener('click',async()=>{
+      scanBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      const lang=document.getElementById('langSelect').value;
+      let allText='';
+      for(let i=0;i<selectedFiles.length;i++){
+        progressText.textContent='Scanning image '+(i+1)+' of '+selectedFiles.length+'...';
+        progressFill.style.width=((i/selectedFiles.length)*100)+'%';
+        const result=await Tesseract.recognize(selectedFiles[i],lang,{logger:m=>{if(m.status==='recognizing text')progressText.textContent='Image '+(i+1)+': '+(m.progress*100).toFixed(0)+'%';}});
+        allText+='--- Image '+(i+1)+': '+selectedFiles[i].name+' ---\n'+result.data.text+'\n\n';
+      }
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      ocrOutput.value=allText.trim();
+      resultArea.classList.add('active');scanBtn.disabled=false;
+    });
+    document.getElementById('copyBtn').addEventListener('click',()=>{ocrOutput.select();document.execCommand('copy');});
+    document.getElementById('downloadTxtBtn').addEventListener('click',()=>{const blob=new Blob([ocrOutput.value],{type:'text/plain'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='scan-output.txt';a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to PDF — Free Online | Toolzspan</title>
+  <meta name="description" content="Convert images to PDF for free. Upload JPG, PNG, or other images and combine them into a single PDF document instantly.">
+  <link rel="canonical" href="https://toolzspan.site/tools/image-to-pdf.html">
+  <meta property="og:title" content="Image to PDF — Free Online | Toolzspan">
+  <meta property="og:description" content="Convert images to PDF for free. Upload images and combine them into a PDF.">
+  <meta property="og:url" content="https://toolzspan.site/tools/image-to-pdf.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Image to PDF","url":"https://toolzspan.site/tools/image-to-pdf.html","description":"Convert images to PDF for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+
+  <main>
+    <section class="tool-hero"><h1>Image to PDF</h1><p>Convert one or more images into a PDF document. Upload JPG, PNG, or WebP images, arrange the order, and download a single PDF file.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-area-icon">📄</div>
+        <p><strong>Drag and drop images here</strong></p><p>or click to browse (JPG, PNG, WebP)</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+      </div>
+      <div class="file-list" id="fileList"></div>
+      <button class="btn btn-primary btn-block" id="convertBtn" disabled>Convert to PDF</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Converting...</p></div>
+      <div class="result-area" id="resultArea"><h3>Conversion Complete</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download PDF</button></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-to-image.html" class="related-tool-link">PDF to Image</a><a href="image-compressor.html" class="related-tool-link">Image Compressor</a><a href="pdf-merger.html" class="related-tool-link">PDF Merger</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    let selectedFiles=[],pdfBlob=null;
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));});
+    fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
+    function addFiles(files){files.forEach(f=>selectedFiles.push(f));renderFileList();convertBtn.disabled=selectedFiles.length===0;}
+    function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+(i+1)+'. '+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();convertBtn.disabled=selectedFiles.length===0;});});}
+
+    convertBtn.addEventListener('click',async()=>{
+      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      const pdfDoc=await PDFLib.PDFDocument.create();
+      for(let i=0;i<selectedFiles.length;i++){
+        progressText.textContent='Processing image '+(i+1)+' of '+selectedFiles.length+'...';
+        progressFill.style.width=((i/selectedFiles.length)*100)+'%';
+        const bytes=await selectedFiles[i].arrayBuffer();
+        let img;
+        if(selectedFiles[i].type==='image/png'){img=await pdfDoc.embedPng(bytes);}
+        else{img=await pdfDoc.embedJpg(bytes);}
+        const page=pdfDoc.addPage([img.width,img.height]);
+        page.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
+      }
+      progressText.textContent='Finalizing...';progressFill.style.width='90%';
+      const pdfBytes=await pdfDoc.save();
+      pdfBlob=new Blob([pdfBytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent=selectedFiles.length+' image(s) converted — '+formatSize(pdfBytes.length);
+      resultArea.classList.add('active');convertBtn.disabled=false;
+    });
+
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download='images-to-pdf.pdf';a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

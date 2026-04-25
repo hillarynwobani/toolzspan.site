@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR PDF — Free Online | Toolzspan</title>
+  <meta name="description" content="Extract text from scanned PDF documents using OCR for free. Convert image-based PDFs into selectable, searchable text in your browser.">
+  <link rel="canonical" href="https://toolzspan.site/tools/ocr-pdf.html">
+  <meta property="og:title" content="OCR PDF — Free Online | Toolzspan">
+  <meta property="og:description" content="Extract text from scanned PDFs using OCR for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/ocr-pdf.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"OCR PDF","url":"https://toolzspan.site/tools/ocr-pdf.html","description":"Extract text from scanned PDFs using OCR.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>OCR PDF</h1><p>Extract text from scanned or image-based PDF documents using Optical Character Recognition. Upload your PDF and get the text content instantly.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🔍</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
+      <div class="file-list" id="fileList"></div>
+      <div class="tool-options" id="optionsArea" style="display:none;">
+        <label for="langSelect">OCR Language</label>
+        <select id="langSelect"><option value="eng" selected>English</option><option value="spa">Spanish</option><option value="fra">French</option><option value="deu">German</option><option value="por">Portuguese</option></select>
+      </div>
+      <button class="btn btn-primary btn-block" id="ocrBtn" disabled>Extract Text</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing OCR...</p></div>
+      <div class="result-area" id="resultArea">
+        <h3>Extracted Text</h3>
+        <textarea id="ocrOutput" style="width:100%;min-height:300px;padding:16px;border:1px solid var(--border-color);border-radius:var(--radius-sm);font-family:var(--font-body);font-size:0.95rem;resize:vertical;" readonly></textarea>
+        <button class="btn btn-download" id="copyBtn" style="margin-top:12px;">Copy Text</button>
+        <button class="btn btn-secondary" id="downloadTxtBtn" style="margin-top:12px;">Download as .txt</button>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="scan-image.html" class="related-tool-link">Scan Image</a><a href="pdf-to-image.html" class="related-tool-link">PDF to Image</a><a href="pdf-editor.html" class="related-tool-link">PDF Editor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    let srcFile=null;
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),ocrBtn=document.getElementById('ocrBtn'),optionsArea=document.getElementById('optionsArea'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),ocrOutput=document.getElementById('ocrOutput');
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';optionsArea.style.display='block';ocrBtn.disabled=false;}
+
+    ocrBtn.addEventListener('click',async()=>{
+      ocrBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const lang=document.getElementById('langSelect').value;
+      const ab=await srcFile.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+      let allText='';
+      for(let p=1;p<=pdf.numPages;p++){
+        progressText.textContent='OCR page '+p+' of '+pdf.numPages+'...';
+        progressFill.style.width=((p/pdf.numPages)*80)+'%';
+        const page=await pdf.getPage(p);
+        const vp=page.getViewport({scale:2});
+        const canvas=document.createElement('canvas');canvas.width=vp.width;canvas.height=vp.height;
+        await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+        const result=await Tesseract.recognize(canvas,lang,{logger:m=>{if(m.status==='recognizing text')progressText.textContent='OCR page '+p+': '+(m.progress*100).toFixed(0)+'%';}});
+        allText+='--- Page '+p+' ---\n'+result.data.text+'\n\n';
+      }
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      ocrOutput.value=allText.trim();
+      resultArea.classList.add('active');ocrBtn.disabled=false;
+    });
+
+    document.getElementById('copyBtn').addEventListener('click',()=>{ocrOutput.select();document.execCommand('copy');});
+    document.getElementById('downloadTxtBtn').addEventListener('click',()=>{const blob=new Blob([ocrOutput.value],{type:'text/plain'});const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download='ocr-output.txt';a.click();URL.revokeObjectURL(u);});
+  </script>
+</body>
+</html>

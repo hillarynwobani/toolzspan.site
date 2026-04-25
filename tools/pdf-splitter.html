@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Splitter — Free Online | Toolzspan</title>
+  <meta name="description" content="Split a PDF into separate pages or sections for free. Extract specific pages from any PDF instantly in your browser.">
+  <link rel="canonical" href="https://toolzspan.site/tools/pdf-splitter.html">
+  <meta property="og:title" content="PDF Splitter — Free Online | Toolzspan">
+  <meta property="og:description" content="Split a PDF into separate pages or sections for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/pdf-splitter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PDF Splitter","url":"https://toolzspan.site/tools/pdf-splitter.html","description":"Split a PDF into separate pages for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+
+  <main>
+    <section class="tool-hero"><h1>PDF Splitter</h1><p>Split a PDF into individual pages or extract a custom range of pages. Upload your PDF, choose which pages you need, and download them instantly.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-area-icon">✂️</div>
+        <p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p>
+        <input type="file" id="fileInput" accept=".pdf">
+      </div>
+      <div class="file-list" id="fileList"></div>
+      <div class="tool-options" id="optionsArea" style="display:none;">
+        <label for="pageRange">Pages to extract (e.g. 1-3, 5, 7-9)</label>
+        <input type="text" id="pageRange" placeholder="Leave blank to split all pages individually">
+        <p style="font-size:0.85rem;color:var(--mid-gray);margin:0;">Total pages: <strong id="totalPages">0</strong></p>
+      </div>
+      <button class="btn btn-primary btn-block" id="splitBtn" disabled>Split PDF</button>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Splitting...</p></div>
+      <div class="result-area" id="resultArea"><h3>Split Complete</h3><p id="resultInfo"></p><div id="downloadLinks"></div></div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-merger.html" class="related-tool-link">PDF Merger</a><a href="pdf-page-remover.html" class="related-tool-link">PDF Page Remover</a><a href="pdf-compressor.html" class="related-tool-link">PDF Compressor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function(){document.getElementById('navMenu').classList.toggle('active');});
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),splitBtn=document.getElementById('splitBtn'),optionsArea=document.getElementById('optionsArea'),pageRange=document.getElementById('pageRange'),totalPagesEl=document.getElementById('totalPages'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadLinks=document.getElementById('downloadLinks');
+    let srcFile=null,srcPageCount=0;
+
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+
+    async function loadFile(f){
+      srcFile=f;
+      fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';
+      const ab=await f.arrayBuffer();
+      const pdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+      srcPageCount=pdf.getPageCount();
+      totalPagesEl.textContent=srcPageCount;
+      optionsArea.style.display='block';
+      splitBtn.disabled=false;
+    }
+    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+
+    function parseRange(str,max){
+      if(!str.trim()){return Array.from({length:max},(_,i)=>[[i]]);}
+      const groups=[];
+      str.split(',').forEach(part=>{
+        part=part.trim();const m=part.match(/^(\d+)\s*-\s*(\d+)$/);
+        if(m){const s=Math.max(1,parseInt(m[1])),e=Math.min(max,parseInt(m[2]));const idxs=[];for(let i=s;i<=e;i++)idxs.push(i-1);if(idxs.length)groups.push(idxs);}
+        else{const n=parseInt(part);if(n>=1&&n<=max)groups.push([n-1]);}
+      });
+      return groups;
+    }
+
+    splitBtn.addEventListener('click',async()=>{
+      splitBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');downloadLinks.innerHTML='';
+      const ab=await srcFile.arrayBuffer();
+      const groups=parseRange(pageRange.value,srcPageCount);
+      const blobs=[];
+      for(let i=0;i<groups.length;i++){
+        progressText.textContent='Creating part '+(i+1)+' of '+groups.length+'...';
+        progressFill.style.width=((i/groups.length)*100)+'%';
+        const newPdf=await PDFLib.PDFDocument.create();
+        const srcPdf=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
+        const pages=await newPdf.copyPages(srcPdf,groups[i]);
+        pages.forEach(p=>newPdf.addPage(p));
+        const bytes=await newPdf.save();
+        blobs.push({name:srcFile.name.replace('.pdf','')+'_part'+(i+1)+'.pdf',blob:new Blob([bytes],{type:'application/pdf'})});
+      }
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent=blobs.length+' file(s) created.';
+      blobs.forEach(item=>{
+        const btn=document.createElement('button');btn.className='btn btn-download';btn.style.margin='6px';btn.textContent='Download '+item.name;
+        btn.addEventListener('click',()=>{const u=URL.createObjectURL(item.blob);const a=document.createElement('a');a.href=u;a.download=item.name;a.click();URL.revokeObjectURL(u);});
+        downloadLinks.appendChild(btn);
+      });
+      resultArea.classList.add('active');splitBtn.disabled=false;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator — Free Online | Toolzspan</title>
+  <meta name="description" content="Generate QR codes for any URL or text for free. Create custom QR codes instantly in your browser and download them as images.">
+  <link rel="canonical" href="https://toolzspan.site/tools/qr-code-generator.html">
+  <meta property="og:title" content="QR Code Generator — Free Online | Toolzspan">
+  <meta property="og:description" content="Generate QR codes for any URL or text for free.">
+  <meta property="og:url" content="https://toolzspan.site/tools/qr-code-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"QR Code Generator","url":"https://toolzspan.site/tools/qr-code-generator.html","description":"Generate QR codes for any URL or text for free.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+  </script>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
+  <main>
+    <section class="tool-hero"><h1>QR Code Generator</h1><p>Generate a QR code for any URL, text, or message. Customize the size and download your QR code as an image — perfect for sharing links.</p></section>
+    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="tool-workspace">
+      <div class="tool-options" style="display:block;">
+        <label for="qrText">URL or text</label>
+        <input type="text" id="qrText" placeholder="https://example.com or any text">
+        <label for="qrSize">Size (px)</label>
+        <select id="qrSize"><option value="128">128 × 128</option><option value="256" selected>256 × 256</option><option value="512">512 × 512</option><option value="1024">1024 × 1024</option></select>
+      </div>
+      <button class="btn btn-primary btn-block" id="generateBtn">Generate QR Code</button>
+      <div class="result-area" id="resultArea" style="display:none;">
+        <h3>Your QR Code</h3>
+        <div id="qrOutput" style="display:flex;justify-content:center;margin:20px 0;"></div>
+        <button class="btn btn-download" id="downloadBtn">Download QR Code</button>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Your data never leaves your browser.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="word-counter.html" class="related-tool-link">Word Counter</a><a href="color-picker.html" class="related-tool-link">Color Picker</a><a href="image-compressor.html" class="related-tool-link">Image Compressor</a></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"></div>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+  <script>
+    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
+    const generateBtn=document.getElementById('generateBtn'),qrText=document.getElementById('qrText'),qrSize=document.getElementById('qrSize'),qrOutput=document.getElementById('qrOutput'),resultArea=document.getElementById('resultArea'),downloadBtn=document.getElementById('downloadBtn');
+    let qrDataUrl=null;
+
+    generateBtn.addEventListener('click',async()=>{
+      const text=qrText.value.trim();
+      if(!text){alert('Please enter a URL or text.');return;}
+      qrOutput.innerHTML='';resultArea.style.display='none';
+      const size=parseInt(qrSize.value);
+      const canvas=document.createElement('canvas');
+      await QRCode.toCanvas(canvas,text,{width:size,margin:2,color:{dark:'#0A1628',light:'#FFFFFF'}});
+      qrOutput.appendChild(canvas);
+      qrDataUrl=canvas.toDataURL('image/png');
+      resultArea.style.display='block';
+      resultArea.classList.add('active');
+    });
+
+    downloadBtn.addEventListener('click',()=>{
+      if(!qrDataUrl)return;
+      const a=document.createElement('a');a.href=qrDataUrl;a.download='qr-code.png';a.click();
+    });
+  </script>
+</body>
+</html>
