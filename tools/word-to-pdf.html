@@ -37,63 +37,62 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js" defer></script>
   <script>
-  document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    var srcFile=null,pdfBlob=null;
-    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    let srcFile=null,pdfBlob=null;
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('click',function(){fileInput.click();});
-    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
-    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
-    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f)loadFile(f);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
     function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
 
-    convertBtn.addEventListener('click',async function(){
+    convertBtn.addEventListener('click',async()=>{
       convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
       progressText.textContent='Extracting text...';progressFill.style.width='30%';
+      const ab=await srcFile.arrayBuffer();
+      let textContent='';
       try{
-        var ab=await srcFile.arrayBuffer();
-        var textContent='';
-        try{var result=await mammoth.extractRawText({arrayBuffer:ab});textContent=result.value;}catch(e){textContent=new TextDecoder().decode(ab);}
-        if(!textContent||textContent.trim().length===0){throw new Error('No text could be extracted from this file.');}
-        progressText.textContent='Creating PDF...';progressFill.style.width='60%';
-        var pdfDoc=await PDFLib.PDFDocument.create();
-        var font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        var fontSize=12,margin=50,lineHeight=fontSize*1.4,maxPages=200;
-        var lines=textContent.substring(0,500000).split('\n');
-        var page=pdfDoc.addPage([612,792]);var y=792-margin;var pageCount=1;
-        for(var li=0;li<lines.length&&pageCount<=maxPages;li++){
-          var line=lines[li];if(!line){y-=lineHeight*0.3;if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;pageCount++;}continue;}
-          var words=line.split(' ');var currentLine='';
-          for(var wi=0;wi<words.length;wi++){
-            var test=currentLine?currentLine+' '+words[wi]:words[wi];
-            var w=font.widthOfTextAtSize(test.substring(0,200),fontSize);
-            if(w>612-margin*2&&currentLine){
-              if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;pageCount++;if(pageCount>maxPages)break;}
-              page.drawText(currentLine.substring(0,200),{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
-              y-=lineHeight;currentLine=words[wi];
-            }else{currentLine=test;}
-          }
-          if(currentLine&&pageCount<=maxPages){
-            if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;pageCount++;}
-            page.drawText(currentLine.substring(0,200),{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
-            y-=lineHeight;
-          }
+        const result=await mammoth.extractRawText({arrayBuffer:ab});
+        textContent=result.value;
+      }catch(e){
+        // Fallback: read as text
+        textContent=new TextDecoder().decode(ab);
+      }
+      progressText.textContent='Creating PDF...';progressFill.style.width='60%';
+      const pdfDoc=await PDFLib.PDFDocument.create();
+      const font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      const fontSize=12;const margin=50;const lineHeight=fontSize*1.4;
+      const lines=textContent.split('\n');
+      let page=pdfDoc.addPage([612,792]);let y=792-margin;
+      for(const line of lines){
+        const words=line.split(' ');let currentLine='';
+        for(const word of words){
+          const test=currentLine?currentLine+' '+word:word;
+          const w=font.widthOfTextAtSize(test,fontSize);
+          if(w>612-margin*2&&currentLine){
+            if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;}
+            page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
+            y-=lineHeight;currentLine=word;
+          }else{currentLine=test;}
         }
-        progressFill.style.width='90%';
-        var bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
-        progressFill.style.width='100%';progressText.textContent='Done!';
-        resultInfo.textContent='Word document converted to PDF — '+formatSize(bytes.length);
-        resultArea.classList.add('active');
-      }catch(err){progressText.textContent='Error: '+err.message;}
-      convertBtn.disabled=false;
+        if(currentLine){
+          if(y<margin){page=pdfDoc.addPage([612,792]);y=792-margin;}
+          page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
+          y-=lineHeight;
+        }
+        y-=lineHeight*0.3;
+      }
+      progressFill.style.width='90%';
+      const bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent='Word document converted to PDF — '+formatSize(bytes.length);
+      resultArea.classList.add('active');convertBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',function(){if(!pdfBlob)return;var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.(docx?|txt)$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
-  });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.(docx?|txt)$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
   </script>
 </body>
 </html>

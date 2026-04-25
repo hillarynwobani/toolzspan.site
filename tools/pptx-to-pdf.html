@@ -37,103 +37,58 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
   <script>
-  document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    var srcFile=null,pdfBlob=null;
-    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    let srcFile=null,pdfBlob=null;
+    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('click',function(){fileInput.click();});
-    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
-    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
-    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
+    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
     function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
 
-    convertBtn.addEventListener('click',async function(){
+    convertBtn.addEventListener('click',async()=>{
       convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
       progressText.textContent='Reading presentation...';progressFill.style.width='20%';
-      try{
-        var ab=await srcFile.arrayBuffer();
-        var zip=await JSZip.loadAsync(ab);
-        var slideFiles=Object.keys(zip.files).filter(function(n){return n.match(/ppt\/slides\/slide\d+\.xml$/);}).sort();
-        // Collect images from ppt/media/
-        var imageFiles={};
-        var mediaKeys=Object.keys(zip.files).filter(function(n){return n.startsWith('ppt/media/');});
-        for(var mi=0;mi<mediaKeys.length;mi++){
-          var key=mediaKeys[mi];
-          var ext=key.split('.').pop().toLowerCase();
-          if(['png','jpg','jpeg','gif'].indexOf(ext)>=0){
-            imageFiles[key]=await zip.file(key).async('uint8array');
-          }
-        }
-        var slides=[];
-        for(var i=0;i<slideFiles.length;i++){
-          progressText.textContent='Reading slide '+(i+1)+'/'+slideFiles.length+'...';
-          progressFill.style.width=(20+(i/slideFiles.length)*40)+'%';
-          var xml=await zip.file(slideFiles[i]).async('text');
-          var texts=[];
-          var matches=xml.match(/<a:t>([^<]*)<\/a:t>/g);
-          if(matches)matches.forEach(function(m){var t=m.replace(/<\/?a:t>/g,'').trim();if(t)texts.push(t);});
-          slides.push(texts);
-        }
-        progressText.textContent='Creating PDF...';progressFill.style.width='70%';
-        var pdfDoc=await PDFLib.PDFDocument.create();
-        var font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        var fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-        // Embed first image as a background hint if available
-        var embeddedImages=[];
-        var imgKeys=Object.keys(imageFiles);
-        for(var ik=0;ik<Math.min(imgKeys.length,slides.length);ik++){
-          try{
-            var imgData=imageFiles[imgKeys[ik]];
-            var ext2=imgKeys[ik].split('.').pop().toLowerCase();
-            var img;
-            if(ext2==='png')img=await pdfDoc.embedPng(imgData);
-            else img=await pdfDoc.embedJpg(imgData);
-            embeddedImages.push(img);
-          }catch(e){embeddedImages.push(null);}
-        }
-        slides.forEach(function(texts,idx){
-          var page=pdfDoc.addPage([792,612]);
-          // Draw background color
-          page.drawRectangle({x:0,y:0,width:792,height:612,color:PDFLib.rgb(0.97,0.97,0.98)});
-          // Draw embedded image if available
-          if(embeddedImages[idx]){
-            try{
-              var img=embeddedImages[idx];
-              var scale=Math.min(300/img.width,200/img.height);
-              page.drawImage(img,{x:792-300-40,y:612-250,width:img.width*scale,height:img.height*scale,opacity:0.85});
-            }catch(e){}
-          }
-          // Slide number
-          page.drawText('Slide '+(idx+1),{x:50,y:575,size:10,font:font,color:PDFLib.rgb(0.5,0.5,0.5)});
-          // Slide title (first text element)
-          var y=545;
-          if(texts.length>0){
-            var title=texts[0].substring(0,70);
-            page.drawText(title,{x:50,y:y,size:22,font:fontBold,color:PDFLib.rgb(0.06,0.09,0.16)});
-            y-=36;
-          }
-          // Remaining text
-          for(var ti=1;ti<texts.length;ti++){
-            if(y<50)break;
-            var line=texts[ti].substring(0,90);
-            page.drawText(line,{x:50,y:y,size:14,font:font,color:PDFLib.rgb(0.2,0.2,0.2)});
-            y-=22;
-          }
+      const ab=await srcFile.arrayBuffer();
+      const zip=await JSZip.loadAsync(ab);
+      // Extract text from slides
+      const slideFiles=Object.keys(zip.files).filter(n=>n.match(/ppt\/slides\/slide\d+\.xml$/)).sort();
+      const slides=[];
+      for(let i=0;i<slideFiles.length;i++){
+        progressText.textContent='Reading slide '+(i+1)+' of '+slideFiles.length+'...';
+        progressFill.style.width=(20+(i/slideFiles.length)*40)+'%';
+        const xml=await zip.file(slideFiles[i]).async('text');
+        const texts=[];
+        const matches=xml.match(/<a:t>([^<]*)<\/a:t>/g);
+        if(matches)matches.forEach(m=>{const t=m.replace(/<\/?a:t>/g,'').trim();if(t)texts.push(t);});
+        slides.push(texts.join('\n'));
+      }
+      progressText.textContent='Creating PDF...';progressFill.style.width='70%';
+      const pdfDoc=await PDFLib.PDFDocument.create();
+      const font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+      const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      slides.forEach((text,idx)=>{
+        const page=pdfDoc.addPage([792,612]); // Landscape
+        page.drawText('Slide '+(idx+1),{x:50,y:570,size:10,font:font,color:PDFLib.rgb(0.5,0.5,0.5)});
+        const lines=text.split('\n');let y=540;
+        lines.forEach((line,li)=>{
+          if(y<50)return;
+          const f=li===0?fontBold:font;
+          const s=li===0?20:14;
+          page.drawText(line.substring(0,80),{x:50,y:y,size:s,font:f,color:PDFLib.rgb(0,0,0)});
+          y-=s*1.6;
         });
-        var bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
-        progressFill.style.width='100%';progressText.textContent='Done!';
-        resultInfo.innerHTML=slides.length+' slide(s) converted — '+formatSize(bytes.length)+'<br><small>Note: Complex layouts, backgrounds, and some images may differ from the original.</small>';
-        resultArea.classList.add('active');
-      }catch(err){progressText.textContent='Error: '+err.message;}
-      convertBtn.disabled=false;
+      });
+      const bytes=await pdfDoc.save();pdfBlob=new Blob([bytes],{type:'application/pdf'});
+      progressFill.style.width='100%';progressText.textContent='Done!';
+      resultInfo.textContent=slides.length+' slide(s) converted to PDF — '+formatSize(bytes.length);
+      resultArea.classList.add('active');convertBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',function(){if(!pdfBlob)return;var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pptx','.pdf');a.click();URL.revokeObjectURL(u);});
-  });
+    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(pdfBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pptx','.pdf');a.click();URL.revokeObjectURL(u);});
   </script>
 </body>
 </html>
