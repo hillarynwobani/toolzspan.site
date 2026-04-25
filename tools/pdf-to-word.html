@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PDF to Word — Free Online | Toolzspan</title>
   <meta name="description" content="Convert PDF files to editable Word documents for free. Extract text from your PDFs and download as a .docx file instantly in your browser.">
@@ -23,7 +24,7 @@
 <body>
   <header class="site-header"><div class="header-inner"><a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="../toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a><button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button><nav class="nav-menu" id="navMenu"><a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></div></header>
   <main>
-    <section class="tool-hero"><h1>PDF to Word</h1><p>Convert your PDF files into editable Word documents. This tool extracts text content from your PDF and creates a downloadable .docx file.</p></section>
+    <section class="tool-hero"><h1>PDF to Word</h1><p>Convert your PDF files into editable Word documents. This tool extracts text content from your PDF and creates a downloadable .doc file with preserved paragraph structure.</p></section>
     <div class="ad-slot" id="ad-tool-top"></div>
     <div class="tool-workspace">
       <div class="upload-area" id="uploadArea"><div class="upload-area-icon">📝</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
@@ -37,44 +38,174 @@
     <div class="ad-slot" id="ad-tool-bottom"></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><div class="footer-links"><a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div><p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p></div></footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
-  <script src="https://unpkg.com/docx@8.2.3/build/index.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
     document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
-    let srcFile=null,resultBlob=null;
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
+    var srcFile=null,resultBlob=null;
+    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');const f=Array.from(e.dataTransfer.files).find(f=>f.type==='application/pdf');if(f)loadFile(f);});
-    fileInput.addEventListener('change',()=>{if(fileInput.files[0])loadFile(fileInput.files[0]);});
+    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
+    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
+    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');var f=Array.from(e.dataTransfer.files).find(function(f){return f.type==='application/pdf';});if(f)loadFile(f);});
+    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
     function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
 
-    convertBtn.addEventListener('click',async()=>{
-      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
-      if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-      const ab=await srcFile.arrayBuffer();
-      const pdf=await pdfjsLib.getDocument({data:ab}).promise;
-      const paragraphs=[];
-      for(let p=1;p<=pdf.numPages;p++){
-        progressText.textContent='Extracting page '+p+' of '+pdf.numPages+'...';
-        progressFill.style.width=((p/pdf.numPages)*80)+'%';
-        const page=await pdf.getPage(p);
-        const content=await page.getTextContent();
-        const pageText=content.items.map(item=>item.str).join(' ');
-        if(pageText.trim())paragraphs.push(pageText.trim());
+    // Extract structured text from PDF using position data
+    function extractStructuredText(items){
+      if(!items||items.length===0)return[];
+      var lines=[];
+      var currentLine={text:'',y:null,fontSize:0,x:0};
+
+      // Sort items by Y position (top to bottom), then X (left to right)
+      var sorted=items.slice().sort(function(a,b){
+        var ay=a.transform?a.transform[5]:0;
+        var by=b.transform?b.transform[5]:0;
+        // Same line if Y difference is small
+        if(Math.abs(ay-by)<3){
+          var ax=a.transform?a.transform[0]:0;
+          var bx=b.transform?b.transform[0]:0;
+          return(a.transform?a.transform[4]:0)-(b.transform?b.transform[4]:0);
+        }
+        return by-ay; // Top to bottom (higher Y = higher on page)
+      });
+
+      for(var i=0;i<sorted.length;i++){
+        var item=sorted[i];
+        if(!item.str&&item.str!=='')continue;
+        var itemY=item.transform?item.transform[5]:0;
+        var itemX=item.transform?item.transform[4]:0;
+        var itemFontSize=item.transform?Math.abs(item.transform[3]):12;
+
+        if(currentLine.y===null){
+          // First item
+          currentLine={text:item.str,y:itemY,fontSize:itemFontSize,x:itemX};
+        }else if(Math.abs(itemY-currentLine.y)<3){
+          // Same line — check if there's a big horizontal gap (column or tab)
+          if(currentLine.text.length>0){
+            var lastChar=currentLine.text[currentLine.text.length-1];
+            if(lastChar!==' '&&item.str&&item.str[0]!==' '){
+              // Check for word spacing
+              currentLine.text+=' ';
+            }
+          }
+          currentLine.text+=item.str;
+        }else{
+          // New line — save current line
+          if(currentLine.text.trim())lines.push({text:currentLine.text.trim(),fontSize:currentLine.fontSize,y:currentLine.y,x:currentLine.x});
+          currentLine={text:item.str,y:itemY,fontSize:itemFontSize,x:itemX};
+        }
       }
-      progressText.textContent='Creating Word document...';progressFill.style.width='90%';
-      // Create a simple HTML-based .doc file (broader compatibility than docx library)
-      let html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>'+srcFile.name+'</title></head><body>';
-      paragraphs.forEach(t=>{html+='<p style="font-family:Calibri,sans-serif;font-size:11pt;">'+t+'</p>';});
-      html+='</body></html>';
-      resultBlob=new Blob([html],{type:'application/msword'});
-      progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent='Text extracted from '+pdf.numPages+' page(s).';
-      resultArea.classList.add('active');convertBtn.disabled=false;
+      // Don't forget the last line
+      if(currentLine.text&&currentLine.text.trim()){
+        lines.push({text:currentLine.text.trim(),fontSize:currentLine.fontSize,y:currentLine.y,x:currentLine.x});
+      }
+      return lines;
+    }
+
+    // Group lines into paragraphs based on spacing
+    function groupIntoParagraphs(lines){
+      if(lines.length===0)return[];
+      var paragraphs=[];
+      var currentParagraph={lines:[lines[0]],fontSize:lines[0].fontSize};
+
+      for(var i=1;i<lines.length;i++){
+        var prevLine=lines[i-1];
+        var currLine=lines[i];
+        var lineGap=Math.abs(prevLine.y-currLine.y);
+        var avgFontSize=(prevLine.fontSize+currLine.fontSize)/2;
+        var normalLineSpacing=avgFontSize*1.6;
+        var fontSizeChanged=Math.abs(prevLine.fontSize-currLine.fontSize)>2;
+        var bigGap=lineGap>normalLineSpacing*1.3;
+
+        if(fontSizeChanged||bigGap){
+          // New paragraph
+          paragraphs.push(currentParagraph);
+          currentParagraph={lines:[currLine],fontSize:currLine.fontSize};
+        }else{
+          // Continue current paragraph
+          currentParagraph.lines.push(currLine);
+        }
+      }
+      paragraphs.push(currentParagraph);
+      return paragraphs;
+    }
+
+    convertBtn.addEventListener('click',async function(){
+      if(typeof pdfjsLib==='undefined'){alert('PDF library is still loading. Please wait a moment and try again.');return;}
+      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      try{
+        var ab=await srcFile.arrayBuffer();
+        var pdf=await pdfjsLib.getDocument({data:ab}).promise;
+        var allParagraphs=[];
+
+        for(var p=1;p<=pdf.numPages;p++){
+          progressText.textContent='Extracting page '+p+' of '+pdf.numPages+'...';
+          progressFill.style.width=((p/pdf.numPages)*70)+'%';
+          await new Promise(function(r){setTimeout(r,0);});
+
+          var page=await pdf.getPage(p);
+          var content=await page.getTextContent();
+          var lines=extractStructuredText(content.items);
+          var paragraphs=groupIntoParagraphs(lines);
+
+          // Add a page break marker between pages
+          if(p>1&&allParagraphs.length>0){
+            allParagraphs.push({lines:[],fontSize:0,isPageBreak:true});
+          }
+          paragraphs.forEach(function(para){allParagraphs.push(para);});
+        }
+
+        progressText.textContent='Creating Word document...';progressFill.style.width='85%';
+
+        // Build an HTML-based .doc file with proper structure
+        var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">';
+        html+='<head><meta charset="utf-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><title>'+srcFile.name.replace('.pdf','')+'</title>';
+        html+='<style>';
+        html+='body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:72pt 72pt 72pt 72pt;color:#1a1a1a;}';
+        html+='h1{font-size:18pt;font-weight:bold;margin:12pt 0 6pt 0;color:#0a1628;}';
+        html+='h2{font-size:14pt;font-weight:bold;margin:10pt 0 4pt 0;color:#1a2a4a;}';
+        html+='h3{font-size:12pt;font-weight:bold;margin:8pt 0 4pt 0;color:#333;}';
+        html+='p{font-size:11pt;margin:0 0 6pt 0;text-align:justify;}';
+        html+='br.page-break{page-break-before:always;}';
+        html+='</style></head><body>';
+
+        allParagraphs.forEach(function(para){
+          if(para.isPageBreak){
+            html+='<br class="page-break">';
+            return;
+          }
+          var text=para.lines.map(function(l){return l.text;}).join(' ').trim();
+          if(!text)return;
+          // Escape HTML
+          text=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+          // Determine if this is a heading based on font size
+          var avgFontSize=para.fontSize||11;
+          if(avgFontSize>=18){
+            html+='<h1>'+text+'</h1>';
+          }else if(avgFontSize>=14){
+            html+='<h2>'+text+'</h2>';
+          }else if(avgFontSize>=12.5){
+            html+='<h3>'+text+'</h3>';
+          }else{
+            html+='<p>'+text+'</p>';
+          }
+        });
+
+        html+='</body></html>';
+        resultBlob=new Blob([html],{type:'application/msword'});
+        progressFill.style.width='100%';progressText.textContent='Done!';
+        resultInfo.textContent='Text extracted from '+pdf.numPages+' page(s) with '+allParagraphs.filter(function(p){return !p.isPageBreak;}).length+' paragraph(s).';
+        resultArea.classList.add('active');
+      }catch(e){
+        alert('Error converting PDF: '+e.message);
+        progressText.textContent='Error occurred.';
+      }
+      convertBtn.disabled=false;
     });
-    downloadBtn.addEventListener('click',()=>{const u=URL.createObjectURL(resultBlob);const a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','.doc');a.click();URL.revokeObjectURL(u);});
+    downloadBtn.addEventListener('click',function(){var u=URL.createObjectURL(resultBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','.doc');a.click();URL.revokeObjectURL(u);});
   </script>
 </body>
 </html>
