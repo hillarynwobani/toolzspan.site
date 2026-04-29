@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Converter — Free Online Tool | Toolzspan</title>
-  <meta name="description" content="Convert between time zones instantly. Find the current time in any city worldwide.">
-  <link rel="canonical" href="https://toolzspan.site/tools/time-converter.html">
-  <meta property="og:title" content="Time Converter — Free Online Tool | Toolzspan"><meta property="og:description" content="Convert between time zones instantly. Find the current time in any city worldwide."><meta property="og:url" content="https://toolzspan.site/tools/time-converter.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Toolzspan">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Time Converter — Free Online Tool | Toolzspan"><meta name="twitter:description" content="Convert between time zones instantly. Find the current time in any city worldwide.">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Time Converter","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Convert between time zones instantly. Find the current time in any city worldwide.","url":"https://toolzspan.site/tools/time-converter.html"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site"},{"@type":"ListItem","position":2,"name":"General Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"Time Converter","item":"https://toolzspan.site/tools/time-converter.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this tool account for daylight saving time?","acceptedAnswer":{"@type":"Answer","text":"Yes. It uses your browser's built-in timezone database, which automatically handles DST transitions."}},{"@type":"Question","name":"Can I convert times for a future date?","acceptedAnswer":{"@type":"Answer","text":"Yes. Enter any date and time and the tool will calculate the correct conversion."}},{"@type":"Question","name":"How many time zones are supported?","acceptedAnswer":{"@type":"Answer","text":"Over 400 IANA time zones covering every country and major city."}},{"@type":"Question","name":"Is this tool free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free with no sign-up required."}}]}</script>
-</head>
-<body>
-    <header class="site-header">
+# Toolzspan Fix Script v2 - Simple string replacement approach
+$ErrorActionPreference = 'Stop'
+$root = "c:\GravityProject\toolzspan.site"
+
+# Build header HTML for tool pages (relative paths within /tools/)
+$headerTools = @'
+  <header class="site-header">
     <div class="header-inner">
       <a href="/" class="header-logo" aria-label="Toolzspan Home">
-        <img src="../toolzspan-logo-v2.svg" alt="Toolzspan â€” All-in-One Free Online Tools" width="180" height="45" loading="eager">
+        <img src="../toolzspan-logo-v2.svg" alt="Toolzspan — All-in-One Free Online Tools" width="180" height="45" loading="eager">
         <span class="logo-tagline">49 Free Online Tools</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
@@ -125,32 +113,20 @@
       </div>
     </div>
   </header>
-  <main>
-    <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="all-tools.html#general">General Tools</a><span>›</span>Time Converter</div>
-    <section class="tool-hero"><h1>Time Converter</h1><p>Convert between time zones instantly. Find the current time in any city worldwide.</p></section>
-    <div class="ad-slot" id="ad-tool-top"><!-- AdSense --></div>
-    <div class="tool-workspace"><div class="tool-options">
-<label>From Time Zone</label><select id="tzFrom"></select>
-<label>To Time Zone</label><select id="tzTo"></select>
-<label>Date & Time</label><input type="datetime-local" id="dtInput">
-<div class="result-area active" style="display:block;margin-top:16px;"><h3 id="tzResult">—</h3></div>
-</div><p class="no-signup-note"><strong>No sign-up required.</strong> Works entirely in your browser.</p>
-<div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="units-converter.html" class="related-tool-link">Units Converter</a><a href="word-counter.html" class="related-tool-link">Word Counter</a><a href="color-picker.html" class="related-tool-link">Color Picker</a></div></div></div>
-    <div class="tool-info-section">
-      <h2>How to Use Time Converter</h2>
-      <ol><li>Select your source time zone from the "From" dropdown.</li><li>Select the target time zone from the "To" dropdown.</li><li>Enter or adjust the date and time you want to convert.</li><li>The converted time appears instantly below.</li></ol>
-      <h2>Why Use Time Converter?</h2>
-      <ul><li><strong>Instant Results</strong> — Conversions happen in real time as you type.</li><li><strong>All Time Zones</strong> — Supports every IANA time zone worldwide.</li><li><strong>No Sign-Up</strong> — Use it immediately, no account needed.</li><li><strong>Works Offline</strong> — Runs entirely in your browser, no internet required after loading.</li></ul>
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-item"><button class="faq-question">Does this tool account for daylight saving time?</button><div class="faq-answer"><p>Yes. It uses your browser's built-in timezone database, which automatically handles DST transitions for all supported regions.</p></div></div>
-      <div class="faq-item"><button class="faq-question">Can I convert times for a future date?</button><div class="faq-answer"><p>Absolutely. Enter any date and time — past, present, or future — and the tool will calculate the correct conversion.</p></div></div>
-      <div class="faq-item"><button class="faq-question">How many time zones are supported?</button><div class="faq-answer"><p>The tool supports all IANA time zones — typically over 400 entries covering every country and major city.</p></div></div>
-      <div class="faq-item"><button class="faq-question">Is this tool free to use?</button><div class="faq-answer"><p>Yes, completely free with no sign-up required.</p></div></div>
-    
-    </div>
-    <div class="ad-slot" id="ad-tool-bottom"><!-- AdSense --></div>
-  </main>
-    <footer class="site-footer">
+'@
+
+# Build header for blog/core pages (absolute /tools/ paths)
+$headerAbsolute = $headerTools -replace 'href="([a-z])', 'href="/tools/$1'
+$headerAbsolute = $headerAbsolute -replace 'href="all-tools', 'href="/tools/all-tools'
+
+# For blog pages: logo path is ../
+$headerBlog = $headerAbsolute
+# For core pages: logo path is root-relative
+$headerCore = $headerAbsolute -replace 'src="../toolzspan-logo-v2.svg"', 'src="toolzspan-logo-v2.svg"'
+
+# Footer template
+$footer = @'
+  <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -186,19 +162,143 @@
       </div>
     </div>
   </footer>
-  <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
-  <script>
-var tzs=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['UTC','America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Europe/London','Europe/Paris','Europe/Berlin','Asia/Tokyo','Asia/Shanghai','Asia/Kolkata','Australia/Sydney','Pacific/Auckland','Africa/Lagos','Africa/Cairo'];
-var tf=document.getElementById('tzFrom'),tt=document.getElementById('tzTo'),di=document.getElementById('dtInput'),tr=document.getElementById('tzResult');
-tzs.forEach(function(z){tf.innerHTML+='<option value="'+z+'">'+z.replace(/_/g,' ')+'</option>';tt.innerHTML+='<option value="'+z+'">'+z.replace(/_/g,' ')+'</option>';});
-try{tf.value=Intl.DateTimeFormat().resolvedOptions().timeZone;}catch(e){}
-if(tt.options.length>1)tt.selectedIndex=1;
-di.value=new Date().toISOString().slice(0,16);
-function calc(){var d=new Date(di.value);if(isNaN(d))return;
-var opts={timeZone:tt.value,year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true};
-tr.textContent=d.toLocaleString('en-US',{timeZone:tf.value,hour:'2-digit',minute:'2-digit',hour12:true})+' ('+tf.value.replace(/_/g,' ')+') = '+d.toLocaleString('en-US',opts)+' ('+tt.value.replace(/_/g,' ')+')';}
-tf.addEventListener('change',calc);tt.addEventListener('change',calc);di.addEventListener('input',calc);calc();
-</script>
-</body>
-</html>
+'@
+
+# FAQ HTML block
+$faqHtml = @'
+
+<h2 id="faq">Frequently Asked Questions</h2>
+<div class="faq-item"><button class="faq-question">Do I have to pay to use this tool?</button><div class="faq-answer"><p>No. All tools on Toolzspan are completely free to use. There are no hidden fees, subscriptions, or paywalls.</p></div></div>
+<div class="faq-item"><button class="faq-question">Do I need to create an account or give my email?</button><div class="faq-answer"><p>No. We firmly believe that basic digital utilities should not require surrendering your personal data. You can use all tools anonymously.</p></div></div>
+<div class="faq-item"><button class="faq-question">Is my file safe and private?</button><div class="faq-answer"><p>Privacy is a massive priority. Depending on the specific tool, your file is either processed entirely within your own local web browser (meaning it never touches the internet), or it is passed to a secure server, processed, and immediately purged. Data is never stored or viewed.</p></div></div>
+<div class="faq-item"><button class="faq-question">Can I do this on my smartphone?</button><div class="faq-answer"><p>Yes. The interface is fully responsive. Whether you are on a desktop monitor, an iPad, or a smartphone, the tools will scale and function perfectly.</p></div></div>
+'@
+
+$faqSchema = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I have to pay to use this tool?","acceptedAnswer":{"@type":"Answer","text":"No, all tools on Toolzspan are completely free to use."}},{"@type":"Question","name":"Do I need to create an account or give my email?","acceptedAnswer":{"@type":"Answer","text":"No. You can use the tools anonymously."}},{"@type":"Question","name":"Is my file safe and private?","acceptedAnswer":{"@type":"Answer","text":"Privacy is a priority. Files are processed locally or securely deleted after processing."}},{"@type":"Question","name":"Can I do this on my smartphone?","acceptedAnswer":{"@type":"Answer","text":"Yes. The interface is fully responsive and works on all mobile devices."}}]}</script>'
+
+function Replace-HeaderFooter($filePath, $headerHtml, $footerHtml) {
+    $content = [System.IO.File]::ReadAllText($filePath)
+    
+    # Replace header using regex
+    $headerRegex = [regex]::new('<header class="site-header">.*?</header>', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+    $content = $headerRegex.Replace($content, $headerHtml, 1)
+    
+    # Replace footer using regex
+    $footerRegex = [regex]::new('<footer class="site-footer">.*?</footer>', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+    $content = $footerRegex.Replace($content, $footerHtml, 1)
+    
+    [System.IO.File]::WriteAllText($filePath, $content)
+}
+
+# === TOOL PAGES ===
+Write-Output "=== FIXING TOOL PAGES ==="
+Get-ChildItem "$root\tools\*.html" | ForEach-Object {
+    Replace-HeaderFooter $_.FullName $headerTools $footer
+    Write-Output "  Fixed: $($_.Name)"
+}
+
+# === BLOG PAGES ===
+Write-Output "`n=== FIXING BLOG PAGES ==="
+Get-ChildItem "$root\blog\*.html" | ForEach-Object {
+    Replace-HeaderFooter $_.FullName $headerBlog $footer
+    Write-Output "  Fixed: $($_.Name)"
+}
+
+# === CORE PAGES ===
+Write-Output "`n=== FIXING CORE PAGES ==="
+@("about.html","contact.html","privacy-policy.html","terms-of-service.html","404.html") | ForEach-Object {
+    $fp = "$root\$_"
+    if (Test-Path $fp) {
+        Replace-HeaderFooter $fp $headerCore $footer
+        Write-Output "  Fixed: $_"
+    }
+}
+
+# === INJECT FAQ INTO OLD BLOG POSTS ===
+Write-Output "`n=== INJECTING FAQ INTO OLD BLOG POSTS ==="
+for ($i = 1; $i -le 22; $i++) {
+    $num = $i.ToString("00")
+    $fp = "$root\blog\post-$num.html"
+    if (Test-Path $fp) {
+        $content = [System.IO.File]::ReadAllText($fp)
+        if ($content -match 'faq-item') {
+            Write-Output "  Skipped (has FAQ): post-$num.html"
+            continue
+        }
+        
+        # Insert FAQ before related-posts or before </article>
+        $relatedRegex = [regex]::new('<div class="related-posts">')
+        if ($relatedRegex.IsMatch($content)) {
+            $content = $relatedRegex.Replace($content, ($faqHtml + "`n" + '<div class="related-posts">'), 1)
+        } elseif ($content.Contains('</article>')) {
+            $content = $content.Replace('</article>', ($faqHtml + "`n</article>"))
+        } else {
+            $content = $content.Replace('</main>', ($faqHtml + "`n</main>"))
+        }
+        
+        # Add FAQPage schema
+        if (-not $content.Contains('FAQPage')) {
+            $content = $content.Replace('</head>', ($faqSchema + "`n</head>"))
+        }
+        
+        [System.IO.File]::WriteAllText($fp, $content)
+        Write-Output "  Injected FAQ: post-$num.html"
+    }
+}
+
+# === FINAL AUDIT ===
+Write-Output "`n=== FINAL AUDIT ==="
+$issues = 0
+
+$allFiles = @()
+$allFiles += Get-ChildItem "$root\tools\*.html"
+$allFiles += Get-ChildItem "$root\blog\*.html"
+@("about.html","contact.html","privacy-policy.html","terms-of-service.html","404.html") | ForEach-Object {
+    $fp = "$root\$_"
+    if (Test-Path $fp) { $allFiles += Get-Item $fp }
+}
+
+foreach ($f in $allFiles) {
+    $c = [System.IO.File]::ReadAllText($f.FullName)
+    $problems = @()
+    if ($c -notmatch 'class="dot"') { $problems += "NO_DOTS" }
+    if ($c -notmatch 'mega-view-all') { $problems += "NO_VIEW_ALL" }
+    if ($c -notmatch 'search-btn') { $problems += "NO_SEARCH_BTN" }
+    if ($c -notmatch 'logo-text') { $problems += "NO_TEXT_LOGO" }
+    if ($problems.Count -gt 0) {
+        Write-Output "  FAIL: $($f.Name) - $($problems -join ', ')"
+        $issues++
+    }
+}
+
+# Blog link check
+$blogBroken = 0
+Get-ChildItem "$root\blog\*.html" | ForEach-Object {
+    $c = [System.IO.File]::ReadAllText($_.FullName)
+    if ($c -match 'mega-dropdown' -and $c -match 'href="mp4-converter\.html"') {
+        Write-Output "  FAIL: $($_.Name) - RELATIVE_LINKS"
+        $blogBroken++
+    }
+}
+
+# Blog FAQ check
+$blogNoFaq = 0
+for ($i = 1; $i -le 22; $i++) {
+    $num = $i.ToString("00")
+    $fp = "$root\blog\post-$num.html"
+    if (Test-Path $fp) {
+        $c = [System.IO.File]::ReadAllText($fp)
+        if ($c -notmatch 'faq-item') {
+            Write-Output "  FAIL: post-$num.html - NO_FAQ"
+            $blogNoFaq++
+        }
+    }
+}
+
+$total = $issues + $blogBroken + $blogNoFaq
+if ($total -eq 0) {
+    Write-Output "`n*** ALL PAGES PASS AUDIT ***"
+} else {
+    Write-Output "`nTotal issues: $total (header/footer: $issues, broken links: $blogBroken, missing FAQ: $blogNoFaq)"
+}
+Write-Output "Done!"
