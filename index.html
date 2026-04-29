@@ -4,20 +4,21 @@
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toolzspan — All-in-One Free Online Tools</title>
-  <meta name="description" content="Free online PDF tools and utilities. Compress, merge, split PDFs, convert images, generate QR codes and more — no sign-up required.">
+  <title>Toolzspan — 49 Free Online Tools | Convert, Compress & More</title>
+  <meta name="description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 49 tools, no sign-up required. Fast, secure, works on any device.">
   <link rel="canonical" href="https://toolzspan.site/">
-  <meta property="og:title" content="Toolzspan — All-in-One Free Online Tools">
-  <meta property="og:description" content="Free online PDF tools and utilities. Compress, merge, split PDFs, convert images, generate QR codes and more — no sign-up required.">
+  <meta property="og:title" content="Toolzspan — 49 Free Online Tools | Convert, Compress & More">
+  <meta property="og:description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 49 tools, no sign-up required.">
   <meta property="og:url" content="https://toolzspan.site/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta property="og:image" content="https://toolzspan.site/images/og-home.png">
+  <meta property="og:site_name" content="Toolzspan">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Toolzspan — All-in-One Free Online Tools">
-  <meta name="twitter:description" content="Free online PDF tools and utilities. Compress, merge, split PDFs, convert images, generate QR codes and more — no sign-up required.">
+  <meta name="twitter:title" content="Toolzspan — 49 Free Online Tools | Convert, Compress & More">
+  <meta name="twitter:description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 49 tools, no sign-up required.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
@@ -27,7 +28,7 @@
     "@type": "WebSite",
     "name": "Toolzspan",
     "url": "https://toolzspan.site/",
-    "description": "All-in-One Free Online Tools — PDF tools, image tools and more.",
+    "description": "49 Free Online Tools — Convert, Compress & More. PDF, video, audio, image tools with no sign-up required.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://toolzspan.site/?q={search_term_string}",
@@ -42,225 +43,273 @@
     "name": "Toolzspan",
     "url": "https://toolzspan.site/",
     "logo": "https://toolzspan.site/toolzspan-logo-v2.svg",
-    "description": "Free online PDF and utility tools — no sign-up required."
+    "description": "All-in-One Free Online Tools — PDF, video, image, audio tools with no sign-up required."
   }
   </script>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Topbar -->
+  <div class="topbar">
+    🎉 All tools are <span>100% free</span> — No sign-up required. Works on any device.
+  </div>
+
+  <!-- Header with Mega-Menu -->
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="header-logo" aria-label="Toolzspan Home">
-        <img src="toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager">
+        <img src="toolzspan-logo-v2.svg" alt="Toolzspan — All-in-One Free Online Tools" width="180" height="45" loading="eager">
+        <span class="logo-tagline">49 Free Online Tools</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
         <span></span><span></span><span></span>
       </button>
       <nav class="nav-menu" id="navMenu">
-        <a href="/">Home</a>
-        <a href="/tools/pdf-compressor.html">Tools</a>
-        <a href="/blog/">Blog</a>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
+
+        <!-- CONVERT Tab -->
+        <div class="nav-tab" id="navConvert">Convert <span class="arrow">▼</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video & Audio</div>
+              <a href="/tools/mp4-converter.html"><span class="dot"></span>MP4 Converter</a>
+              <a href="/tools/mp3-converter.html"><span class="dot"></span>MP3 Converter</a>
+              <a href="/tools/mp4-to-mp3.html"><span class="dot"></span>MP4 to MP3</a>
+              <a href="/tools/mp3-to-mp4.html"><span class="dot"></span>MP3 to MP4</a>
+              <a href="/tools/avi-to-mp4.html"><span class="dot"></span>AVI to MP4</a>
+              <a href="/tools/mov-to-mp4.html"><span class="dot"></span>MOV to MP4</a>
+              <a href="/tools/webm-to-mp4.html"><span class="dot"></span>WebM to MP4</a>
+              <a href="/tools/wav-to-mp3.html"><span class="dot"></span>WAV to MP3</a>
+              <a href="/tools/ogg-to-mp3.html"><span class="dot"></span>OGG to MP3</a>
+              <a href="/tools/all-tools.html#video-audio" class="mega-view-all">→ View All Video & Audio</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="/tools/image-to-pdf.html"><span class="dot"></span>Image to PDF</a>
+              <a href="/tools/pdf-to-image.html"><span class="dot"></span>PDF to Image</a>
+              <a href="/tools/jpg-to-png.html"><span class="dot"></span>JPG to PNG</a>
+              <a href="/tools/png-to-jpg.html"><span class="dot"></span>PNG to JPG</a>
+              <a href="/tools/webp-to-jpg.html"><span class="dot"></span>WEBP to JPG</a>
+              <a href="/tools/webp-to-png.html"><span class="dot"></span>WEBP to PNG</a>
+              <a href="/tools/jpg-to-webp.html"><span class="dot"></span>JPG to WEBP</a>
+              <a href="/tools/png-to-webp.html"><span class="dot"></span>PNG to WEBP</a>
+              <a href="/tools/heic-to-jpg.html"><span class="dot"></span>HEIC to JPG</a>
+              <a href="/tools/all-tools.html#image" class="mega-view-all">→ View All Image Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF & Documents</div>
+              <a href="/tools/pdf-to-word.html"><span class="dot"></span>PDF to Word</a>
+              <a href="/tools/word-to-pdf.html"><span class="dot"></span>Word to PDF</a>
+              <a href="/tools/powerpoint-to-pdf.html"><span class="dot"></span>PowerPoint to PDF</a>
+              <a href="/tools/excel-to-pdf.html"><span class="dot"></span>Excel to PDF</a>
+              <a href="/tools/pdf-editor.html"><span class="dot"></span>PDF Editor</a>
+              <a href="/tools/all-tools.html#pdf" class="mega-view-all">→ View All PDF & Docs</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPRESS Tab -->
+        <div class="nav-tab" id="navCompress">Compress <span class="arrow">▼</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video & Audio</div>
+              <a href="/tools/video-compressor.html"><span class="dot"></span>Video Compressor</a>
+              <a href="/tools/compress-mp4.html"><span class="dot"></span>Compress MP4</a>
+              <a href="/tools/audio-compressor.html"><span class="dot"></span>Audio Compressor</a>
+              <a href="/tools/compress-mp3.html"><span class="dot"></span>Compress MP3</a>
+              <a href="/tools/all-tools.html#compress" class="mega-view-all">→ View All Compressors</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="/tools/image-compressor.html"><span class="dot"></span>Image Compressor</a>
+              <a href="/tools/gif-compressor.html"><span class="dot"></span>GIF Compressor</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF</div>
+              <a href="/tools/pdf-compressor.html"><span class="dot"></span>PDF Compressor</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOLS Tab -->
+        <div class="nav-tab" id="navTools">Tools <span class="arrow">▼</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF Tools</div>
+              <a href="/tools/pdf-merger.html"><span class="dot"></span>PDF Merger</a>
+              <a href="/tools/pdf-splitter.html"><span class="dot"></span>PDF Splitter</a>
+              <a href="/tools/pdf-page-rotator.html"><span class="dot"></span>PDF Page Rotator</a>
+              <a href="/tools/pdf-page-remover.html"><span class="dot"></span>PDF Page Remover</a>
+              <a href="/tools/add-watermark-pdf.html"><span class="dot"></span>Add Watermark</a>
+              <a href="/tools/add-password-pdf.html"><span class="dot"></span>Add Password</a>
+              <a href="/tools/remove-password-pdf.html"><span class="dot"></span>Remove Password</a>
+              <a href="/tools/sign-pdf.html"><span class="dot"></span>Sign PDF</a>
+              <a href="/tools/ocr-pdf.html"><span class="dot"></span>OCR PDF</a>
+              <a href="/tools/scan-image.html"><span class="dot"></span>Scan Image</a>
+              <a href="/tools/all-tools.html#pdf-tools" class="mega-view-all">→ View All PDF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">GIF Tools</div>
+              <a href="/tools/gif-maker.html"><span class="dot"></span>GIF Maker</a>
+              <a href="/tools/gif-converter.html"><span class="dot"></span>GIF Converter</a>
+              <a href="/tools/all-tools.html#gif" class="mega-view-all">→ View All GIF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">General Tools</div>
+              <a href="/tools/qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
+              <a href="/tools/word-counter.html"><span class="dot"></span>Word Counter</a>
+              <a href="/tools/color-picker.html"><span class="dot"></span>Color Picker</a>
+              <a href="/tools/units-converter.html"><span class="dot"></span>Units Converter</a>
+              <a href="/tools/time-converter.html"><span class="dot"></span>Time Converter</a>
+              <a href="/tools/all-tools.html#general" class="mega-view-all">→ View All General Tools</a>
+            </div>
+          </div>
+        </div>
+
       </nav>
+      <div class="nav-right">
+        <div class="search-btn">🔍</div>
+      </div>
     </div>
   </header>
 
   <main>
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero">
-      <div class="container">
-        <h1>All-in-One Free Online Tools</h1>
-        <p>Compress, merge, split PDFs, convert images, generate QR codes and more — all free, all in your browser.</p>
-        <span class="hero-badge">✨ No sign-up required</span>
+      <div class="hero-badge">✦ 49 Free Tools — No Sign-Up</div>
+      <h1>All-in-One Free<br><span class="accent">Online Tools</span></h1>
+      <div class="hero-tagline">49 Free Online Tools — Convert, Compress & More</div>
+      <p>Convert, compress, and manage your files — PDF, video, audio, images and more. Fast, free, and 100% private.</p>
+      <div class="hero-search">
+        <input type="text" placeholder="Search tools — e.g. compress PDF, MP4 to MP3..." id="heroSearch">
+        <button id="heroSearchBtn">Search</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">49</span>
+          <span class="label">Free Tools</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">100%</span>
+          <span class="label">Free Forever</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">0</span>
+          <span class="label">Sign-Up Needed</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">5</span>
+          <span class="label">Categories</span>
+        </div>
       </div>
     </section>
 
     <!-- Ad Slot 1 -->
     <div class="ad-slot" id="ad-home-top"><!-- AdSense ad unit --></div>
 
-    <!-- PDF Tools Section -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-title"><span>PDF Tools</span></h2>
-        <div class="tools-grid">
+    <!-- Popular Tools -->
+    <section class="popular">
+      <div class="section-header">
+        <h2 class="section-title">Popular <span>Tools</span></h2>
+        <a class="see-all" href="/tools/all-tools.html">See all tools →</a>
+      </div>
+      <div class="popular-tools-grid">
+        <a class="popular-tool-tile" href="tools/pdf-compressor.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#1E6FFF22,#1E6FFF44);">📄</div>
+          <h3>PDF Compressor</h3>
+          <p>Reduce PDF size fast</p>
+        </a>
+        <a class="popular-tool-tile" href="tools/mp4-to-mp3.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#00C6A722,#00C6A744);">🎬</div>
+          <h3>MP4 to MP3</h3>
+          <p>Extract audio from video</p>
+        </a>
+        <a class="popular-tool-tile" href="tools/image-compressor.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#FF6B3522,#FF6B3544);">🗜️</div>
+          <h3>Image Compressor</h3>
+          <p>Compress images online</p>
+        </a>
+        <a class="popular-tool-tile" href="tools/pdf-merger.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#FFD93D33,#FFD93D55);">🔗</div>
+          <h3>PDF Merger</h3>
+          <p>Combine multiple PDFs</p>
+        </a>
+        <a class="popular-tool-tile" href="tools/heic-to-jpg.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#7C3AED22,#7C3AED44);">📱</div>
+          <h3>HEIC to JPG</h3>
+          <p>Open iPhone photos anywhere</p>
+        </a>
+        <a class="popular-tool-tile" href="tools/qr-code-generator.html">
+          <div class="tile-icon" style="background:linear-gradient(135deg,#00C6A722,#1E6FFF33);">📲</div>
+          <h3>QR Code Generator</h3>
+          <p>Generate QR codes for any URL</p>
+        </a>
+      </div>
+    </section>
 
-          <a href="tools/pdf-compressor.html" class="tool-card" id="tool-pdf-compressor">
-            <div class="tool-card-icon">📦</div>
-            <h3>PDF Compressor</h3>
-            <p>Reduce PDF file size without losing quality</p>
-          </a>
-
-          <a href="tools/pdf-merger.html" class="tool-card" id="tool-pdf-merger">
-            <div class="tool-card-icon">🔗</div>
-            <h3>PDF Merger</h3>
-            <p>Combine multiple PDFs into one file</p>
-          </a>
-
-          <a href="tools/pdf-splitter.html" class="tool-card" id="tool-pdf-splitter">
-            <div class="tool-card-icon">✂️</div>
-            <h3>PDF Splitter</h3>
-            <p>Split a PDF into separate pages or sections</p>
-          </a>
-
-          <a href="tools/pdf-to-image.html" class="tool-card" id="tool-pdf-to-image">
-            <div class="tool-card-icon">🖼️</div>
-            <h3>PDF to Image</h3>
-            <p>Convert PDF pages to JPG or PNG images</p>
-          </a>
-
-          <a href="tools/image-to-pdf.html" class="tool-card" id="tool-image-to-pdf">
-            <div class="tool-card-icon">📄</div>
-            <h3>Image to PDF</h3>
-            <p>Convert images into a PDF document</p>
-          </a>
-
-          <a href="tools/pdf-page-rotator.html" class="tool-card" id="tool-pdf-page-rotator">
-            <div class="tool-card-icon">🔄</div>
-            <h3>PDF Page Rotator</h3>
-            <p>Rotate individual pages in your PDF</p>
-          </a>
-
-          <a href="tools/pdf-page-remover.html" class="tool-card" id="tool-pdf-page-remover">
-            <div class="tool-card-icon">🗑️</div>
-            <h3>PDF Page Remover</h3>
-            <p>Remove unwanted pages from a PDF</p>
-          </a>
-
-          <a href="tools/pdf-editor.html" class="tool-card" id="tool-pdf-editor">
-            <div class="tool-card-icon">✏️</div>
-            <h3>PDF Editor</h3>
-            <p>Edit text and elements in your PDF</p>
-          </a>
-
-          <a href="tools/add-watermark-to-pdf.html" class="tool-card" id="tool-add-watermark">
-            <div class="tool-card-icon">💧</div>
-            <h3>Add Watermark to PDF</h3>
-            <p>Add a custom watermark to your PDF pages</p>
-          </a>
-
-          <a href="tools/remove-watermark-from-pdf.html" class="tool-card" id="tool-remove-watermark">
-            <div class="tool-card-icon">🚫</div>
-            <h3>Remove Watermark from PDF</h3>
-            <p>Remove watermarks from PDF documents</p>
-          </a>
-
-          <a href="tools/add-password-to-pdf.html" class="tool-card" id="tool-add-password">
-            <div class="tool-card-icon">🔒</div>
-            <h3>Add Password to PDF</h3>
-            <p>Protect your PDF with a password</p>
-          </a>
-
-          <a href="tools/remove-password-from-pdf.html" class="tool-card" id="tool-remove-password">
-            <div class="tool-card-icon">🔓</div>
-            <h3>Remove Password from PDF</h3>
-            <p>Unlock a password-protected PDF</p>
-          </a>
-
-          <a href="tools/sign-pdf.html" class="tool-card" id="tool-sign-pdf">
-            <div class="tool-card-icon">🖊️</div>
-            <h3>Sign PDF</h3>
-            <p>Add your signature to any PDF document</p>
-          </a>
-
-          <a href="tools/ocr-pdf.html" class="tool-card" id="tool-ocr-pdf">
-            <div class="tool-card-icon">🔍</div>
-            <h3>OCR PDF</h3>
-            <p>Extract text from scanned PDFs using OCR</p>
-          </a>
-
-          <a href="tools/scan-image.html" class="tool-card" id="tool-scan-image">
-            <div class="tool-card-icon">📷</div>
-            <h3>Scan Image</h3>
-            <p>Convert scanned images into editable text</p>
-          </a>
-
-          <a href="tools/pdf-to-word.html" class="tool-card" id="tool-pdf-to-word">
-            <div class="tool-card-icon">📝</div>
-            <h3>PDF to Word</h3>
-            <p>Convert PDF files to editable Word documents</p>
-          </a>
-
-          <a href="tools/word-to-pdf.html" class="tool-card" id="tool-word-to-pdf">
-            <div class="tool-card-icon">📃</div>
-            <h3>Word to PDF</h3>
-            <p>Convert Word documents to PDF format</p>
-          </a>
-
-          <a href="tools/pptx-to-pdf.html" class="tool-card" id="tool-pptx-to-pdf">
-            <div class="tool-card-icon">📊</div>
-            <h3>PowerPoint to PDF</h3>
-            <p>Convert PowerPoint presentations to PDF</p>
-          </a>
-
-          <a href="tools/excel-to-pdf.html" class="tool-card" id="tool-excel-to-pdf">
-            <div class="tool-card-icon">📈</div>
-            <h3>Excel to PDF</h3>
-            <p>Convert Excel spreadsheets to PDF format</p>
-          </a>
-
+    <!-- How It Works -->
+    <section class="how-it-works">
+      <div class="how-inner">
+        <h2 class="section-title">How It <span>Works</span></h2>
+        <p>Process any file in 3 simple steps — no account needed</p>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="how-step-num">1</div>
+            <h3>Upload Your File</h3>
+            <p>Drag and drop or click to select your file. Works with PDF, video, audio, and images.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">2</div>
+            <h3>Choose Your Tool</h3>
+            <p>Select from 49 free tools. Adjust settings if needed — or just use the smart defaults.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">3</div>
+            <h3>Download Result</h3>
+            <p>Your file is ready in seconds. Download it instantly. Your files stay private and secure.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Ad Slot 2 (between sections) -->
-    <div class="ad-slot" id="ad-home-mid"><!-- AdSense ad unit --></div>
-
-    <!-- Other Tools Section -->
-    <section class="section" style="background: var(--off-white);">
-      <div class="container">
-        <h2 class="section-title"><span>Other Tools</span></h2>
-        <div class="tools-grid">
-
-          <a href="tools/image-compressor.html" class="tool-card" id="tool-image-compressor">
-            <div class="tool-card-icon">🗜️</div>
-            <h3>Image Compressor</h3>
-            <p>Reduce image file size without losing quality</p>
-          </a>
-
-          <a href="tools/image-resizer.html" class="tool-card" id="tool-image-resizer">
-            <div class="tool-card-icon">📐</div>
-            <h3>Image Resizer</h3>
-            <p>Resize images to any custom dimension</p>
-          </a>
-
-          <a href="tools/qr-code-generator.html" class="tool-card" id="tool-qr-code">
-            <div class="tool-card-icon">📱</div>
-            <h3>QR Code Generator</h3>
-            <p>Generate QR codes for any URL or text</p>
-          </a>
-
-          <a href="tools/word-counter.html" class="tool-card" id="tool-word-counter">
-            <div class="tool-card-icon">🔢</div>
-            <h3>Word Counter</h3>
-            <p>Count words, characters and sentences instantly</p>
-          </a>
-
-          <a href="tools/color-picker.html" class="tool-card" id="tool-color-picker">
-            <div class="tool-card-icon">🎨</div>
-            <h3>Color Picker</h3>
-            <p>Pick and convert colors in HEX, RGB, and HSL</p>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Ad Slot 3 -->
+    <!-- Ad Slot 2 -->
     <div class="ad-slot" id="ad-home-bottom"><!-- AdSense ad unit --></div>
   </main>
 
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-links">
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/privacy-policy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">
+            <span class="toolz" style="color:#fff;">Toolz</span><span class="span">span</span>
+          </span>
+          <p>All-in-one free online tools for PDF, video, audio, and image processing. No sign-up. No limits.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Company</div>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Resources</div>
+          <a href="/blog/">Blog</a>
+          <a href="/tools/all-tools.html">All Tools</a>
+          <a href="/sitemap.xml">Sitemap</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Legal</div>
+          <a href="/privacy-policy.html">Privacy Policy</a>
+          <a href="/terms-of-service.html">Terms of Service</a>
+        </div>
       </div>
-      <p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p>
+      <div class="footer-bottom">
+        <span class="copy">© 2026 Toolzspan. All rights reserved.</span>
+        <div class="footer-badges">
+          <span class="badge">🔒 Secure</span>
+          <span class="badge">⚡ Fast</span>
+          <span class="badge">✅ Free</span>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -269,6 +318,18 @@
     document.getElementById('menuToggle').addEventListener('click', function() {
       document.getElementById('navMenu').classList.toggle('active');
     });
+
+    // Mobile accordion for mega-menu tabs
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll('.nav-tab').forEach(function(tab) {
+        tab.addEventListener('click', function(e) {
+          if (e.target.closest('.mega-dropdown')) return;
+          e.preventDefault();
+          this.classList.toggle('accordion-open');
+        });
+      });
+    }
   </script>
+  <script src="js/search.js"></script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirect old watermark URL to 404
+[[redirects]]
+  from = "/tools/remove-watermark-from-pdf.html"
+  to = "/404.html"
+  status = 410
+
+# Redirect old pptx URL to new name
+[[redirects]]
+  from = "/tools/pptx-to-pdf.html"
+  to = "/tools/powerpoint-to-pdf.html"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

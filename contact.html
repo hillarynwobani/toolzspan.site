@@ -112,10 +112,12 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="toolzspan-logo-v2.svg" alt="Toolzspan logo" width="180" height="45" loading="eager"></a>
+      <a href="/" class="header-logo" aria-label="Toolzspan Home"><img src="toolzspan-logo-v2.svg" alt="Toolzspan — All-in-One Free Online Tools" width="180" height="45" loading="eager"><span class="header-tagline">49 FREE ONLINE TOOLS — CONVERT, COMPRESS & MORE</span></a>
       <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle"><span></span><span></span><span></span></button>
       <nav class="nav-menu" id="navMenu">
-        <a href="/">Home</a><a href="/tools/pdf-compressor.html">Tools</a><a href="/blog/">Blog</a><a href="/about.html">About</a><a href="/contact.html">Contact</a>
+        <div class="nav-tab">Convert<div class="mega-dropdown"><div class="mega-col"><div class="mega-col-heading">Video & Audio</div><a href="tools/mp4-converter.html">MP4 Converter</a><a href="tools/mp3-converter.html">MP3 Converter</a><a href="tools/mp4-to-mp3.html">MP4 to MP3</a><a href="tools/mp3-to-mp4.html">MP3 to MP4</a><a href="tools/avi-to-mp4.html">AVI to MP4</a><a href="tools/mov-to-mp4.html">MOV to MP4</a><a href="tools/webm-to-mp4.html">WebM to MP4</a><a href="tools/wav-to-mp3.html">WAV to MP3</a><a href="tools/ogg-to-mp3.html">OGG to MP3</a></div><div class="mega-col"><div class="mega-col-heading">Image</div><a href="tools/image-to-pdf.html">Image to PDF</a><a href="tools/pdf-to-image.html">PDF to Image</a><a href="tools/jpg-to-png.html">JPG to PNG</a><a href="tools/png-to-jpg.html">PNG to JPG</a><a href="tools/webp-to-jpg.html">WEBP to JPG</a><a href="tools/webp-to-png.html">WEBP to PNG</a><a href="tools/jpg-to-webp.html">JPG to WEBP</a><a href="tools/png-to-webp.html">PNG to WEBP</a><a href="tools/heic-to-jpg.html">HEIC to JPG</a></div><div class="mega-col"><div class="mega-col-heading">PDF & Documents</div><a href="tools/pdf-to-word.html">PDF to Word</a><a href="tools/word-to-pdf.html">Word to PDF</a><a href="tools/powerpoint-to-pdf.html">PowerPoint to PDF</a><a href="tools/excel-to-pdf.html">Excel to PDF</a><a href="tools/pdf-editor.html">PDF Editor</a></div></div></div>
+        <div class="nav-tab">Compress<div class="mega-dropdown"><div class="mega-col"><div class="mega-col-heading">Video & Audio</div><a href="tools/video-compressor.html">Video Compressor</a><a href="tools/compress-mp4.html">Compress MP4</a><a href="tools/audio-compressor.html">Audio Compressor</a><a href="tools/compress-mp3.html">Compress MP3</a></div><div class="mega-col"><div class="mega-col-heading">Image</div><a href="tools/image-compressor.html">Image Compressor</a><a href="tools/gif-compressor.html">GIF Compressor</a></div><div class="mega-col"><div class="mega-col-heading">PDF</div><a href="tools/pdf-compressor.html">PDF Compressor</a></div></div></div>
+        <div class="nav-tab">Tools<div class="mega-dropdown"><div class="mega-col"><div class="mega-col-heading">PDF Tools</div><a href="tools/pdf-merger.html">PDF Merger</a><a href="tools/pdf-splitter.html">PDF Splitter</a><a href="tools/pdf-page-rotator.html">PDF Page Rotator</a><a href="tools/pdf-page-remover.html">PDF Page Remover</a><a href="tools/add-watermark-pdf.html">Add Watermark</a><a href="tools/add-password-pdf.html">Add Password</a><a href="tools/remove-password-pdf.html">Remove Password</a><a href="tools/sign-pdf.html">Sign PDF</a><a href="tools/ocr-pdf.html">OCR PDF</a><a href="tools/scan-image.html">Scan Image</a></div><div class="mega-col"><div class="mega-col-heading">GIF Tools</div><a href="tools/gif-maker.html">GIF Maker</a><a href="tools/gif-converter.html">GIF Converter</a></div><div class="mega-col"><div class="mega-col-heading">General</div><a href="tools/qr-code-generator.html">QR Code Generator</a><a href="tools/word-counter.html">Word Counter</a><a href="tools/color-picker.html">Color Picker</a><a href="tools/units-converter.html">Units Converter</a><a href="tools/time-converter.html">Time Converter</a></div></div></div>
       </nav>
     </div>
   </header>
@@ -172,132 +174,18 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-links">
-        <a href="/about.html">About</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a>
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="toolzspan-logo-v2.svg" alt="Toolzspan" width="160" height="40"><p>49 free online tools to convert, compress, and edit your files. No sign-up required.</p></div>
+        <div class="footer-col"><div class="footer-col-heading">Company</div><a href="/about.html">About</a><a href="/contact.html">Contact</a></div>
+        <div class="footer-col"><div class="footer-col-heading">Resources</div><a href="/blog/">Blog</a><a href="/tools/all-tools.html">All Tools</a><a href="/sitemap.xml">Sitemap</a></div>
+        <div class="footer-col"><div class="footer-col-heading">Legal</div><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></div>
       </div>
-      <p class="footer-copy">&copy; 2026 Toolzspan. All rights reserved.</p>
+      <div class="footer-bottom"><p>&copy; 2026 Toolzspan. All rights reserved.</p></div>
     </div>
   </footer>
 
-  <script>
-    // Mobile menu toggle
-    document.getElementById('menuToggle').addEventListener('click', function() {
-      document.getElementById('navMenu').classList.toggle('active');
-    });
-
-    // Contact form handling with Web3Forms
-    (function() {
-      var form = document.getElementById('contactForm');
-      var submitBtn = document.getElementById('contactSubmit');
-      var successEl = document.getElementById('contactSuccess');
-      var errorEl = document.getElementById('contactError');
-      var errorText = document.getElementById('contactErrorText');
-      var nameInput = document.getElementById('contact-name');
-      var emailInput = document.getElementById('contact-email');
-      var messageInput = document.getElementById('contact-message');
-      var nameError = document.getElementById('nameError');
-      var emailError = document.getElementById('emailError');
-      var messageError = document.getElementById('messageError');
-
-      // Simple email regex
-      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      // Clear field error on input
-      [nameInput, emailInput, messageInput].forEach(function(input) {
-        input.addEventListener('input', function() {
-          this.classList.remove('input-error');
-          var errorDiv = document.getElementById(this.id.replace('contact-', '') + 'Error');
-          if (errorDiv) errorDiv.classList.remove('active');
-        });
-      });
-
-      function validateForm() {
-        var valid = true;
-
-        if (!nameInput.value.trim()) {
-          nameInput.classList.add('input-error');
-          nameError.classList.add('active');
-          valid = false;
-        }
-
-        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
-          emailInput.classList.add('input-error');
-          emailError.classList.add('active');
-          valid = false;
-        }
-
-        if (!messageInput.value.trim()) {
-          messageInput.classList.add('input-error');
-          messageError.classList.add('active');
-          valid = false;
-        }
-
-        return valid;
-      }
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Reset messages
-        successEl.classList.remove('active');
-        errorEl.classList.remove('active');
-
-        // Validate
-        if (!validateForm()) return;
-
-        // Set loading state
-        submitBtn.classList.add('btn-loading');
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-
-        // Collect form data
-        var formData = new FormData(form);
-        var jsonData = {};
-        formData.forEach(function(value, key) {
-          jsonData[key] = value;
-        });
-
-        // Submit to Web3Forms API
-        fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(jsonData)
-        })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          // Reset button
-          submitBtn.classList.remove('btn-loading');
-          submitBtn.textContent = 'Send Message';
-          submitBtn.disabled = false;
-
-          if (data.success) {
-            // Show success, hide form
-            form.style.display = 'none';
-            successEl.classList.add('active');
-            form.reset();
-          } else {
-            // Show error
-            errorText.textContent = data.message || 'Your message could not be sent. Please try again.';
-            errorEl.classList.add('active');
-          }
-        })
-        .catch(function(err) {
-          // Reset button
-          submitBtn.classList.remove('btn-loading');
-          submitBtn.textContent = 'Send Message';
-          submitBtn.disabled = false;
-
-          // Show error
-          errorText.textContent = 'A network error occurred. Please check your connection and try again.';
-          errorEl.classList.add('active');
-        });
-      });
-    })();
-  </script>
+  
+  <script src="js/main.js"></script>
+  <script src="js/search.js"></script>
 </body>
 </html>
