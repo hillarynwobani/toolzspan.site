@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trim Audio Online — Free Audio Cutter Tool | Toolzspan</title>
+  <meta name="description" content="Trim and cut audio files online for free. Visual waveform editor with drag handles. Supports MP3, WAV, OGG, M4A, AAC. No sign-up required.">
+  <link rel="canonical" href="https://toolzspan.site/tools/trim-audio.html">
+  <meta property="og:title" content="Trim Audio Online — Free Audio Cutter Tool | Toolzspan"><meta property="og:description" content="Trim and cut audio files online for free. Visual waveform editor with drag handles. Supports MP3, WAV, OGG, M4A, AAC. No sign-up required."><meta property="og:url" content="https://toolzspan.site/tools/trim-audio.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Toolzspan">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Trim Audio Online — Free Audio Cutter Tool | Toolzspan"><meta name="twitter:description" content="Trim and cut audio files online for free. Visual waveform editor with drag handles.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Trim Audio","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Trim and cut audio files online for free with a visual waveform editor. Supports MP3, WAV, OGG, M4A, AAC.","url":"https://toolzspan.site/tools/trim-audio.html"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"Trim Audio","item":"https://toolzspan.site/tools/trim-audio.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What audio formats can I trim?","acceptedAnswer":{"@type":"Answer","text":"You can trim MP3, WAV, OGG, M4A, and AAC files directly in your browser."}},{"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Yes, the maximum file size is 50MB. This is more than enough for most audio files."}},{"@type":"Question","name":"Will trimming reduce the audio quality?","acceptedAnswer":{"@type":"Answer","text":"No. The tool decodes the audio and re-encodes the selected region without additional compression, preserving the original quality."}},{"@type":"Question","name":"Is my audio file uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens entirely in your browser using the Web Audio API. Your file never leaves your device."}}]}</script>
+  <style>
+    .waveform-wrap{background:var(--light-bg);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:20px;margin:20px 0;position:relative;min-height:160px;display:none;}
+    .waveform-wrap.active{display:block;}
+    #waveform{width:100%;min-height:128px;}
+    .trim-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px;}
+    .trim-time{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--deep-navy);}
+    .trim-time label{font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);}
+    .trim-time input{width:80px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:monospace;text-align:center;}
+    .trim-duration{font-size:13px;color:var(--muted);margin-left:auto;}
+    .play-btn{width:40px;height:40px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--primary-blue),var(--accent-teal));color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;}
+    .play-btn:hover{transform:scale(1.1);}
+    @media(max-width:480px){.trim-controls{flex-direction:column;align-items:stretch;}.trim-duration{margin-left:0;text-align:center;}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="header-logo" aria-label="Toolzspan Home">
+        <img src="../toolzspan-logo-v2.svg" alt="Toolzspan — All-in-One Free Online Tools" width="180" height="45" loading="eager">
+        <span class="logo-tagline">50 Free Online Tools</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <div class="nav-tab" id="navConvert">Convert <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video &amp; Audio</div>
+              <a href="mp4-converter.html"><span class="dot"></span>MP4 Converter</a>
+              <a href="mp3-converter.html"><span class="dot"></span>MP3 Converter</a>
+              <a href="mp4-to-mp3.html"><span class="dot"></span>MP4 to MP3</a>
+              <a href="mp3-to-mp4.html"><span class="dot"></span>MP3 to MP4</a>
+              <a href="avi-to-mp4.html"><span class="dot"></span>AVI to MP4</a>
+              <a href="mov-to-mp4.html"><span class="dot"></span>MOV to MP4</a>
+              <a href="webm-to-mp4.html"><span class="dot"></span>WebM to MP4</a>
+              <a href="wav-to-mp3.html"><span class="dot"></span>WAV to MP3</a>
+              <a href="ogg-to-mp3.html"><span class="dot"></span>OGG to MP3</a>
+              <a href="all-tools.html#video-audio" class="mega-view-all">&rarr; View All Video &amp; Audio</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="image-to-pdf.html"><span class="dot"></span>Image to PDF</a>
+              <a href="pdf-to-image.html"><span class="dot"></span>PDF to Image</a>
+              <a href="jpg-to-png.html"><span class="dot"></span>JPG to PNG</a>
+              <a href="png-to-jpg.html"><span class="dot"></span>PNG to JPG</a>
+              <a href="webp-to-jpg.html"><span class="dot"></span>WEBP to JPG</a>
+              <a href="webp-to-png.html"><span class="dot"></span>WEBP to PNG</a>
+              <a href="jpg-to-webp.html"><span class="dot"></span>JPG to WEBP</a>
+              <a href="png-to-webp.html"><span class="dot"></span>PNG to WEBP</a>
+              <a href="heic-to-jpg.html"><span class="dot"></span>HEIC to JPG</a>
+              <a href="all-tools.html#image" class="mega-view-all">&rarr; View All Image Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF &amp; Documents</div>
+              <a href="pdf-to-word.html"><span class="dot"></span>PDF to Word</a>
+              <a href="word-to-pdf.html"><span class="dot"></span>Word to PDF</a>
+              <a href="powerpoint-to-pdf.html"><span class="dot"></span>PowerPoint to PDF</a>
+              <a href="excel-to-pdf.html"><span class="dot"></span>Excel to PDF</a>
+              <a href="pdf-editor.html"><span class="dot"></span>PDF Editor</a>
+              <a href="all-tools.html#pdf" class="mega-view-all">&rarr; View All PDF &amp; Docs</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-tab" id="navCompress">Compress <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video &amp; Audio</div>
+              <a href="video-compressor.html"><span class="dot"></span>Video Compressor</a>
+              <a href="compress-mp4.html"><span class="dot"></span>Compress MP4</a>
+              <a href="audio-compressor.html"><span class="dot"></span>Audio Compressor</a>
+              <a href="compress-mp3.html"><span class="dot"></span>Compress MP3</a>
+              <a href="all-tools.html#compress" class="mega-view-all">&rarr; View All Compressors</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="image-compressor.html"><span class="dot"></span>Image Compressor</a>
+              <a href="gif-compressor.html"><span class="dot"></span>GIF Compressor</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF</div>
+              <a href="pdf-compressor.html"><span class="dot"></span>PDF Compressor</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-tab" id="navTools">Tools <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF Tools</div>
+              <a href="pdf-merger.html"><span class="dot"></span>PDF Merger</a>
+              <a href="pdf-splitter.html"><span class="dot"></span>PDF Splitter</a>
+              <a href="pdf-page-rotator.html"><span class="dot"></span>PDF Page Rotator</a>
+              <a href="pdf-page-remover.html"><span class="dot"></span>PDF Page Remover</a>
+              <a href="add-watermark-pdf.html"><span class="dot"></span>Add Watermark</a>
+              <a href="add-password-pdf.html"><span class="dot"></span>Add Password</a>
+              <a href="remove-password-pdf.html"><span class="dot"></span>Remove Password</a>
+              <a href="sign-pdf.html"><span class="dot"></span>Sign PDF</a>
+              <a href="ocr-pdf.html"><span class="dot"></span>OCR PDF</a>
+              <a href="scan-image.html"><span class="dot"></span>Scan Image</a>
+              <a href="all-tools.html#pdf-tools" class="mega-view-all">&rarr; View All PDF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">GIF Tools</div>
+              <a href="gif-maker.html"><span class="dot"></span>GIF Maker</a>
+              <a href="gif-converter.html"><span class="dot"></span>GIF Converter</a>
+              <a href="all-tools.html#gif" class="mega-view-all">&rarr; View All GIF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">General</div>
+              <a href="qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
+              <a href="word-counter.html"><span class="dot"></span>Word Counter</a>
+              <a href="color-picker.html"><span class="dot"></span>Color Picker</a>
+              <a href="units-converter.html"><span class="dot"></span>Units Converter</a>
+              <a href="time-converter.html"><span class="dot"></span>Time Converter</a>
+              <a href="trim-audio.html"><span class="dot"></span>Trim Audio</a>
+              <a href="all-tools.html#general" class="mega-view-all">&rarr; View All General Tools</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <div class="search-btn">&#128269;</div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="all-tools.html#general">Tools</a><span>›</span>Trim Audio</div>
+    <section class="tool-hero"><h1>Trim Audio</h1><p>Cut and trim audio files online for free. Upload your file, drag the handles on the waveform to select the region you want, and download the trimmed clip instantly.</p></section>
+    <div class="ad-slot" id="ad-tool-top"><!-- AdSense --></div>
+    <div class="tool-workspace">
+<div class="upload-area" id="uploadArea"><div class="upload-area-icon">✂️</div>
+<p><strong>Drag and drop your audio file here</strong></p><p>or click to browse · MP3, WAV, OGG, M4A, AAC · Max 50 MB</p>
+<input type="file" id="fileInput" accept=".mp3,.wav,.ogg,.m4a,.aac,.flac"></div>
+<div class="file-warning" id="fileWarning"></div><div class="file-error" id="fileError"></div>
+<div class="file-list" id="fileList"></div>
+
+<div class="waveform-wrap" id="waveformWrap">
+  <div id="waveform"></div>
+  <div class="trim-controls">
+    <button class="play-btn" id="playBtn" title="Play/Pause">▶</button>
+    <div class="trim-time"><label>Start</label><input type="text" id="startTime" value="0:00.0" readonly></div>
+    <div class="trim-time"><label>End</label><input type="text" id="endTime" value="0:00.0" readonly></div>
+    <div class="trim-duration" id="trimDuration">Selected: 0.0s</div>
+  </div>
+</div>
+
+<button class="btn btn-primary btn-block" id="processBtn" disabled>Trim Audio</button>
+<div class="processing-msg" id="processingMsg"><span class="spinner"></span> Trimming your audio... <strong>Please do not close this tab.</strong></div>
+<div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing...</p></div>
+<div class="result-area" id="resultArea"><h3>Done!</h3><p id="resultInfo"></p><button class="btn btn-download" id="downloadBtn">Download Trimmed Audio</button></div>
+<p class="no-signup-note"><strong>No sign-up required.</strong> Your audio is processed entirely in your browser and never uploaded to any server.</p>
+<div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="audio-compressor.html" class="related-tool-link">Audio Compressor</a><a href="mp3-converter.html" class="related-tool-link">MP3 Converter</a><a href="mp4-to-mp3.html" class="related-tool-link">MP4 to MP3</a></div></div></div>
+    <div class="tool-info-section">
+      <h2>How to Use Trim Audio</h2>
+      <ol><li>Click the upload area or drag and drop your audio file (MP3, WAV, OGG, M4A, AAC).</li><li>Wait for the waveform to load — this takes a few seconds depending on file size.</li><li>Drag the highlighted region handles left or right to select the portion you want to keep.</li><li>Click the play button to preview your selection before trimming.</li><li>Click "Trim Audio" to process, then download your trimmed clip.</li></ol>
+      <h2>Why Use Trim Audio?</h2>
+      <ul><li><strong>Create Ringtones</strong> — Cut your favorite section from any song to make a custom ringtone.</li><li><strong>Edit Podcasts</strong> — Remove intros, outros, or awkward pauses from podcast recordings.</li><li><strong>Extract Clips</strong> — Pull out a specific quote, sound effect, or music sample from a longer recording.</li><li><strong>100% Private</strong> — Everything runs in your browser. Your audio never touches a server.</li></ul>
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item"><button class="faq-question">What audio formats can I trim?</button><div class="faq-answer"><p>You can trim MP3, WAV, OGG, M4A, and AAC files directly in your browser.</p></div></div>
+      <div class="faq-item"><button class="faq-question">Is there a file size limit?</button><div class="faq-answer"><p>Yes, the maximum file size is 50 MB. This is more than enough for most audio files, including full-length songs and podcast episodes.</p></div></div>
+      <div class="faq-item"><button class="faq-question">Will trimming reduce the audio quality?</button><div class="faq-answer"><p>No. The tool decodes the audio and re-encodes only the selected region using the Web Audio API, preserving the original quality.</p></div></div>
+      <div class="faq-item"><button class="faq-question">Is my audio file uploaded to a server?</button><div class="faq-answer"><p>No. All processing happens entirely in your browser using the Web Audio API. Your file never leaves your device.</p></div></div>
+    </div>
+    <div class="ad-slot" id="ad-tool-bottom"><!-- AdSense --></div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">
+            <span class="toolz" style="color:#fff;">Toolz</span><span class="span">span</span>
+          </span>
+          <p>All-in-one free online tools for PDF, video, audio, and image processing. No sign-up. No limits.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Company</div>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Resources</div>
+          <a href="/blog/">Blog</a>
+          <a href="/tools/all-tools.html">All Tools</a>
+          <a href="/sitemap.xml">Sitemap</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Legal</div>
+          <a href="/privacy-policy.html">Privacy Policy</a>
+          <a href="/terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="copy">&copy; 2026 Toolzspan. All rights reserved.</span>
+        <div class="footer-badges">
+          <span class="badge">&#128274; Secure</span>
+          <span class="badge">&#9889; Fast</span>
+          <span class="badge">&#9989; Free</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/main.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.min.js"></script>
+  <script>
+(function(){
+  var fi=document.getElementById('fileInput'),ua=document.getElementById('uploadArea'),pb=document.getElementById('processBtn');
+  var pw=document.getElementById('progressWrap'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText');
+  var ra=document.getElementById('resultArea'),ri=document.getElementById('resultInfo'),db=document.getElementById('downloadBtn');
+  var fw=document.getElementById('fileWarning'),fe=document.getElementById('fileError'),pm=document.getElementById('processingMsg');
+  var ww=document.getElementById('waveformWrap'),playBtn=document.getElementById('playBtn');
+  var startEl=document.getElementById('startTime'),endEl=document.getElementById('endTime'),durEl=document.getElementById('trimDuration');
+  var MAX=50,blob=null,fname='',ws=null,region=null,audioBuffer=null;
+
+  function fmt(s){var m=Math.floor(s/60);var sec=(s%60).toFixed(1);return m+':'+('0'+sec).slice(-4);}
+
+  ua.addEventListener('click',function(){fi.click();});
+  ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('drag-over');});
+  ua.addEventListener('dragleave',function(){ua.classList.remove('drag-over');});
+  ua.addEventListener('drop',function(e){e.preventDefault();ua.classList.remove('drag-over');if(e.dataTransfer.files.length){fi.files=e.dataTransfer.files;handleFile(e.dataTransfer.files[0]);}});
+  fi.addEventListener('change',function(){if(this.files.length)handleFile(this.files[0]);});
+
+  function handleFile(f){
+    var mb=f.size/(1024*1024);fname=f.name;
+    if(mb>MAX){fe.textContent='File too large. Maximum size is '+MAX+'MB.';fe.classList.add('active');fw.classList.remove('active');pb.disabled=true;return;}
+    if(mb>MAX*0.75){fw.textContent='Large file — waveform may take a moment to load.';fw.classList.add('active');fe.classList.remove('active');}
+    else{fw.classList.remove('active');fe.classList.remove('active');}
+    ra.classList.remove('active');pb.disabled=true;
+    document.getElementById('fileList').innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+(mb<1?(f.size/1024).toFixed(1)+' KB':mb.toFixed(2)+' MB')+'</span></div>';
+    loadWaveform(f);
+  }
+
+  function loadWaveform(file){
+    ww.classList.add('active');
+    if(ws){ws.destroy();}
+    ws=WaveSurfer.create({container:'#waveform',waveColor:'#a8c4f0',progressColor:'#1E6FFF',cursorColor:'#0A1628',height:128,barWidth:2,barGap:1,barRadius:2,normalize:true});
+    var regionsPlugin=ws.registerPlugin(WaveSurfer.Regions.create());
+    ws.loadBlob(file);
+    ws.on('ready',function(){
+      var dur=ws.getDuration();
+      region=regionsPlugin.addRegion({start:0,end:Math.min(dur,30),color:'rgba(30,111,255,0.15)',drag:true,resize:true});
+      updateTimes(region.start,region.end);
+      pb.disabled=false;
+      region.on('update-end',function(){updateTimes(region.start,region.end);});
+    });
+    ws.on('decode',function(){
+      var actx=ws.getDecodedData();
+      if(actx)audioBuffer=actx;
+    });
+    playBtn.onclick=function(){
+      if(ws.isPlaying()){ws.pause();playBtn.textContent='▶';}
+      else{ws.play(region?region.start:0,region?region.end:undefined);playBtn.textContent='⏸';}
+    };
+    ws.on('pause',function(){playBtn.textContent='▶';});
+  }
+
+  function updateTimes(s,e){startEl.value=fmt(s);endEl.value=fmt(e);durEl.textContent='Selected: '+(e-s).toFixed(1)+'s';}
+
+  pb.addEventListener('click',function(){
+    if(!audioBuffer||!region)return;
+    pb.disabled=true;pm.classList.add('active');pw.classList.add('active');pf.style.width='20%';pt.textContent='Trimming...';
+    var sr=audioBuffer.sampleRate,ch=audioBuffer.numberOfChannels;
+    var startSample=Math.floor(region.start*sr),endSample=Math.floor(region.end*sr);
+    var len=endSample-startSample;
+    if(len<=0){pt.textContent='Invalid selection.';pm.classList.remove('active');pb.disabled=false;return;}
+    var offCtx=new OfflineAudioContext(ch,len,sr);
+    for(var c=0;c<ch;c++){var src=audioBuffer.getChannelData(c);var dst=offCtx.createBuffer(1,len,sr).getChannelData(0);for(var i=0;i<len;i++){dst[i]=src[startSample+i];}}
+    // Build final buffer
+    var outBuf=offCtx.createBuffer(ch,len,sr);
+    for(var c=0;c<ch;c++){var src=audioBuffer.getChannelData(c);var dst=outBuf.getChannelData(c);for(var i=0;i<len;i++){dst[i]=src[startSample+i];}}
+    pf.style.width='60%';pt.textContent='Encoding WAV...';
+    var wav=bufferToWav(outBuf);
+    blob=new Blob([wav],{type:'audio/wav'});
+    pf.style.width='100%';pt.textContent='Done!';
+    var trimName=fname.replace(/\.[^.]+$/,'')+'_trimmed.wav';
+    ri.textContent='Trimmed: '+trimName+' ('+(blob.size/(1024*1024)).toFixed(2)+' MB)';
+    ra.classList.add('active');pm.classList.remove('active');pb.disabled=false;
+  });
+
+  db.addEventListener('click',function(){
+    if(!blob)return;var u=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=u;a.download=fname.replace(/\.[^.]+$/,'')+'_trimmed.wav';a.click();URL.revokeObjectURL(u);
+  });
+
+  function bufferToWav(buf){
+    var numCh=buf.numberOfChannels,sr=buf.sampleRate,len=buf.length;
+    var bytesPerSample=2,blockAlign=numCh*bytesPerSample;
+    var dataSize=len*blockAlign,headerSize=44;
+    var ab=new ArrayBuffer(headerSize+dataSize),v=new DataView(ab);
+    function w(o,s){for(var i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));}
+    w(0,'RIFF');v.setUint32(4,36+dataSize,true);w(8,'WAVE');
+    w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,numCh,true);
+    v.setUint32(24,sr,true);v.setUint32(28,sr*blockAlign,true);v.setUint16(32,blockAlign,true);v.setUint16(34,16,true);
+    w(36,'data');v.setUint32(40,dataSize,true);
+    var off=44;
+    for(var i=0;i<len;i++){for(var c=0;c<numCh;c++){var s=Math.max(-1,Math.min(1,buf.getChannelData(c)[i]));v.setInt16(off,s<0?s*0x8000:s*0x7FFF,true);off+=2;}}
+    return ab;
+  }
+})();
+  </script>
+</body>
+</html>
