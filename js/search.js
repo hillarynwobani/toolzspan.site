@@ -66,7 +66,6 @@
     { name: 'Word Counter', url: '/tools/word-counter.html', tags: ['word', 'count', 'character', 'letter', 'text', 'paragraph', 'sentence', 'essay', 'writing'], cat: 'General', icon: '🔢' },
     { name: 'Color Picker', url: '/tools/color-picker.html', tags: ['color', 'colour', 'pick', 'hex', 'rgb', 'hsl', 'palette', 'design', 'eyedropper'], cat: 'General', icon: '🎨' },
     { name: 'Units Converter', url: '/tools/units-converter.html', tags: ['unit', 'convert', 'length', 'weight', 'temperature', 'meter', 'feet', 'kg', 'pound', 'celsius', 'fahrenheit', 'volume', 'speed', 'metric', 'imperial'], cat: 'General', icon: '📏' },
-    { name: 'Trim Audio', url: '/tools/trim-audio.html', tags: ['trim', 'cut', 'audio', 'clip', 'ringtone', 'snippet', 'mp3', 'wav', 'editor', 'music'], cat: 'General', icon: '✂️' },
     { name: 'Time Converter', url: '/tools/time-converter.html', tags: ['time', 'zone', 'timezone', 'convert', 'clock', 'gmt', 'utc', 'est', 'pst', 'world', 'city', 'country'], cat: 'General', icon: '🕐' }
   ];
 
@@ -284,7 +283,7 @@
 
     var navInput = document.createElement('input');
     navInput.type = 'text';
-    navInput.placeholder = 'Search 50 tools...';
+    navInput.placeholder = 'Search 49 tools...';
     navInput.style.cssText = 'flex:1;border:none;outline:none;padding:14px 12px;font-size:16px;font-family:inherit;color:#1A2340;background:transparent;';
     navInput.id = 'navSearchInput';
 
@@ -315,7 +314,7 @@
       }, 10);
       navInput.value = '';
       navInput.focus();
-      navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50 free tools...</div>';
+      navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 49 free tools...</div>';
     }
 
     function closeSearch() {
@@ -352,7 +351,7 @@
         if (val.trim().length >= 2) {
           renderResults(navDropdown, results, val);
         } else {
-          navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50 free tools...</div>';
+          navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 49 free tools...</div>';
         }
       }, 150);
     });

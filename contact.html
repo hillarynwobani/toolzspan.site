@@ -114,7 +114,7 @@
     <div class="header-inner">
       <a href="/" class="header-logo" aria-label="Toolzspan Home">
         <img src="toolzspan-logo-v2.svg" alt="Toolzspan â€” All-in-One Free Online Tools" width="180" height="45" loading="eager">
-        <span class="logo-tagline">50 Free Online Tools</span>
+        <span class="logo-tagline">49 Free Online Tools</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
         <span></span><span></span><span></span>
@@ -239,7 +239,7 @@
         <p id="contactErrorText">Your message could not be sent. Please try again or email us directly.</p>
       </div>
 
-      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <form class="contact-form" id="contactForm" novalidate>
         <!-- Web3Forms access key -->
         <input type="hidden" name="access_key" value="6f988c0c-2c2b-4cc4-b8ee-cd51009a196a">
         <!-- Web3Forms subject line -->
@@ -310,54 +310,5 @@
   
   <script src="js/main.js"></script>
   <script src="js/search.js"></script>
-  <script>
-  (function(){
-    var form = document.getElementById('contactForm');
-    var btn = document.getElementById('contactSubmit');
-    var success = document.getElementById('contactSuccess');
-    var error = document.getElementById('contactError');
-    var errorText = document.getElementById('contactErrorText');
-    if(!form) return;
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      // Validate
-      var name = document.getElementById('contact-name');
-      var email = document.getElementById('contact-email');
-      var msg = document.getElementById('contact-message');
-      var valid = true;
-      [name, email, msg].forEach(function(el){ el.classList.remove('input-error'); });
-      document.querySelectorAll('.field-error').forEach(function(el){ el.classList.remove('active'); });
-      if(!name.value.trim()){ name.classList.add('input-error'); document.getElementById('nameError').classList.add('active'); valid=false; }
-      if(!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){ email.classList.add('input-error'); document.getElementById('emailError').classList.add('active'); valid=false; }
-      if(!msg.value.trim()){ msg.classList.add('input-error'); document.getElementById('messageError').classList.add('active'); valid=false; }
-      if(!valid) return;
-      btn.classList.add('btn-loading');
-      btn.textContent = 'Sending...';
-      var fd = new FormData(form);
-      fetch('https://api.web3forms.com/submit', { method:'POST', body: fd })
-        .then(function(r){ return r.json(); })
-        .then(function(data){
-          btn.classList.remove('btn-loading');
-          btn.textContent = 'Send Message';
-          if(data.success){
-            success.classList.add('active');
-            error.classList.remove('active');
-            form.reset();
-          } else {
-            error.classList.add('active');
-            success.classList.remove('active');
-            errorText.textContent = data.message || 'Something went wrong. Please try again.';
-          }
-        })
-        .catch(function(){
-          btn.classList.remove('btn-loading');
-          btn.textContent = 'Send Message';
-          error.classList.add('active');
-          success.classList.remove('active');
-          errorText.textContent = 'Network error. Please check your connection and try again.';
-        });
-    });
-  })();
-  </script>
 </body>
 </html>
