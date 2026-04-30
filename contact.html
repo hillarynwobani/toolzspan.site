@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -113,8 +113,8 @@
     <header class="site-header">
     <div class="header-inner">
       <a href="/" class="header-logo" aria-label="Toolzspan Home">
-        <img src="toolzspan-logo-v2.svg" alt="Toolzspan â€” All-in-One Free Online Tools" width="180" height="45" loading="eager">
-        <span class="logo-tagline">49 Free Online Tools</span>
+        <img src="toolzspan-logo-v2.svg" alt="Toolzspan —  All-in-One Free Online Tools" width="180" height="45" loading="eager">
+        <span class="logo-tagline">50 Free Online Tools</span>
       </a>
       <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
         <span></span><span></span><span></span>
@@ -239,7 +239,7 @@
         <p id="contactErrorText">Your message could not be sent. Please try again or email us directly.</p>
       </div>
 
-      <form class="contact-form" id="contactForm" novalidate>
+      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <!-- Web3Forms access key -->
         <input type="hidden" name="access_key" value="6f988c0c-2c2b-4cc4-b8ee-cd51009a196a">
         <!-- Web3Forms subject line -->
@@ -310,5 +310,78 @@
   
   <script src="js/main.js"></script>
   <script src="js/search.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('contactForm');
+    var submitBtn = document.getElementById('contactSubmit');
+    var successDiv = document.getElementById('contactSuccess');
+    var errorDiv = document.getElementById('contactError');
+    var errorText = document.getElementById('contactErrorText');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Client-side validation
+      var name = document.getElementById('contact-name');
+      var email = document.getElementById('contact-email');
+      var message = document.getElementById('contact-message');
+      var valid = true;
+
+      [name, email, message].forEach(function(el) {
+        el.classList.remove('input-error');
+        var errEl = el.parentElement.querySelector('.field-error');
+        if (errEl) errEl.classList.remove('active');
+      });
+
+      if (!name.value.trim()) {
+        name.classList.add('input-error');
+        document.getElementById('nameError').classList.add('active');
+        valid = false;
+      }
+      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.classList.add('input-error');
+        document.getElementById('emailError').classList.add('active');
+        valid = false;
+      }
+      if (!message.value.trim()) {
+        message.classList.add('input-error');
+        document.getElementById('messageError').classList.add('active');
+        valid = false;
+      }
+      if (!valid) return;
+
+      submitBtn.classList.add('btn-loading');
+      submitBtn.textContent = 'Sending...';
+      successDiv.classList.remove('active');
+      errorDiv.classList.remove('active');
+
+      var formData = new FormData(form);
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.textContent = 'Send Message';
+        if (data.success) {
+          successDiv.classList.add('active');
+          form.reset();
+        } else {
+          errorText.textContent = data.message || 'Something went wrong. Please try again.';
+          errorDiv.classList.add('active');
+        }
+      })
+      .catch(function() {
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.textContent = 'Send Message';
+        errorText.textContent = 'Network error. Please check your connection and try again.';
+        errorDiv.classList.add('active');
+      });
+    });
+  });
+  </script>
 </body>
 </html>

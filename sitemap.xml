@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Core Pages -->
   <url><loc>https://toolzspan.site/</loc><lastmod>2026-04-28</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
@@ -19,9 +19,9 @@
   <url><loc>https://toolzspan.site/tools/pdf-page-rotator.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://toolzspan.site/tools/pdf-page-remover.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://toolzspan.site/tools/pdf-editor.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolzspan.site/tools/add-watermark-to-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://toolzspan.site/tools/add-password-to-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://toolzspan.site/tools/remove-password-from-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolzspan.site/tools/add-watermark-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://toolzspan.site/tools/add-password-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolzspan.site/tools/remove-password-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/tools/sign-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/tools/ocr-pdf.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/tools/scan-image.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -64,6 +64,7 @@
   <url><loc>https://toolzspan.site/tools/gif-converter.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
   <!-- General Tools -->
+  <url><loc>https://toolzspan.site/tools/trim-audio.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/tools/qr-code-generator.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/tools/word-counter.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://toolzspan.site/tools/color-picker.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -113,4 +114,6 @@
   <url><loc>https://toolzspan.site/blog/how-to-convert-jpg-to-webp-online-free.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/blog/how-to-convert-png-to-webp-online-free.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolzspan.site/blog/how-to-convert-heic-to-jpg-online-free.html</loc><lastmod>2026-04-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://toolzspan.site/blog/how-to-trim-audio-online-free.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

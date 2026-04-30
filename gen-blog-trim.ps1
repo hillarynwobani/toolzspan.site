@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+$root = "c:\GravityProject\toolzspan.site"
+
+# Use existing blog post as template for header/footer/mega-menu
+$template = [System.IO.File]::ReadAllText("$root\blog\how-to-convert-mp4-to-mp3-online-free.html")
+
+# Extract nav block (from <body> to </header>)
+$bodyIdx = $template.IndexOf('<body>')
+$headerEndIdx = $template.IndexOf('</header>') + '</header>'.Length
+$navBlock = $template.Substring($bodyIdx, $headerEndIdx - $bodyIdx)
+
+# Extract footer block (from <footer to </html>)
+$footerIdx = $template.IndexOf('<footer')
+$footerBlock = $template.Substring($footerIdx)
+
+# Build the head
+$head = @'
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -14,117 +30,10 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Trim Audio Online for Free (2026 Complete Guide)","datePublished":"2026-04-30","author":{"@type":"Organization","name":"Toolzspan Editorial Team"},"publisher":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"},"mainEntityOfPage":"https://toolzspan.site/blog/how-to-trim-audio-online-free.html"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best free online audio trimmer?","acceptedAnswer":{"@type":"Answer","text":"Toolzspan Trim Audio is one of the best free options. It runs entirely in your browser with a visual waveform editor, supports MP3, WAV, OGG, M4A, and AAC, and requires no account or software installation."}},{"@type":"Question","name":"Can I trim audio without losing quality?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Toolzspan audio trimmer decodes your audio at full quality using the Web Audio API and exports the trimmed segment as a lossless WAV file. There is no re-encoding or quality degradation."}},{"@type":"Question","name":"Is it safe to trim audio files online?","acceptedAnswer":{"@type":"Answer","text":"With browser-based tools like Toolzspan, your files never leave your device. All processing is done locally using JavaScript and the Web Audio API, so there is zero risk of data exposure."}},{"@type":"Question","name":"What audio formats can I trim online?","acceptedAnswer":{"@type":"Answer","text":"The Toolzspan Trim Audio tool supports MP3, WAV, OGG, M4A, and AAC formats. The output is always a high-quality WAV file."}}]}</script>
 </head>
-<body>
-    <header class="site-header">
-    <div class="header-inner">
-      <a href="/" class="header-logo" aria-label="Toolzspan Home">
-        <img src="../toolzspan-logo-v2.svg" alt="Toolzspan —  All-in-One Free Online Tools" width="180" height="45" loading="eager">
-        <span class="logo-tagline">50 Free Online Tools</span>
-      </a>
-      <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav-menu" id="navMenu">
-        <div class="nav-tab" id="navConvert">Convert <span class="arrow">&#9660;</span>
-          <div class="mega-dropdown">
-            <div class="mega-col">
-              <div class="mega-col-heading">Video &amp; Audio</div>
-              <a href="/tools/mp4-converter.html"><span class="dot"></span>MP4 Converter</a>
-              <a href="/tools/mp3-converter.html"><span class="dot"></span>MP3 Converter</a>
-              <a href="/tools/mp4-to-mp3.html"><span class="dot"></span>MP4 to MP3</a>
-              <a href="/tools/mp3-to-mp4.html"><span class="dot"></span>MP3 to MP4</a>
-              <a href="/tools/avi-to-mp4.html"><span class="dot"></span>AVI to MP4</a>
-              <a href="/tools/mov-to-mp4.html"><span class="dot"></span>MOV to MP4</a>
-              <a href="/tools/webm-to-mp4.html"><span class="dot"></span>WebM to MP4</a>
-              <a href="/tools/wav-to-mp3.html"><span class="dot"></span>WAV to MP3</a>
-              <a href="/tools/ogg-to-mp3.html"><span class="dot"></span>OGG to MP3</a>
-              <a href="/tools/all-tools.html#video-audio" class="mega-view-all">&rarr; View All Video &amp; Audio</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">Image</div>
-              <a href="/tools/image-to-pdf.html"><span class="dot"></span>Image to PDF</a>
-              <a href="/tools/pdf-to-image.html"><span class="dot"></span>PDF to Image</a>
-              <a href="/tools/jpg-to-png.html"><span class="dot"></span>JPG to PNG</a>
-              <a href="/tools/png-to-jpg.html"><span class="dot"></span>PNG to JPG</a>
-              <a href="/tools/webp-to-jpg.html"><span class="dot"></span>WEBP to JPG</a>
-              <a href="/tools/webp-to-png.html"><span class="dot"></span>WEBP to PNG</a>
-              <a href="/tools/jpg-to-webp.html"><span class="dot"></span>JPG to WEBP</a>
-              <a href="/tools/png-to-webp.html"><span class="dot"></span>PNG to WEBP</a>
-              <a href="/tools/heic-to-jpg.html"><span class="dot"></span>HEIC to JPG</a>
-              <a href="/tools/all-tools.html#image" class="mega-view-all">&rarr; View All Image Tools</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">PDF &amp; Documents</div>
-              <a href="/tools/pdf-to-word.html"><span class="dot"></span>PDF to Word</a>
-              <a href="/tools/word-to-pdf.html"><span class="dot"></span>Word to PDF</a>
-              <a href="/tools/powerpoint-to-pdf.html"><span class="dot"></span>PowerPoint to PDF</a>
-              <a href="/tools/excel-to-pdf.html"><span class="dot"></span>Excel to PDF</a>
-              <a href="/tools/pdf-editor.html"><span class="dot"></span>PDF Editor</a>
-              <a href="/tools/all-tools.html#pdf" class="mega-view-all">&rarr; View All PDF &amp; Docs</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav-tab" id="navCompress">Compress <span class="arrow">&#9660;</span>
-          <div class="mega-dropdown">
-            <div class="mega-col">
-              <div class="mega-col-heading">Video &amp; Audio</div>
-              <a href="/tools/video-compressor.html"><span class="dot"></span>Video Compressor</a>
-              <a href="/tools/compress-mp4.html"><span class="dot"></span>Compress MP4</a>
-              <a href="/tools/audio-compressor.html"><span class="dot"></span>Audio Compressor</a>
-              <a href="/tools/compress-mp3.html"><span class="dot"></span>Compress MP3</a>
-              <a href="/tools/all-tools.html#compress" class="mega-view-all">&rarr; View All Compressors</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">Image</div>
-              <a href="/tools/image-compressor.html"><span class="dot"></span>Image Compressor</a>
-              <a href="/tools/gif-compressor.html"><span class="dot"></span>GIF Compressor</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">PDF</div>
-              <a href="/tools/pdf-compressor.html"><span class="dot"></span>PDF Compressor</a>
-            </div>
-          </div>
-        </div>
-        <div class="nav-tab" id="navTools">Tools <span class="arrow">&#9660;</span>
-          <div class="mega-dropdown">
-            <div class="mega-col">
-              <div class="mega-col-heading">PDF Tools</div>
-              <a href="/tools/pdf-merger.html"><span class="dot"></span>PDF Merger</a>
-              <a href="/tools/pdf-splitter.html"><span class="dot"></span>PDF Splitter</a>
-              <a href="/tools/pdf-page-rotator.html"><span class="dot"></span>PDF Page Rotator</a>
-              <a href="/tools/pdf-page-remover.html"><span class="dot"></span>PDF Page Remover</a>
-              <a href="/tools/add-watermark-pdf.html"><span class="dot"></span>Add Watermark</a>
-              <a href="/tools/add-password-pdf.html"><span class="dot"></span>Add Password</a>
-              <a href="/tools/remove-password-pdf.html"><span class="dot"></span>Remove Password</a>
-              <a href="/tools/sign-pdf.html"><span class="dot"></span>Sign PDF</a>
-              <a href="/tools/ocr-pdf.html"><span class="dot"></span>OCR PDF</a>
-              <a href="/tools/scan-image.html"><span class="dot"></span>Scan Image</a>
-              <a href="/tools/all-tools.html#pdf-tools" class="mega-view-all">&rarr; View All PDF Tools</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">GIF Tools</div>
-              <a href="/tools/gif-maker.html"><span class="dot"></span>GIF Maker</a>
-              <a href="/tools/gif-converter.html"><span class="dot"></span>GIF Converter</a>
-              <a href="/tools/all-tools.html#gif" class="mega-view-all">&rarr; View All GIF Tools</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-heading">General</div>
-              <a href="/tools/qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
-              <a href="/tools/word-counter.html"><span class="dot"></span>Word Counter</a>
-              <a href="/tools/color-picker.html"><span class="dot"></span>Color Picker</a>
-              <a href="/tools/units-converter.html"><span class="dot"></span>Units Converter</a>
-              <a href="/tools/time-converter.html"><span class="dot"></span>Time Converter</a>
-              <a href="/tools/trim-audio.html"><span class="dot"></span>Trim Audio</a>
-              <a href="/tools/all-tools.html#general" class="mega-view-all">&rarr; View All General Tools</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div class="nav-right">
-        <div class="search-btn">&#128269;</div>
-      </div>
-    </div>
-  </header>
+'@
+
+# Build blog content (2000+ words)
+$blogContent = @'
   <main>
     <article class="blog-post">
       <div class="blog-post-header">
@@ -277,43 +186,15 @@
       </div>
     </article>
   </main>
-<footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <span class="logo-text">
-            <span class="toolz" style="color:#fff;">Toolz</span><span class="span">span</span>
-          </span>
-          <p>All-in-one free online tools for PDF, video, audio, and image processing. No sign-up. No limits.</p>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-heading">Company</div>
-          <a href="/about.html">About</a>
-          <a href="/contact.html">Contact</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-heading">Resources</div>
-          <a href="/blog/">Blog</a>
-          <a href="/tools/all-tools.html">All Tools</a>
-          <a href="/sitemap.xml">Sitemap</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-heading">Legal</div>
-          <a href="/privacy-policy.html">Privacy Policy</a>
-          <a href="/terms-of-service.html">Terms of Service</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span class="copy">&copy; 2026 Toolzspan. All rights reserved.</span>
-        <div class="footer-badges">
-          <span class="badge">&#128274; Secure</span>
-          <span class="badge">&#9889; Fast</span>
-          <span class="badge">&#9989; Free</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
-</body>
-</html>
+'@
+
+# Assemble the full page
+$fullPage = $head + "`r`n" + $navBlock + "`r`n" + $blogContent + "`r`n" + $footerBlock
+
+[System.IO.File]::WriteAllText("$root\blog\how-to-trim-audio-online-free.html", $fullPage, [System.Text.Encoding]::UTF8)
+Write-Output "Created blog post: how-to-trim-audio-online-free.html"
+
+# Count words in blog content
+$textOnly = $blogContent -replace '<[^>]+>', '' -replace '&[a-z]+;', ' ' -replace '\s+', ' '
+$words = ($textOnly.Trim() -split '\s+').Count
+Write-Output "Word count: $words"

@@ -1,0 +1,1541 @@
+﻿============================================
+TOOLZSPAN COMPREHENSIVE BUG AUDIT
+============================================
+
+=== 1. CONTACT FORM ===
+  BUG: form tag has no action attribute - form cannot submit
+  BUG: form tag has no method attribute
+  BUG: No JavaScript AJAX handler for form submission
+
+=== 2. MOBILE MENU CSS ===
+  INFO: mega-col has no explicit display rule in mobile query
+
+=== 3. MAIN.JS ===
+  BUG: No window resize handler - mobile accordion breaks on orientation change
+  BUG: No contact form JavaScript handler in main.js
+  main.js is 42 lines (very minimal)
+
+=== 4. TOOL PAGES AUDIT ===
+  all-tools.html: NO_FAQ, NO_SCHEMA, NO_BREADCRUMB, NO_RELATED_TOOLS
+  pdf-to-word.html: NO_SEARCH_JS
+
+=== 5. BLOG PAGES AUDIT ===
+  post-01.html: NO_RELATED_POSTS
+  post-02.html: NO_RELATED_POSTS
+  post-03.html: NO_RELATED_POSTS
+  post-04.html: NO_RELATED_POSTS
+  post-05.html: NO_RELATED_POSTS
+  post-06.html: NO_RELATED_POSTS
+  post-07.html: NO_RELATED_POSTS
+  post-08.html: NO_RELATED_POSTS
+  post-09.html: NO_RELATED_POSTS
+  post-10.html: NO_RELATED_POSTS
+  post-11.html: NO_RELATED_POSTS
+  post-12.html: NO_RELATED_POSTS
+  post-13.html: NO_RELATED_POSTS
+  post-14.html: NO_RELATED_POSTS
+  post-15.html: NO_RELATED_POSTS
+  post-16.html: NO_RELATED_POSTS
+  post-17.html: NO_RELATED_POSTS
+  post-18.html: NO_RELATED_POSTS
+  post-19.html: NO_RELATED_POSTS
+  post-20.html: NO_RELATED_POSTS
+  post-21.html: NO_RELATED_POSTS
+  post-22.html: NO_RELATED_POSTS
+
+=== 6. CORE PAGES AUDIT ===
+
+=== 7. SITEMAP AUDIT ===
+  MISSING from sitemap: add-password-pdf.html
+  MISSING from sitemap: add-watermark-pdf.html
+  MISSING from sitemap: remove-password-pdf.html
+  GHOST in sitemap (no file): tools/add-watermark-to-pdf.html
+  GHOST in sitemap (no file): tools/add-password-to-pdf.html
+  GHOST in sitemap (no file): tools/remove-password-from-pdf.html
+  MISSING from sitemap: blog/how-to-trim-audio-online-free.html
+
+=== 8. ENCODING ISSUES ===
+powershell : parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At line:1 char:1
++ powershell -ExecutionPolicy Bypass -File "c:\GravityProject\toolzspan ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (parsing "alt="T...decimal digits.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "alt="Toolzspan \x{2014} All" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:143 char:9
++     if ($c -match 'alt="Toolzspan .{1,5} All-in-One' -and $c -notmatc ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+  Checking alt text for garbled characters...
+
+=== 9. FONT LOADING ===
+  index.html: Uses Playfair Display instead of Space Grotesk
+  add-password-pdf.html: Uses Playfair Display instead of Space Grotesk
+  add-watermark-pdf.html: Uses Playfair Display instead of Space Grotesk
+  all-tools.html: Uses Playfair Display instead of Space Grotesk
+  audio-compressor.html: Uses Playfair Display instead of Space Grotesk
+  avi-to-mp4.html: Uses Playfair Display instead of Space Grotesk
+  color-picker.html: Uses Playfair Display instead of Space Grotesk
+  compress-mp3.html: Uses Playfair Display instead of Space Grotesk
+  compress-mp4.html: Uses Playfair Display instead of Space Grotesk
+  excel-to-pdf.html: Uses Playfair Display instead of Space Grotesk
+  gif-compressor.html: Uses Playfair Display instead of Space Grotesk
+  gif-converter.html: Uses Playfair Display instead of Space Grotesk
+  gif-maker.html: Uses Playfair Display instead of Space Grotesk
+  heic-to-jpg.html: Uses Playfair Display instead of Space Grotesk
+  image-compressor.html: Uses Playfair Display instead of Space Grotesk
+  image-resizer.html: Uses Playfair Display instead of Space Grotesk
+  image-to-pdf.html: Uses Playfair Display instead of Space Grotesk
+  jpg-to-png.html: Uses Playfair Display instead of Space Grotesk
+  jpg-to-webp.html: Uses Playfair Display instead of Space Grotesk
+  mov-to-mp4.html: Uses Playfair Display instead of Space Grotesk
+  mp3-converter.html: Uses Playfair Display instead of Space Grotesk
+  mp3-to-mp4.html: Uses Playfair Display instead of Space Grotesk
+  mp4-converter.html: Uses Playfair Display instead of Space Grotesk
+  mp4-to-mp3.html: Uses Playfair Display instead of Space Grotesk
+  ocr-pdf.html: Uses Playfair Display instead of Space Grotesk
+  ogg-to-mp3.html: Uses Playfair Display instead of Space Grotesk
+  pdf-compressor.html: Uses Playfair Display instead of Space Grotesk
+  pdf-editor.html: Uses Playfair Display instead of Space Grotesk
+  pdf-merger.html: Uses Playfair Display instead of Space Grotesk
+  pdf-page-remover.html: Uses Playfair Display instead of Space Grotesk
+  pdf-page-rotator.html: Uses Playfair Display instead of Space Grotesk
+  pdf-splitter.html: Uses Playfair Display instead of Space Grotesk
+  pdf-to-image.html: Uses Playfair Display instead of Space Grotesk
+  pdf-to-word.html: Uses Playfair Display instead of Space Grotesk
+  png-to-jpg.html: Uses Playfair Display instead of Space Grotesk
+  png-to-webp.html: Uses Playfair Display instead of Space Grotesk
+  powerpoint-to-pdf.html: Uses Playfair Display instead of Space Grotesk
+  qr-code-generator.html: Uses Playfair Display instead of Space Grotesk
+  remove-password-pdf.html: Uses Playfair Display instead of Space Grotesk
+  scan-image.html: Uses Playfair Display instead of Space Grotesk
+  sign-pdf.html: Uses Playfair Display instead of Space Grotesk
+  time-converter.html: Uses Playfair Display instead of Space Grotesk
+  units-converter.html: Uses Playfair Display instead of Space Grotesk
+  video-compressor.html: Uses Playfair Display instead of Space Grotesk
+  wav-to-mp3.html: Uses Playfair Display instead of Space Grotesk
+  webm-to-mp4.html: Uses Playfair Display instead of Space Grotesk
+  webp-to-jpg.html: Uses Playfair Display instead of Space Grotesk
+  webp-to-png.html: Uses Playfair Display instead of Space Grotesk
+  word-counter.html: Uses Playfair Display instead of Space Grotesk
+  word-to-pdf.html: Uses Playfair Display instead of Space Grotesk
+  50 pages have wrong font
+
+=== 10. BROKEN LINK PATTERNS ===
+  add-password-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  add-password-pdf.html -> remove-password-from-pdf.html (FILE NOT FOUND)
+  add-password-pdf.html -> add-watermark-to-pdf.html (FILE NOT FOUND)
+  add-watermark-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  add-watermark-pdf.html -> add-password-to-pdf.html (FILE NOT FOUND)
+  all-tools.html -> trim-audio.html (FILE NOT FOUND)
+  audio-compressor.html -> trim-audio.html (FILE NOT FOUND)
+  avi-to-mp4.html -> trim-audio.html (FILE NOT FOUND)
+  color-picker.html -> trim-audio.html (FILE NOT FOUND)
+  compress-mp3.html -> trim-audio.html (FILE NOT FOUND)
+  compress-mp4.html -> trim-audio.html (FILE NOT FOUND)
+  excel-to-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  excel-to-pdf.html -> pptx-to-pdf.html (FILE NOT FOUND)
+  gif-compressor.html -> trim-audio.html (FILE NOT FOUND)
+  gif-converter.html -> trim-audio.html (FILE NOT FOUND)
+  gif-maker.html -> trim-audio.html (FILE NOT FOUND)
+  heic-to-jpg.html -> trim-audio.html (FILE NOT FOUND)
+  image-compressor.html -> trim-audio.html (FILE NOT FOUND)
+  image-resizer.html -> trim-audio.html (FILE NOT FOUND)
+  image-to-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  jpg-to-png.html -> trim-audio.html (FILE NOT FOUND)
+  jpg-to-webp.html -> trim-audio.html (FILE NOT FOUND)
+  mov-to-mp4.html -> trim-audio.html (FILE NOT FOUND)
+  mp3-converter.html -> trim-audio.html (FILE NOT FOUND)
+  mp3-to-mp4.html -> trim-audio.html (FILE NOT FOUND)
+  mp4-converter.html -> trim-audio.html (FILE NOT FOUND)
+  mp4-to-mp3.html -> trim-audio.html (FILE NOT FOUND)
+  ocr-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  ogg-to-mp3.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-compressor.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-editor.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-editor.html -> add-watermark-to-pdf.html (FILE NOT FOUND)
+  pdf-merger.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-page-remover.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-page-rotator.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-splitter.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-to-image.html -> trim-audio.html (FILE NOT FOUND)
+  pdf-to-word.html -> trim-audio.html (FILE NOT FOUND)
+  png-to-jpg.html -> trim-audio.html (FILE NOT FOUND)
+  png-to-webp.html -> trim-audio.html (FILE NOT FOUND)
+  powerpoint-to-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  qr-code-generator.html -> trim-audio.html (FILE NOT FOUND)
+  remove-password-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  remove-password-pdf.html -> add-password-to-pdf.html (FILE NOT FOUND)
+  scan-image.html -> trim-audio.html (FILE NOT FOUND)
+  sign-pdf.html -> trim-audio.html (FILE NOT FOUND)
+  sign-pdf.html -> add-watermark-to-pdf.html (FILE NOT FOUND)
+  time-converter.html -> trim-audio.html (FILE NOT FOUND)
+  units-converter.html -> trim-audio.html (FILE NOT FOUND)
+  video-compressor.html -> trim-audio.html (FILE NOT FOUND)
+  wav-to-mp3.html -> trim-audio.html (FILE NOT FOUND)
+  webm-to-mp4.html -> trim-audio.html (FILE NOT FOUND)
+  webp-to-jpg.html -> trim-audio.html (FILE NOT FOUND)
+  webp-to-png.html -> trim-audio.html (FILE NOT FOUND)
+  word-counter.html -> trim-audio.html (FILE NOT FOUND)
+  word-to-pdf.html -> trim-audio.html (FILE NOT FOUND)
+
+=== 11. ALL-TOOLS PAGE COMPLETENESS ===
+
+=== 12. HOMEPAGE TOOL COUNT ===
+Cannot overwrite variable HOME because it is read-only or constant.
+At C:\GravityProject\toolzspan.site\audit.ps1:195 char:1
++ $home = [System.IO.File]::ReadAllText("$root\index.html")
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (HOME:String) [], SessionStateUnauthorizedAccessException
+    + FullyQualifiedErrorId : VariableNotWritable
+ 
+
+=== 13. SEARCH INDEX ===
+
+=== 14. CSS AUDIT ===
+
+=== 15. LOGO ALT TEXT CHECK ===
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+parsing "\x{2014}|\x{2013}" - Insufficient hexadecimal digits.
+At C:\GravityProject\toolzspan.site\audit.ps1:230 char:13
++         if ($altVal -match '[^\x20-\x7E]' -and $altVal -notmatch '\x{ ...
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (:) [], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException
+ 
+  Checking...
+
+============================================
+AUDIT COMPLETE
+============================================
