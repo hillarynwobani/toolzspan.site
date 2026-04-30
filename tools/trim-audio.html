@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Trim Audio","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Trim and cut audio files online for free with a visual waveform editor. Supports MP3, WAV, OGG, M4A, AAC.","url":"https://toolzspan.site/tools/trim-audio.html"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site"},{"@type":"ListItem","position":2,"name":"General Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"Trim Audio","item":"https://toolzspan.site/tools/trim-audio.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What audio formats can I trim?","acceptedAnswer":{"@type":"Answer","text":"You can trim MP3, WAV, OGG, M4A, and AAC files. The output is always a high-quality WAV file."}},{"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Yes, the maximum file size is 50MB. This covers most audio files including full podcast episodes and songs."}},{"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens 100% in your browser using the Web Audio API. Your files never leave your device."}},{"@type":"Question","name":"Can I preview the selection before trimming?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click the Play Region button to hear only the selected portion before you trim. You can adjust the start and end handles until you are satisfied."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What audio formats can I trim?","acceptedAnswer":{"@type":"Answer","text":"You can trim MP3, WAV, OGG, M4A, and AAC files. You can choose to export the trimmed clip as MP3, WAV, or OGG. By default the tool matches the format of your input file."}},{"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Yes, the maximum file size is 50MB. This covers most audio files including full podcast episodes and songs."}},{"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens 100% in your browser using the Web Audio API. Your files never leave your device."}},{"@type":"Question","name":"Can I preview the selection before trimming?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click the Play Region button to hear only the selected portion before you trim. You can adjust the start and end handles until you are satisfied."}}]}</script>
+  <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
   <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js" type="module"></script>
   <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.esm.js" type="module"></script>
   <style>
@@ -24,10 +25,12 @@
     .trim-controls .time-field label{font-size:12px;font-weight:600;text-transform:uppercase;color:var(--muted);letter-spacing:0.05em;}
     .trim-controls .time-field span{font-size:18px;font-weight:700;color:var(--deep-navy);font-family:'DM Sans',sans-serif;}
     .trim-controls .btn{margin-left:auto;}
+    .format-select{font-size:14px;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-family:inherit;font-weight:600;color:var(--deep-navy);cursor:pointer;min-width:170px;}
+    .format-select:focus{outline:none;border-color:var(--primary-blue);box-shadow:0 0 0 3px rgba(30,111,255,0.1);}
     .btn-play-region{background:var(--deep-navy);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:background 0.2s;}
     .btn-play-region:hover{background:var(--primary-blue);}
     .btn-play-region.playing{background:#e74c3c;}
-    @media(max-width:480px){.trim-controls{flex-direction:column;align-items:flex-start;}.trim-controls .btn{margin-left:0;width:100%;}}
+    @media(max-width:480px){.trim-controls{flex-direction:column;align-items:flex-start;}.trim-controls .btn{margin-left:0;width:100%;}.format-select{width:100%;}}
   </style>
 </head>
 <body>
@@ -159,6 +162,14 @@
     <div class="time-field"><label>Start</label><span id="startTime">0:00.000</span></div>
     <div class="time-field"><label>End</label><span id="endTime">0:00.000</span></div>
     <div class="time-field"><label>Duration</label><span id="durTime">0:00.000</span></div>
+    <div class="time-field"><label>Output Format</label>
+      <select id="formatSelect" class="format-select" aria-label="Output audio format">
+        <option value="auto">Auto (match input)</option>
+        <option value="mp3">MP3</option>
+        <option value="wav">WAV (lossless)</option>
+        <option value="ogg">OGG (Opus)</option>
+      </select>
+    </div>
     <button class="btn-play-region" id="playRegionBtn">&#9654; Play Region</button>
   </div>
 </div>
@@ -169,11 +180,11 @@
 <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="audio-compressor.html" class="related-tool-link">Audio Compressor</a><a href="mp3-converter.html" class="related-tool-link">MP3 Converter</a><a href="mp4-to-mp3.html" class="related-tool-link">MP4 to MP3</a></div></div></div>
     <div class="tool-info-section">
       <h2>How to Use Trim Audio</h2>
-      <ol><li>Click the upload area or drag and drop your audio file (MP3, WAV, OGG, M4A, or AAC).</li><li>Wait for the waveform to load &mdash; you will see a visual representation of your audio.</li><li>Drag the blue region handles to select the portion you want to keep.</li><li>Click &ldquo;Play Region&rdquo; to preview your selection before trimming.</li><li>Click &ldquo;Trim Audio&rdquo; to extract the selected portion and download it as a WAV file.</li></ol>
+      <ol><li>Click the upload area or drag and drop your audio file (MP3, WAV, OGG, M4A, or AAC).</li><li>Wait for the waveform to load &mdash; you will see a visual representation of your audio.</li><li>Drag the blue region handles to select the portion you want to keep.</li><li>Click &ldquo;Play Region&rdquo; to preview your selection before trimming.</li><li>Pick an output format (Auto, MP3, WAV or OGG). &ldquo;Auto&rdquo; keeps the format of your input file.</li><li>Click &ldquo;Trim Audio&rdquo; to extract the selected portion and download it.</li></ol>
       <h2>Why Use Trim Audio?</h2>
-      <ul><li><strong>Visual Precision</strong> &mdash; See your audio waveform and select exactly the right section with drag handles.</li><li><strong>100% Private</strong> &mdash; Your audio never leaves your device. Everything is processed locally in your browser.</li><li><strong>Multiple Formats</strong> &mdash; Works with MP3, WAV, OGG, M4A, and AAC files up to 50MB.</li><li><strong>Instant Preview</strong> &mdash; Listen to your selection before trimming to make sure it sounds perfect.</li></ul>
+      <ul><li><strong>Visual Precision</strong> &mdash; See your audio waveform and select exactly the right section with drag handles.</li><li><strong>100% Private</strong> &mdash; Your audio never leaves your device. Everything is processed locally in your browser.</li><li><strong>Multiple Formats In &amp; Out</strong> &mdash; Trim MP3, WAV, OGG, M4A, AAC, FLAC files up to 50MB and export the result as MP3, WAV, or OGG.</li><li><strong>Instant Preview</strong> &mdash; Listen to your selection before trimming to make sure it sounds perfect.</li></ul>
       <h2>Frequently Asked Questions</h2>
-      <div class="faq-item"><button class="faq-question">What audio formats can I trim?</button><div class="faq-answer"><p>You can trim MP3, WAV, OGG, M4A, and AAC files. The output is always a high-quality WAV file.</p></div></div>
+      <div class="faq-item"><button class="faq-question">What audio formats can I trim?</button><div class="faq-answer"><p>You can trim MP3, WAV, OGG, M4A, AAC, and FLAC files. You can choose to export the trimmed clip as MP3, WAV, or OGG. By default the tool matches the format of your input file.</p></div></div>
       <div class="faq-item"><button class="faq-question">Is there a file size limit?</button><div class="faq-answer"><p>Yes, the maximum file size is 50MB. This covers most audio files including full podcast episodes and songs.</p></div></div>
       <div class="faq-item"><button class="faq-question">Are my files uploaded to a server?</button><div class="faq-answer"><p>No. All processing happens 100% in your browser using the Web Audio API. Your files never leave your device.</p></div></div>
       <div class="faq-item"><button class="faq-question">Can I preview the selection before trimming?</button><div class="faq-answer"><p>Yes. Click the Play Region button to hear only the selected portion before you trim. You can adjust the start and end handles until you are satisfied.</p></div></div>
@@ -229,11 +240,31 @@ pf=document.getElementById('progressFill'),pt=document.getElementById('progressT
 ra=document.getElementById('resultArea'),ri=document.getElementById('resultInfo'),
 db=document.getElementById('downloadBtn'),fw=document.getElementById('fileWarning'),
 fe=document.getElementById('fileError'),pm=document.getElementById('processingMsg'),
-ww=document.getElementById('waveformWrap'),prb=document.getElementById('playRegionBtn');
+ww=document.getElementById('waveformWrap'),prb=document.getElementById('playRegionBtn'),
+fs=document.getElementById('formatSelect');
 
-var MAX=50,ws=null,regions=null,activeRegion=null,blob=null,fname='',audioBuffer=null,audioCtx=null;
+var MAX=50,ws=null,regions=null,activeRegion=null,blob=null,origName='',fname='',inputFormat='mp3',audioBuffer=null,audioCtx=null;
 
 function fmtTime(s){var m=Math.floor(s/60);var ss=Math.floor(s%60);var ms=Math.round((s%1)*1000);return m+':'+String(ss).padStart(2,'0')+'.'+String(ms).padStart(3,'0');}
+function fmtSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB';}
+
+function detectFormat(name){
+  var n=name.toLowerCase();
+  if(n.endsWith('.mp3'))return'mp3';
+  if(n.endsWith('.wav'))return'wav';
+  if(n.endsWith('.ogg'))return'ogg';
+  if(n.endsWith('.m4a')||n.endsWith('.aac'))return'mp3';
+  if(n.endsWith('.flac'))return'wav';
+  return'mp3';
+}
+
+function resolveFormat(){
+  var v=fs.value;
+  if(v==='auto')return inputFormat;
+  return v;
+}
+
+function fmtToMime(f){return f==='mp3'?'audio/mpeg':f==='wav'?'audio/wav':f==='ogg'?'audio/ogg':'application/octet-stream';}
 
 ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('drag-over');});
 ua.addEventListener('dragleave',function(){ua.classList.remove('drag-over');});
@@ -241,14 +272,15 @@ ua.addEventListener('drop',function(e){e.preventDefault();ua.classList.remove('d
 fi.addEventListener('change',function(){if(this.files.length)handleFile(this.files[0]);});
 
 function handleFile(f){
-  var mb=f.size/(1024*1024);fname=f.name.replace(/\.[^/.]+$/,'')+'-trimmed.wav';
+  var mb=f.size/(1024*1024);
+  origName=f.name.replace(/\.[^/.]+$/,'');
+  inputFormat=detectFormat(f.name);
   if(mb>MAX){fe.textContent='File too large. Maximum size is '+MAX+'MB.';fe.classList.add('active');fw&&fw.classList.remove('active');pb.disabled=true;return;}
-  if(mb>MAX*0.75){fw&&(fw.textContent='Large file â€” waveform may take a moment to load.',fw.classList.add('active'));fe.classList.remove('active');}
+  if(mb>MAX*0.75){fw&&(fw.textContent='Large file \u2014 waveform may take a moment to load.',fw.classList.add('active'));fe.classList.remove('active');}
   else{fw&&fw.classList.remove('active');fe.classList.remove('active');}
   ra.classList.remove('active');pb.disabled=true;pm.classList.add('active');
   document.getElementById('fileList').innerHTML='<div class=file-item><span class=file-item-name>'+f.name+'</span><span class=file-item-size>'+(mb<1?(f.size/1024).toFixed(1)+' KB':mb.toFixed(2)+' MB')+'</span></div>';
-  
-  // Decode audio
+
   var reader=new FileReader();
   reader.onload=function(e){
     audioCtx=new(window.AudioContext||window.webkitAudioContext)();
@@ -274,6 +306,8 @@ function loadWaveform(f){
     activeRegion=regions.addRegion({start:0,end:dur,color:'rgba(30,111,255,0.18)',drag:true,resize:true});
     updateTimes(0,dur,dur);
   });
+  ws.on('pause',function(){prb.innerHTML='&#9654; Play Region';prb.classList.remove('playing');playing=false;});
+  ws.on('finish',function(){prb.innerHTML='&#9654; Play Region';prb.classList.remove('playing');playing=false;});
   regions.on('region-updated',function(r){
     var s=r.start,e=r.end;
     updateTimes(s,e,e-s);
@@ -292,23 +326,42 @@ prb.addEventListener('click',function(){
   if(playing){ws.pause();prb.innerHTML='&#9654; Play Region';prb.classList.remove('playing');playing=false;return;}
   activeRegion.play();prb.innerHTML='&#9724; Stop';prb.classList.add('playing');playing=true;
 });
-if(ws){ws.on('pause',function(){prb.innerHTML='&#9654; Play Region';prb.classList.remove('playing');playing=false;});}
 
-pb.addEventListener('click',function(){
+pb.addEventListener('click',async function(){
   if(!audioBuffer||!activeRegion)return;
-  pb.disabled=true;pw.classList.add('active');pf.style.width='30%';pt.textContent='Trimming audio...';
+  pb.disabled=true;pw.classList.add('active');pf.style.width='15%';pt.textContent='Trimming audio...';fe.classList.remove('active');
+
   var start=activeRegion.start,end=activeRegion.end,sr=audioBuffer.sampleRate,ch=audioBuffer.numberOfChannels;
   var startSample=Math.floor(start*sr),endSample=Math.floor(end*sr),len=endSample-startSample;
   var offCtx=new OfflineAudioContext(ch,len,sr);
   var newBuf=offCtx.createBuffer(ch,len,sr);
   for(var c=0;c<ch;c++){var src=audioBuffer.getChannelData(c),dst=newBuf.getChannelData(c);for(var i=0;i<len;i++)dst[i]=src[startSample+i];}
-  pf.style.width='60%';
-  // Encode to WAV
-  var wavBuf=encodeWAV(newBuf);
-  blob=new Blob([wavBuf],{type:'audio/wav'});
-  pf.style.width='100%';pt.textContent='Done!';
-  ri.textContent='Trimmed: '+fmtTime(end-start)+' of audio ('+(blob.size/1024).toFixed(1)+' KB)';
-  ra.classList.add('active');pb.disabled=false;
+  pf.style.width='30%';
+
+  var fmt=resolveFormat();
+  fname=origName+'-trimmed.'+fmt;
+  pt.textContent='Encoding '+fmt.toUpperCase()+'...';
+
+  try{
+    if(fmt==='wav'){
+      blob=new Blob([encodeWAV(newBuf)],{type:'audio/wav'});
+      pf.style.width='100%';
+    }else if(fmt==='mp3'){
+      blob=await encodeMP3(newBuf,function(p){pf.style.width=(30+p*70)+'%';});
+    }else if(fmt==='ogg'){
+      blob=await encodeOGG(newBuf,function(p){pf.style.width=(30+p*70)+'%';});
+    }else{
+      throw new Error('Unsupported output format: '+fmt);
+    }
+    pt.textContent='Done!';
+    ri.textContent='Trimmed: '+fmtTime(end-start)+' of audio ('+fmtSize(blob.size)+', '+fmt.toUpperCase()+')';
+    ra.classList.add('active');
+  }catch(err){
+    fe.textContent='Encoding failed: '+(err && err.message ? err.message : err);
+    fe.classList.add('active');
+    pw.classList.remove('active');
+  }
+  pb.disabled=false;
 });
 
 function encodeWAV(buf){
@@ -324,6 +377,89 @@ function encodeWAV(buf){
   wr(36,'data');v.setUint32(40,dataLen,true);
   var off=44;for(var i=0;i<interleaved.length;i++,off+=2){var s=Math.max(-1,Math.min(1,interleaved[i]));v.setInt16(off,s<0?s*0x8000:s*0x7FFF,true);}
   return ab;
+}
+
+function floatTo16BitPCM(input){
+  var output=new Int16Array(input.length);
+  for(var i=0;i<input.length;i++){var s=Math.max(-1,Math.min(1,input[i]));output[i]=s<0?s*0x8000:s*0x7FFF;}
+  return output;
+}
+
+function encodeMP3(buf,onProgress){
+  return new Promise(function(resolve,reject){
+    if(typeof window.lamejs==='undefined'){reject(new Error('MP3 encoder not loaded. Please refresh the page and try again.'));return;}
+    try{
+      var ch=Math.min(buf.numberOfChannels,2);
+      var sr=buf.sampleRate;
+      var encoder=new window.lamejs.Mp3Encoder(ch,sr,192);
+      var left=floatTo16BitPCM(buf.getChannelData(0));
+      var right=ch===2?floatTo16BitPCM(buf.getChannelData(1)):null;
+      var blockSize=1152;
+      var mp3Data=[];
+      var totalBlocks=Math.max(1,Math.ceil(buf.length/blockSize));
+      var block=0;
+      function processChunk(){
+        var i=block*blockSize;
+        if(i>=buf.length){
+          var endBuf=encoder.flush();
+          if(endBuf.length>0)mp3Data.push(new Uint8Array(endBuf));
+          if(onProgress)onProgress(1);
+          resolve(new Blob(mp3Data,{type:'audio/mpeg'}));
+          return;
+        }
+        var batchEnd=Math.min(block+50,totalBlocks);
+        for(;block<batchEnd;block++){
+          var off=block*blockSize;
+          var leftChunk=left.subarray(off,off+blockSize);
+          var rightChunk=right?right.subarray(off,off+blockSize):null;
+          var mp3buf=ch===2?encoder.encodeBuffer(leftChunk,rightChunk):encoder.encodeBuffer(leftChunk);
+          if(mp3buf.length>0)mp3Data.push(new Uint8Array(mp3buf));
+        }
+        if(onProgress)onProgress(block/totalBlocks);
+        setTimeout(processChunk,0);
+      }
+      processChunk();
+    }catch(e){reject(e);}
+  });
+}
+
+function encodeOGG(buf,onProgress){
+  return new Promise(function(resolve,reject){
+    if(typeof MediaRecorder==='undefined'){reject(new Error('Your browser does not support OGG encoding. Try MP3 or WAV.'));return;}
+    var preferred=['audio/ogg;codecs=opus','audio/webm;codecs=opus','audio/ogg','audio/webm'];
+    var mime=null;
+    for(var i=0;i<preferred.length;i++){if(MediaRecorder.isTypeSupported(preferred[i])){mime=preferred[i];break;}}
+    if(!mime){reject(new Error('Browser does not support OGG/Opus encoding. Try Chrome or Firefox, or choose MP3 / WAV.'));return;}
+    try{
+      var ctx=new(window.AudioContext||window.webkitAudioContext)();
+      var source=ctx.createBufferSource();
+      source.buffer=buf;
+      var dest=ctx.createMediaStreamDestination();
+      source.connect(dest);
+      var rec=new MediaRecorder(dest.stream,{mimeType:mime});
+      var chunks=[];
+      rec.ondataavailable=function(e){if(e.data&&e.data.size>0)chunks.push(e.data);};
+      rec.onerror=function(e){reject(new Error('Recording error: '+(e.error&&e.error.message?e.error.message:e.message||'unknown')));};
+      var startTs=0,duration=buf.duration*1000,timer=null;
+      rec.onstart=function(){
+        startTs=Date.now();
+        timer=setInterval(function(){
+          if(onProgress)onProgress(Math.min((Date.now()-startTs)/duration,0.99));
+        },200);
+      };
+      rec.onstop=function(){
+        if(timer)clearInterval(timer);
+        try{ctx.close();}catch(e){}
+        if(onProgress)onProgress(1);
+        resolve(new Blob(chunks,{type:mime}));
+      };
+      source.onended=function(){
+        try{rec.stop();}catch(e){}
+      };
+      rec.start();
+      source.start();
+    }catch(e){reject(e);}
+  });
 }
 
 db.addEventListener('click',function(){if(!blob)return;var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fname;a.click();URL.revokeObjectURL(u);});
