@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /netlify/
+Disallow: /package.json
+Disallow: /netlify.toml
+Disallow: /.gitattributes
 
 Sitemap: https://toolzspan.site/sitemap.xml
