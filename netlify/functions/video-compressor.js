@@ -1,16 +1,19 @@
-// Netlify Function — Compress video files
-// Engine: FFmpeg
-// Deploy: netlify.toml [functions] directory = "netlify/functions"
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
-  // TODO: Implement FFmpeg processing
-  // 1. Parse multipart form data from event.body
-  // 2. Write temp file
-  // 3. Run FFmpeg command
-  // 4. Return processed file as base64 or binary
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status: 'ready', message: 'Compress video files endpoint. Deploy with FFmpeg to enable.' })
-  };
-};
+﻿// Video Compressor - reduce video file size with quality control via 'crf' field (18-32)
+const { makeFfmpegHandler } = require('./_lib/handler');
+
+exports.handler = makeFfmpegHandler({
+  allowedExtensions: ['mp4', 'avi', 'mov', 'mkv', 'webm', 'm4v'],
+  outputExt: 'mp4',
+  outputMime: 'video/mp4',
+  maxBytes: 50 * 1024 * 1024,
+  buildArgs: (file, fields) => {
+    const crfNum = parseInt(fields.crf, 10);
+    const crf = (crfNum >= 18 && crfNum <= 32) ? String(crfNum) : '28';
+    return [
+      '-c:v', 'libx264', '-preset', 'fast', '-crf', crf,
+      '-c:a', 'aac', '-b:a', '96k',
+      '-movflags', '+faststart'
+    ];
+  },
+  defaultOutName: (base) => `${base}-compressed.mp4`
+});

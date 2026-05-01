@@ -48,6 +48,8 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -60,12 +62,49 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
-img {
+img,
+svg,
+video,
+iframe,
+canvas {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+pre,
+code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+p,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 a {
@@ -748,6 +787,7 @@ main {
 
 .file-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
@@ -1273,7 +1313,24 @@ main {
   list-style: disc;
 }
 
-/* === ADSENSE SLOTS === */
+/* === ADSENSE PLACEHOLDERS (Section 6D - 3 placements per tool page) === */
+.adsense-placeholder {
+  width: 100%;
+  min-height: 90px;
+  margin: 24px auto;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F5F7FA;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.adsense-top    { margin-bottom: 28px; }
+.adsense-mid    { margin-top: 28px; margin-bottom: 28px; }
+.adsense-bottom { margin-top: 32px; }
+
+/* === LEGACY AD-SLOT (kept for homepage / blog use) === */
 .ad-slot {
   max-width: 728px;
   min-height: 90px;
@@ -1873,26 +1930,43 @@ main {
     font-size: 22px;
   }
 
+  /* ============================================
+     MOBILE MEGA-MENU: 3-LEVEL DRILL-DOWN
+     L1 = .nav-menu (Convert/Compress/Tools tabs)
+     L2 = .mega-dropdown (categories of active tab)
+     L3 = .mega-col (tools of active category)
+     ============================================ */
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
   .nav-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
+    top: 64px;
     right: 0;
+    bottom: 0;
+    left: 0;
     background: var(--white);
     flex-direction: column;
     padding: 0;
     gap: 0;
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
+    border-top: 1px solid var(--border);
+    box-shadow: none;
     z-index: 999;
-    max-height: 80vh;
+    max-height: none;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+    display: flex;
   }
 
   .nav-menu.active {
-    display: flex;
+    transform: translateX(0);
+    visibility: visible;
   }
 
   .header-logo {
@@ -1918,15 +1992,20 @@ main {
     gap: 0;
   }
 
+  /* L1 row: a tab */
   .nav-tab {
     width: 100%;
-    padding: 14px 20px;
+    padding: 18px 22px;
     height: auto;
     border-bottom: 1px solid var(--border);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
+    color: var(--deep-navy);
     cursor: pointer;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .nav-tab::after {
@@ -1934,88 +2013,182 @@ main {
   }
 
   .nav-tab .arrow {
-    float: right;
-    font-size: 10px;
-    transition: transform 0.3s ease;
+    font-size: 14px;
+    color: var(--muted);
+    transform: rotate(-90deg);
     display: inline-block;
+    transition: none;
   }
 
-  .nav-tab.accordion-open .arrow {
-    transform: rotate(180deg);
-  }
-
+  /* L2: mega-dropdown becomes a fixed full-screen panel that slides in */
   .mega-dropdown {
-    position: static;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    min-width: 100%;
-    padding: 0;
-    opacity: 0;
-    pointer-events: none;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    z-index: 1000;
     display: block !important;
-    background: var(--light-bg);
-  }
-
-  .nav-tab:hover>.mega-dropdown {
-    opacity: 0;
-    pointer-events: none;
-    max-height: 0;
-  }
-
-  .nav-tab.accordion-open .mega-dropdown {
-    opacity: 1;
-    pointer-events: all;
-    max-height: 3000px;
-    padding: 8px 0;
-  }
-
-  .mega-dropdown .mega-col {
+    grid-template-columns: none !important;
     padding: 0;
     margin: 0;
     border: none;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: 0;
+    max-height: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    opacity: 1;
+    pointer-events: none;
+    gap: 0;
+    visibility: hidden;
+  }
+
+  .nav-tab:hover > .mega-dropdown {
+    transform: translateX(100%);
+    pointer-events: none;
+  }
+
+  .nav-tab.is-active > .mega-dropdown {
+    transform: translateX(0);
+    pointer-events: all;
+    visibility: visible;
+  }
+
+  /* Back button injected by JS at top of L2 and L3 panels */
+  .drill-back {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 22px;
+    background: var(--off-white);
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--primary-blue);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+
+  .drill-back::before {
+    content: "‹";
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  .drill-back-title {
+    margin-left: auto;
+    color: var(--deep-navy);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* L2 row: a category (mega-col), default state */
+  .mega-col {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    min-width: 0;
+    position: relative;
   }
 
   .mega-col-heading {
-    padding: 10px 28px 4px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    margin-top: 8px;
-  }
-
-  .mega-dropdown a {
     display: flex;
     align-items: center;
-    padding: 10px 28px;
+    justify-content: space-between;
+    padding: 18px 22px;
+    margin: 0;
     font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--deep-navy);
-    text-decoration: none;
-    border-radius: 0;
-    transition: background 0.15s;
+    border: none;
+    cursor: pointer;
   }
 
-  .mega-dropdown a:hover {
+  .mega-col-heading::after {
+    content: "›";
+    font-size: 22px;
+    color: var(--muted);
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  /* Hide tool links at L2 */
+  .mega-col > a {
+    display: none;
+  }
+
+  /* L3: mega-col becomes a fixed full-screen panel */
+  .mega-col.is-active {
+    position: fixed;
+    top: 64px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--white);
+    z-index: 1100;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(0);
+    animation: drill-slide-in 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: default;
+  }
+
+  /* Hide the original heading caret when the col is the active L3 */
+  .mega-col.is-active > .mega-col-heading {
+    display: none;
+  }
+
+  .mega-col.is-active > a {
+    display: flex;
+    align-items: center;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    color: var(--deep-navy);
+    text-decoration: none;
+    font-size: 15px;
+    background: var(--white);
+  }
+
+  .mega-col.is-active > a:hover {
     background: rgba(30, 111, 255, 0.06);
   }
 
-  .mega-dropdown a .dot {
+  .mega-col.is-active > a .dot {
     margin-right: 10px;
     flex-shrink: 0;
   }
 
   .mega-view-all {
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 600;
     color: var(--primary-blue) !important;
-    padding: 10px 28px !important;
-    margin-bottom: 4px;
+    padding: 16px 22px !important;
+    background: var(--off-white) !important;
+  }
+
+  @keyframes drill-slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
   }
 
   .tools-grid {

@@ -140,7 +140,15 @@
   <main>
     <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="all-tools.html#pdf-tools">PDF Tools</a><span>›</span>Sign Pdf</div>
     <section class="tool-hero"><h1>Sign PDF</h1><p>Add your handwritten signature to any PDF document. Draw your signature, choose the page and position, then download the signed file.</p></section>
-    <div class="ad-slot" id="ad-tool-top"></div>
+    <div class="adsense-placeholder adsense-top">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
     <div class="tool-workspace">
       <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🖊️</div><p><strong>Drag and drop a PDF file here</strong></p><p>or click to browse</p><input type="file" id="fileInput" accept=".pdf"></div>
       <div class="file-list" id="fileList"></div>
@@ -167,7 +175,16 @@
       <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
       <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="pdf-editor.html" class="related-tool-link">PDF Editor</a><a href="add-watermark-pdf.html" class="related-tool-link">Add Watermark to PDF</a><a href="pdf-compressor.html" class="related-tool-link">PDF Compressor</a></div></div>
     </div>
-    
+
+    <div class="adsense-placeholder adsense-mid">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
     <div class="tool-info-section">
       <h2>How to Use Sign Pdf</h2>
       <ol>
@@ -203,7 +220,15 @@
       </div>
     </div>
   
-    <div class="ad-slot" id="ad-tool-bottom"></div>
+    <div class="adsense-placeholder adsense-bottom">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
   </main>
     <footer class="site-footer">
     <div class="footer-inner">
@@ -243,7 +268,6 @@
   </footer>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
   <script>
-    document.getElementById('menuToggle').addEventListener('click',function(){document.getElementById('navMenu').classList.toggle('active');});
     let srcFile=null,pdfBlob=null;
     const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),signBtn=document.getElementById('signBtn'),sigSection=document.getElementById('signatureSection'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
     const sigCanvas=document.getElementById('sigCanvas'),sigCtx=sigCanvas.getContext('2d');

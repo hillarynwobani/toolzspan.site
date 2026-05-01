@@ -1,9 +1,22 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  command = "echo 'Static site - functions deploy automatically'"
 
 [functions]
   node_bundler = "esbuild"
+  # Pull native binary deps out of the bundle (FFmpeg, LibreOffice wrapper, qpdf)
+  external_node_modules = [
+    "@ffmpeg-installer/ffmpeg",
+    "fluent-ffmpeg",
+    "libreoffice-convert",
+    "node-qpdf2",
+    "pdfjs-dist"
+  ]
+  # Free tier hard limit is 10s. Pro raises to 26s. Set 26 here so when user upgrades, no config change needed.
+  timeout = 26
+  # Bundle tmp uploads from /tmp (Netlify allows 512MB ephemeral /tmp)
+  included_files = []
 
 # Redirect old watermark URL to 404
 [[redirects]]

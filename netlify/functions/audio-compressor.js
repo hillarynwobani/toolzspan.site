@@ -1,16 +1,15 @@
-// Netlify Function — Compress audio files
-// Engine: FFmpeg
-// Deploy: netlify.toml [functions] directory = "netlify/functions"
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
-  // TODO: Implement FFmpeg processing
-  // 1. Parse multipart form data from event.body
-  // 2. Write temp file
-  // 3. Run FFmpeg command
-  // 4. Return processed file as base64 or binary
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status: 'ready', message: 'Compress audio files endpoint. Deploy with FFmpeg to enable.' })
-  };
-};
+﻿// Audio Compressor - reduce audio bitrate. Supports MP3, WAV, OGG, M4A, AAC, FLAC.
+const { makeFfmpegHandler } = require('./_lib/handler');
+
+exports.handler = makeFfmpegHandler({
+  allowedExtensions: ['mp3', 'wav', 'ogg', 'm4a', 'aac', 'flac'],
+  outputExt: 'mp3',
+  outputMime: 'audio/mpeg',
+  maxBytes: 30 * 1024 * 1024,
+  buildArgs: (file, fields) => {
+    const validBitrates = ['64k', '96k', '128k', '160k', '192k'];
+    const bitrate = validBitrates.includes(fields.bitrate) ? fields.bitrate : '128k';
+    return ['-vn', '-codec:a', 'libmp3lame', '-b:a', bitrate];
+  },
+  defaultOutName: (base) => `${base}-compressed.mp3`
+});
