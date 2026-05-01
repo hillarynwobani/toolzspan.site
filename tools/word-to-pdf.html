@@ -244,99 +244,70 @@
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
-  <script>
-    var srcFile=null,pdfBlob=null;
-    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
-    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
-    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');var f=e.dataTransfer.files[0];if(f)loadFile(f);});
-    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
-    function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
-
-    convertBtn.addEventListener('click',async function(){
-      if(typeof mammoth==='undefined'){alert('Document conversion library is still loading. Please wait a moment and try again.');return;}
-      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
-      progressText.textContent='Extracting text from document...';progressFill.style.width='20%';
-      try{
-        var ab=await srcFile.arrayBuffer();
-        var textContent='';
-        try{
-          var result=await mammoth.extractRawText({arrayBuffer:ab});
-          textContent=result.value;
-        }catch(e){
-          textContent=new TextDecoder().decode(ab);
-        }
-        if(!textContent||textContent.trim().length===0){
-          alert('Could not extract any text from this document. The file may be corrupted or in an unsupported format.');
-          convertBtn.disabled=false;progressWrap.classList.remove('active');
-          return;
-        }
-        progressText.textContent='Creating PDF...';progressFill.style.width='50%';
-        var pdfDoc=await PDFLib.PDFDocument.create();
-        var font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        var fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-        var fontSize=12;var margin=50;var lineHeight=fontSize*1.5;
-        var pageWidth=612;var pageHeight=792;
-        var maxTextWidth=pageWidth-margin*2;
-        var lines=textContent.split('\n');
-        var page=pdfDoc.addPage([pageWidth,pageHeight]);
-        var y=pageHeight-margin;
-        var pageCount=1;
-
-        for(var li=0;li<lines.length;li++){
-          var line=lines[li];
-          // Skip truly empty lines but add spacing
-          if(line.trim()===''){
-            y-=lineHeight*0.6;
-            if(y<margin){page=pdfDoc.addPage([pageWidth,pageHeight]);y=pageHeight-margin;pageCount++;}
-            continue;
-          }
-          // Word wrap
-          var words=line.split(' ');
-          var currentLine='';
-          for(var w=0;w<words.length;w++){
-            var word=words[w];
-            var test=currentLine?currentLine+' '+word:word;
-            var textWidth=font.widthOfTextAtSize(test,fontSize);
-            if(textWidth>maxTextWidth&&currentLine){
-              if(y<margin){page=pdfDoc.addPage([pageWidth,pageHeight]);y=pageHeight-margin;pageCount++;}
-              page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
-              y-=lineHeight;
-              currentLine=word;
-            }else{
-              currentLine=test;
-            }
-          }
-          if(currentLine){
-            if(y<margin){page=pdfDoc.addPage([pageWidth,pageHeight]);y=pageHeight-margin;pageCount++;}
-            page.drawText(currentLine,{x:margin,y:y,size:fontSize,font:font,color:PDFLib.rgb(0,0,0)});
-            y-=lineHeight;
-          }
-          // Update progress periodically
-          if(li%100===0){
-            progressFill.style.width=(50+((li/lines.length)*40))+'%';
-            // Allow UI to update
-            await new Promise(function(r){setTimeout(r,0);});
-          }
-        }
-        progressFill.style.width='95%';progressText.textContent='Saving PDF...';
-        var bytes=await pdfDoc.save();
-        pdfBlob=new Blob([bytes],{type:'application/pdf'});
-        progressFill.style.width='100%';progressText.textContent='Done!';
-        resultInfo.textContent='Word document converted to PDF ('+pageCount+' page'+(pageCount>1?'s':'')+') — '+formatSize(bytes.length);
-        resultArea.classList.add('active');
-      }catch(e){
-        alert('Error converting document: '+e.message);
-        progressText.textContent='Error occurred.';
-      }
-      convertBtn.disabled=false;
-    });
-    downloadBtn.addEventListener('click',function(){var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace(/\.(docx?|txt)$/i,'.pdf');a.click();URL.revokeObjectURL(u);});
-  </script>
   <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/server-tool.js"></script>
+<script>
+(function () {
+  var fi = document.getElementById('fileInput');
+  var ua = document.getElementById('uploadArea');
+  var pb = document.getElementById('convertBtn');
+  var ra = document.getElementById('resultArea');
+  var ri = document.getElementById('resultInfo');
+  var db = document.getElementById('downloadBtn');
+  var fl = document.getElementById('fileList');
+  var workspace = document.querySelector('.tool-workspace');
+  var selectedFile = null, resultBlob = null, resultName = '';
+
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+  function handleFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    if (pb) pb.disabled = false;
+    if (ra) ra.classList.remove('active');
+    if (workspace && window.ToolzspanServer) ToolzspanServer.hideMessages(workspace);
+    if (fl) fl.innerHTML = '<div class="file-item"><span class="file-item-name">' + f.name + '</span><span class="file-item-size">' + formatSize(f.size) + '</span></div>';
+  }
+  if (ua) {
+    ua.addEventListener('dragover', function (e) { e.preventDefault(); ua.classList.add('drag-over'); });
+    ua.addEventListener('dragleave', function () { ua.classList.remove('drag-over'); });
+    ua.addEventListener('drop', function (e) {
+      e.preventDefault(); ua.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) { fi.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+  }
+  if (fi) fi.addEventListener('change', function () { if (this.files.length) handleFile(this.files[0]); });
+
+  if (pb) pb.addEventListener('click', async function () {
+    if (!selectedFile) return;
+    var err = "";
+    if (err) { ToolzspanServer.showError(workspace, err); return; }
+    pb.disabled = true;
+    try {
+      var res = await ToolzspanServer.run({
+        endpoint: '/.netlify/functions/word-to-pdf',
+        file: selectedFile,
+        fields: {},
+        container: workspace,
+        fallbackName: selectedFile.name.replace(/\.[^.]+$/, '') + '.pdf'
+      });
+      resultBlob = res.blob;
+      resultName = res.filename;
+      if (ri) ri.textContent = 'Processed: ' + resultName + ' (' + formatSize(resultBlob.size) + ')';
+      if (ra) ra.classList.add('active');
+    } catch (e) { /* error already displayed */ }
+    finally { pb.disabled = false; }
+  });
+
+  if (db) db.addEventListener('click', function () {
+    if (!resultBlob) return;
+    ToolzspanServer.downloadBlob(resultBlob, resultName);
+  });
+})();
+</script>
 </body>
 </html>

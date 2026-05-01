@@ -139,6 +139,16 @@
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
     <div class="tool-workspace">
+      <div class="tool-options" style="margin-bottom:14px;">
+  <label style="display:block; font-weight:600; margin-bottom:6px; font-size:14px; color:var(--deep-navy);">Compression level (higher = smaller file, lower quality)</label>
+  <select id="crfSel" style="width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:15px; background:#fff;">
+    <option value="20">Low compression (best quality)</option>
+    <option value="24">Medium-low</option>
+    <option value="28" selected>Balanced (recommended)</option>
+    <option value="30">Strong</option>
+    <option value="32">Maximum compression</option>
+  </select>
+</div>
 <div class="upload-area" id="uploadArea"><div class="upload-area-icon">🗜️</div>
 <p><strong>Drag and drop your file here</strong></p><p>or click to browse</p>
 <input type="file" id="fileInput" accept=".mp4,.avi,.mov,.webm,.mkv"></div>
@@ -218,36 +228,67 @@
     </div>
   </footer>
   <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
-  <script>
-var fi=document.getElementById('fileInput'),ua=document.getElementById('uploadArea'),pb=document.getElementById('processBtn'),pw=document.getElementById('progressWrap'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText'),ra=document.getElementById('resultArea'),ri=document.getElementById('resultInfo'),db=document.getElementById('downloadBtn'),fw=document.getElementById('fileWarning'),fe=document.getElementById('fileError'),pm=document.getElementById('processingMsg');
-var MAX=50,blob=null,fname='';
-ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('drag-over');});
-ua.addEventListener('dragleave',function(){ua.classList.remove('drag-over');});
-ua.addEventListener('drop',function(e){e.preventDefault();ua.classList.remove('drag-over');if(e.dataTransfer.files.length){fi.files=e.dataTransfer.files;handleFile(e.dataTransfer.files[0]);}});
-fi.addEventListener('change',function(){if(this.files.length)handleFile(this.files[0]);});
-function handleFile(f){
-var mb=f.size/(1024*1024);fname=f.name;
-if(mb>MAX){fe.textContent='File too large. Maximum size is '+MAX+'MB.';fe.classList.add('active');if(fw)fw.classList.remove('active');pb.disabled=true;return;}
-if(mb>MAX*0.75){if(fw){fw.textContent='Large file — may take longer. For fastest results, keep under '+Math.round(MAX*0.75)+'MB.';fw.classList.add('active');}fe.classList.remove('active');}
-else{if(fw)fw.classList.remove('active');fe.classList.remove('active');}
-pb.disabled=false;ra.classList.remove('active');
-document.getElementById('fileList').innerHTML='<div class=file-item><span class=file-item-name>'+f.name+'</span><span class=file-item-size>'+(mb<1?(f.size/1024).toFixed(1)+' KB':mb.toFixed(2)+' MB')+'</span></div>';
-}
-pb.addEventListener('click',async function(){
-pb.disabled=true;pw.classList.add('active');pf.style.width='30%';pt.textContent='Uploading...';pm.classList.add('active');
-var fd=new FormData();fd.append('file',fi.files[0]);
-try{
-var r=await fetch('/.netlify/functions/video-compressor',{method:'POST',body:fd});
-if(!r.ok)throw new Error('Server error');
-pf.style.width='90%';pt.textContent='Processing...';
-blob=await r.blob();pf.style.width='100%';pt.textContent='Done!';
-ri.textContent='Processed: '+fname+' ('+(blob.size/1024).toFixed(1)+' KB)';
-ra.classList.add('active');pm.classList.remove('active');
-}catch(e){pt.textContent='Processing took too long. Please try a smaller file.';pm.classList.remove('active');}
-pb.disabled=false;
-});
-db.addEventListener('click',function(){if(!blob)return;var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fname;a.click();URL.revokeObjectURL(u);});
+<script src="../js/search.js"></script>
+<script src="../js/server-tool.js"></script>
+<script>
+(function () {
+  var fi = document.getElementById('fileInput');
+  var ua = document.getElementById('uploadArea');
+  var pb = document.getElementById('processBtn');
+  var ra = document.getElementById('resultArea');
+  var ri = document.getElementById('resultInfo');
+  var db = document.getElementById('downloadBtn');
+  var fl = document.getElementById('fileList');
+  var workspace = document.querySelector('.tool-workspace');
+  var selectedFile = null, resultBlob = null, resultName = '';
+
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+  function handleFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    if (pb) pb.disabled = false;
+    if (ra) ra.classList.remove('active');
+    if (workspace && window.ToolzspanServer) ToolzspanServer.hideMessages(workspace);
+    if (fl) fl.innerHTML = '<div class="file-item"><span class="file-item-name">' + f.name + '</span><span class="file-item-size">' + formatSize(f.size) + '</span></div>';
+  }
+  if (ua) {
+    ua.addEventListener('dragover', function (e) { e.preventDefault(); ua.classList.add('drag-over'); });
+    ua.addEventListener('dragleave', function () { ua.classList.remove('drag-over'); });
+    ua.addEventListener('drop', function (e) {
+      e.preventDefault(); ua.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) { fi.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+  }
+  if (fi) fi.addEventListener('change', function () { if (this.files.length) handleFile(this.files[0]); });
+
+  if (pb) pb.addEventListener('click', async function () {
+    if (!selectedFile) return;
+    pb.disabled = true;
+    try {
+      var res = await ToolzspanServer.run({
+        endpoint: '/.netlify/functions/video-compressor',
+        file: selectedFile,
+        fields: { crf: document.getElementById("crfSel") ? document.getElementById("crfSel").value : "28" },
+        container: workspace,
+        fallbackName: selectedFile.name.replace(/\.[^.]+$/, '') + '.mp4'
+      });
+      resultBlob = res.blob;
+      resultName = res.filename;
+      if (ri) ri.textContent = 'Processed: ' + resultName + ' (' + formatSize(resultBlob.size) + ')';
+      if (ra) ra.classList.add('active');
+    } catch (e) { /* error already displayed */ }
+    finally { pb.disabled = false; }
+  });
+
+  if (db) db.addEventListener('click', function () {
+    if (!resultBlob) return;
+    ToolzspanServer.downloadBlob(resultBlob, resultName);
+  });
+})();
 </script>
 </body>
 </html>

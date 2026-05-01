@@ -244,233 +244,70 @@
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script>
-    var srcFile=null,pdfBlob=null;
-    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
-    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
-    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
-    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
-    function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
-
-    // Helper: extract image references from a slide's relationships
-    async function getSlideImages(zip,slideIndex){
-      var images=[];
-      var relPath='ppt/slides/_rels/slide'+(slideIndex+1)+'.xml.rels';
-      var relFile=zip.file(relPath);
-      if(!relFile)return images;
-      var relXml=await relFile.async('text');
-      // Find all image relationships
-      var relRegex=/Relationship[^>]*Target="([^"]*)"[^>]*Type="[^"]*\/image"/g;
-      var relRegex2=/Relationship[^>]*Type="[^"]*\/image"[^>]*Target="([^"]*)"/g;
-      var match;
-      var targets=[];
-      // Try both attribute orders
-      var combined=relXml;
-      var imgRegex=/Target="(\.\.\/media\/[^"]+)"/g;
-      while((match=imgRegex.exec(combined))!==null){
-        targets.push(match[1]);
-      }
-      // Also try without ../
-      var imgRegex2=/Target="(media\/[^"]+)"/g;
-      while((match=imgRegex2.exec(combined))!==null){
-        targets.push(match[1]);
-      }
-      // Deduplicate
-      var seen={};
-      for(var i=0;i<targets.length;i++){
-        var target=targets[i];
-        var mediaPath=target.replace('../','ppt/');
-        if(!mediaPath.startsWith('ppt/'))mediaPath='ppt/'+mediaPath;
-        if(seen[mediaPath])continue;
-        seen[mediaPath]=true;
-        var mediaFile=zip.file(mediaPath);
-        if(mediaFile){
-          try{
-            var data=await mediaFile.async('uint8array');
-            var ext=mediaPath.split('.').pop().toLowerCase();
-            images.push({data:data,ext:ext,path:mediaPath});
-          }catch(e){}
-        }
-      }
-      return images;
-    }
-
-    convertBtn.addEventListener('click',async function(){
-      if(typeof JSZip==='undefined'||typeof PDFLib==='undefined'){alert('Libraries are still loading. Please wait a moment and try again.');return;}
-      convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');
-      progressText.textContent='Reading presentation...';progressFill.style.width='10%';
-      try{
-        var ab=await srcFile.arrayBuffer();
-        var zip=await JSZip.loadAsync(ab);
-
-        // Find all slide files and sort them
-        var slideFiles=Object.keys(zip.files).filter(function(n){return n.match(/ppt\/slides\/slide\d+\.xml$/);}).sort(function(a,b){
-          var numA=parseInt(a.match(/slide(\d+)/)[1]);
-          var numB=parseInt(b.match(/slide(\d+)/)[1]);
-          return numA-numB;
-        });
-
-        if(slideFiles.length===0){
-          alert('No slides found in this presentation.');
-          convertBtn.disabled=false;progressWrap.classList.remove('active');return;
-        }
-
-        // Pre-load all media files from ppt/media/
-        var allMedia={};
-        var mediaFiles=Object.keys(zip.files).filter(function(n){return n.startsWith('ppt/media/');});
-        progressText.textContent='Loading media files...';progressFill.style.width='15%';
-        for(var m=0;m<mediaFiles.length;m++){
-          try{
-            allMedia[mediaFiles[m]]=await zip.file(mediaFiles[m]).async('uint8array');
-          }catch(e){}
-        }
-
-        var pdfDoc=await PDFLib.PDFDocument.create();
-        var font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        var fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-        var slideWidth=792;var slideHeight=612; // Landscape
-        var imageCount=0;
-
-        for(var i=0;i<slideFiles.length;i++){
-          progressText.textContent='Converting slide '+(i+1)+' of '+slideFiles.length+'...';
-          progressFill.style.width=(15+((i/slideFiles.length)*75))+'%';
-          // Allow UI to update
-          await new Promise(function(r){setTimeout(r,0);});
-
-          var xml=await zip.file(slideFiles[i]).async('text');
-          var page=pdfDoc.addPage([slideWidth,slideHeight]);
-
-          // Draw a subtle slide background
-          page.drawRectangle({x:0,y:0,width:slideWidth,height:slideHeight,color:PDFLib.rgb(1,1,1)});
-
-          // Draw slide number
-          page.drawText('Slide '+(i+1)+' of '+slideFiles.length,{x:slideWidth-120,y:slideHeight-25,size:8,font:font,color:PDFLib.rgb(0.6,0.6,0.6)});
-
-          // Extract all text from the slide XML
-          var texts=[];
-          var textMatches=xml.match(/<a:t>([^<]*)<\/a:t>/g);
-          if(textMatches){
-            textMatches.forEach(function(m){
-              var t=m.replace(/<\/?a:t>/g,'').trim();
-              if(t)texts.push(t);
-            });
-          }
-
-          // Get images for this slide
-          var slideImages=await getSlideImages(zip,i);
-
-          // Layout: images first, then text
-          var contentY=slideHeight-50;
-          var usedHeight=0;
-
-          // Embed images
-          if(slideImages.length>0){
-            var imgAreaHeight=slideImages.length===1?350:250;
-            var imgX=50;
-            var imgY=contentY-imgAreaHeight;
-            var imgWidth=Math.floor((slideWidth-100)/Math.min(slideImages.length,3));
-
-            for(var j=0;j<Math.min(slideImages.length,4);j++){
-              var img=slideImages[j];
-              try{
-                var embeddedImg;
-                if(img.ext==='png'){
-                  embeddedImg=await pdfDoc.embedPng(img.data);
-                }else if(img.ext==='jpg'||img.ext==='jpeg'){
-                  embeddedImg=await pdfDoc.embedJpg(img.data);
-                }else{
-                  // Try as JPEG first, then PNG
-                  try{
-                    embeddedImg=await pdfDoc.embedJpg(img.data);
-                  }catch(e2){
-                    try{
-                      embeddedImg=await pdfDoc.embedPng(img.data);
-                    }catch(e3){continue;}
-                  }
-                }
-                // Calculate dimensions maintaining aspect ratio
-                var origW=embeddedImg.width;
-                var origH=embeddedImg.height;
-                var maxW=slideImages.length===1?(slideWidth-100):imgWidth-20;
-                var maxH=imgAreaHeight-20;
-                var scale=Math.min(maxW/origW,maxH/origH,1);
-                var drawW=origW*scale;
-                var drawH=origH*scale;
-                var drawX;
-                if(slideImages.length===1){
-                  drawX=(slideWidth-drawW)/2;
-                }else{
-                  drawX=imgX+j*(imgWidth)+(imgWidth-drawW)/2;
-                }
-                var drawY=imgY+(imgAreaHeight-drawH)/2;
-                page.drawImage(embeddedImg,{x:drawX,y:drawY,width:drawW,height:drawH});
-                imageCount++;
-              }catch(e){}
-            }
-            usedHeight=imgAreaHeight+20;
-          }
-
-          // Draw text below images (or at top if no images)
-          var textY=contentY-usedHeight;
-          if(texts.length>0){
-            for(var ti=0;ti<texts.length;ti++){
-              if(textY<50)break;
-              var isTitle=(ti===0);
-              var textFont=isTitle?fontBold:font;
-              var textSize=isTitle?22:13;
-              var textColor=isTitle?PDFLib.rgb(0.04,0.09,0.16):PDFLib.rgb(0.15,0.15,0.15);
-              var textLine=texts[ti];
-
-              // Word wrap for long text
-              var words=textLine.split(' ');
-              var currentLine='';
-              var maxWidth=slideWidth-100;
-              for(var w=0;w<words.length;w++){
-                var test=currentLine?currentLine+' '+words[w]:words[w];
-                var tw=textFont.widthOfTextAtSize(test,textSize);
-                if(tw>maxWidth&&currentLine){
-                  if(textY<50)break;
-                  page.drawText(currentLine,{x:50,y:textY,size:textSize,font:textFont,color:textColor});
-                  textY-=textSize*1.5;
-                  currentLine=words[w];
-                }else{
-                  currentLine=test;
-                }
-              }
-              if(currentLine&&textY>=50){
-                page.drawText(currentLine,{x:50,y:textY,size:textSize,font:textFont,color:textColor});
-                textY-=textSize*1.5;
-              }
-              if(isTitle)textY-=8; // Extra space after title
-            }
-          }
-
-          // Draw a thin border around the slide
-          page.drawRectangle({x:2,y:2,width:slideWidth-4,height:slideHeight-4,borderColor:PDFLib.rgb(0.85,0.88,0.92),borderWidth:1,color:PDFLib.rgb(1,1,1),opacity:0});
-        }
-
-        progressFill.style.width='95%';progressText.textContent='Saving PDF...';
-        var bytes=await pdfDoc.save();
-        pdfBlob=new Blob([bytes],{type:'application/pdf'});
-        progressFill.style.width='100%';progressText.textContent='Done!';
-        var info=slideFiles.length+' slide(s) converted to PDF';
-        if(imageCount>0)info+=' with '+imageCount+' image(s) embedded';
-        info+=' — '+formatSize(bytes.length);
-        resultInfo.textContent=info;
-        resultArea.classList.add('active');
-      }catch(e){
-        alert('Error converting presentation: '+e.message);
-        progressText.textContent='Error occurred.';
-      }
-      convertBtn.disabled=false;
-    });
-    downloadBtn.addEventListener('click',function(){var u=URL.createObjectURL(pdfBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pptx','.pdf');a.click();URL.revokeObjectURL(u);});
-  </script>
   <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/server-tool.js"></script>
+<script>
+(function () {
+  var fi = document.getElementById('fileInput');
+  var ua = document.getElementById('uploadArea');
+  var pb = document.getElementById('convertBtn');
+  var ra = document.getElementById('resultArea');
+  var ri = document.getElementById('resultInfo');
+  var db = document.getElementById('downloadBtn');
+  var fl = document.getElementById('fileList');
+  var workspace = document.querySelector('.tool-workspace');
+  var selectedFile = null, resultBlob = null, resultName = '';
+
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+  function handleFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    if (pb) pb.disabled = false;
+    if (ra) ra.classList.remove('active');
+    if (workspace && window.ToolzspanServer) ToolzspanServer.hideMessages(workspace);
+    if (fl) fl.innerHTML = '<div class="file-item"><span class="file-item-name">' + f.name + '</span><span class="file-item-size">' + formatSize(f.size) + '</span></div>';
+  }
+  if (ua) {
+    ua.addEventListener('dragover', function (e) { e.preventDefault(); ua.classList.add('drag-over'); });
+    ua.addEventListener('dragleave', function () { ua.classList.remove('drag-over'); });
+    ua.addEventListener('drop', function (e) {
+      e.preventDefault(); ua.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) { fi.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+  }
+  if (fi) fi.addEventListener('change', function () { if (this.files.length) handleFile(this.files[0]); });
+
+  if (pb) pb.addEventListener('click', async function () {
+    if (!selectedFile) return;
+    var err = "";
+    if (err) { ToolzspanServer.showError(workspace, err); return; }
+    pb.disabled = true;
+    try {
+      var res = await ToolzspanServer.run({
+        endpoint: '/.netlify/functions/powerpoint-to-pdf',
+        file: selectedFile,
+        fields: {},
+        container: workspace,
+        fallbackName: selectedFile.name.replace(/\.[^.]+$/, '') + '.pdf'
+      });
+      resultBlob = res.blob;
+      resultName = res.filename;
+      if (ri) ri.textContent = 'Processed: ' + resultName + ' (' + formatSize(resultBlob.size) + ')';
+      if (ra) ra.classList.add('active');
+    } catch (e) { /* error already displayed */ }
+    finally { pb.disabled = false; }
+  });
+
+  if (db) db.addEventListener('click', function () {
+    if (!resultBlob) return;
+    ToolzspanServer.downloadBlob(resultBlob, resultName);
+  });
+})();
+</script>
 </body>
 </html>

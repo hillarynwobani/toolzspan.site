@@ -220,22 +220,70 @@
       </div>
     </div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script>
-    var srcFile=null,resultBlob=null;
-    var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn');
-    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',function(){uploadArea.classList.remove('drag-over');});
-    uploadArea.addEventListener('drop',function(e){e.preventDefault();uploadArea.classList.remove('drag-over');var f=Array.from(e.dataTransfer.files).find(function(f){return f.type==='application/pdf';});if(f)loadFile(f);});
-    fileInput.addEventListener('change',function(){if(fileInput.files[0])loadFile(fileInput.files[0]);});
-    function loadFile(f){srcFile=f;fileList.innerHTML='<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span></div>';convertBtn.disabled=false;}
-    function extractStructuredText(items){if(!items||items.length===0)return[];var lines=[];var cl={text:'',y:null,fontSize:0,x:0};var sorted=items.slice().sort(function(a,b){var ay=a.transform?a.transform[5]:0;var by=b.transform?b.transform[5]:0;if(Math.abs(ay-by)<3){return(a.transform?a.transform[4]:0)-(b.transform?b.transform[4]:0);}return by-ay;});for(var i=0;i<sorted.length;i++){var item=sorted[i];if(!item.str&&item.str!=='')continue;var iy=item.transform?item.transform[5]:0;var ix=item.transform?item.transform[4]:0;var ifs=item.transform?Math.abs(item.transform[3]):12;if(cl.y===null){cl={text:item.str,y:iy,fontSize:ifs,x:ix};}else if(Math.abs(iy-cl.y)<3){if(cl.text.length>0){var lc=cl.text[cl.text.length-1];if(lc!==' '&&item.str&&item.str[0]!==' ')cl.text+=' ';}cl.text+=item.str;}else{if(cl.text.trim())lines.push({text:cl.text.trim(),fontSize:cl.fontSize,y:cl.y,x:cl.x});cl={text:item.str,y:iy,fontSize:ifs,x:ix};}}if(cl.text&&cl.text.trim())lines.push({text:cl.text.trim(),fontSize:cl.fontSize,y:cl.y,x:cl.x});return lines;}
-    function groupIntoParagraphs(lines){if(lines.length===0)return[];var paragraphs=[];var cp={lines:[lines[0]],fontSize:lines[0].fontSize};for(var i=1;i<lines.length;i++){var pl=lines[i-1];var cl=lines[i];var lg=Math.abs(pl.y-cl.y);var af=(pl.fontSize+cl.fontSize)/2;var ns=af*1.6;var fc=Math.abs(pl.fontSize-cl.fontSize)>2;var bg=lg>ns*1.3;if(fc||bg){paragraphs.push(cp);cp={lines:[cl],fontSize:cl.fontSize};}else{cp.lines.push(cl);}}paragraphs.push(cp);return paragraphs;}
-    convertBtn.addEventListener('click',async function(){if(typeof pdfjsLib==='undefined'){alert('PDF library is still loading.');return;}convertBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';try{var ab=await srcFile.arrayBuffer();var pdf=await pdfjsLib.getDocument({data:ab}).promise;var ap=[];for(var p=1;p<=pdf.numPages;p++){progressText.textContent='Extracting page '+p+' of '+pdf.numPages+'...';progressFill.style.width=((p/pdf.numPages)*70)+'%';await new Promise(function(r){setTimeout(r,0);});var page=await pdf.getPage(p);var content=await page.getTextContent();var lines=extractStructuredText(content.items);var paragraphs=groupIntoParagraphs(lines);if(p>1&&ap.length>0)ap.push({lines:[],fontSize:0,isPageBreak:true});paragraphs.forEach(function(para){ap.push(para);});}progressText.textContent='Creating Word document...';progressFill.style.width='85%';var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>'+srcFile.name.replace('.pdf','')+'</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.5;margin:72pt;color:#1a1a1a;}h1{font-size:18pt;font-weight:bold;margin:12pt 0 6pt 0;}h2{font-size:14pt;font-weight:bold;margin:10pt 0 4pt 0;}h3{font-size:12pt;font-weight:bold;margin:8pt 0 4pt 0;}p{font-size:11pt;margin:0 0 6pt 0;text-align:justify;}br.page-break{page-break-before:always;}<\/style><\/head><body>';ap.forEach(function(para){if(para.isPageBreak){html+='<br class="page-break">';return;}var text=para.lines.map(function(l){return l.text;}).join(' ').trim();if(!text)return;text=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');var fs=para.fontSize||11;if(fs>=18)html+='<h1>'+text+'<\/h1>';else if(fs>=14)html+='<h2>'+text+'<\/h2>';else if(fs>=12.5)html+='<h3>'+text+'<\/h3>';else html+='<p>'+text+'<\/p>';});html+='<\/body><\/html>';resultBlob=new Blob([html],{type:'application/msword'});progressFill.style.width='100%';progressText.textContent='Done!';resultInfo.textContent='Text extracted from '+pdf.numPages+' page(s) with '+ap.filter(function(p){return !p.isPageBreak;}).length+' paragraph(s).';resultArea.classList.add('active');}catch(e){alert('Error converting PDF: '+e.message);progressText.textContent='Error occurred.';}convertBtn.disabled=false;});
-    downloadBtn.addEventListener('click',function(){var u=URL.createObjectURL(resultBlob);var a=document.createElement('a');a.href=u;a.download=srcFile.name.replace('.pdf','.doc');a.click();URL.revokeObjectURL(u);});
-  </script>
   <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/server-tool.js"></script>
+<script>
+(function () {
+  var fi = document.getElementById('fileInput');
+  var ua = document.getElementById('uploadArea');
+  var pb = document.getElementById('convertBtn');
+  var ra = document.getElementById('resultArea');
+  var ri = document.getElementById('resultInfo');
+  var db = document.getElementById('downloadBtn');
+  var fl = document.getElementById('fileList');
+  var workspace = document.querySelector('.tool-workspace');
+  var selectedFile = null, resultBlob = null, resultName = '';
+
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+  function handleFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    if (pb) pb.disabled = false;
+    if (ra) ra.classList.remove('active');
+    if (workspace && window.ToolzspanServer) ToolzspanServer.hideMessages(workspace);
+    if (fl) fl.innerHTML = '<div class="file-item"><span class="file-item-name">' + f.name + '</span><span class="file-item-size">' + formatSize(f.size) + '</span></div>';
+  }
+  if (ua) {
+    ua.addEventListener('dragover', function (e) { e.preventDefault(); ua.classList.add('drag-over'); });
+    ua.addEventListener('dragleave', function () { ua.classList.remove('drag-over'); });
+    ua.addEventListener('drop', function (e) {
+      e.preventDefault(); ua.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) { fi.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+  }
+  if (fi) fi.addEventListener('change', function () { if (this.files.length) handleFile(this.files[0]); });
+
+  if (pb) pb.addEventListener('click', async function () {
+    if (!selectedFile) return;
+    var err = "";
+    if (err) { ToolzspanServer.showError(workspace, err); return; }
+    pb.disabled = true;
+    try {
+      var res = await ToolzspanServer.run({
+        endpoint: '/.netlify/functions/pdf-to-word',
+        file: selectedFile,
+        fields: {},
+        container: workspace,
+        fallbackName: selectedFile.name.replace(/\.[^.]+$/, '') + '.docx'
+      });
+      resultBlob = res.blob;
+      resultName = res.filename;
+      if (ri) ri.textContent = 'Processed: ' + resultName + ' (' + formatSize(resultBlob.size) + ')';
+      if (ra) ra.classList.add('active');
+    } catch (e) { /* error already displayed */ }
+    finally { pb.disabled = false; }
+  });
+
+  if (db) db.addEventListener('click', function () {
+    if (!resultBlob) return;
+    ToolzspanServer.downloadBlob(resultBlob, resultName);
+  });
+})();
+</script>
 </body>
 </html>

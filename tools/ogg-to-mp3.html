@@ -217,40 +217,68 @@
       </div>
     </div>
   </footer>
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
   <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
-  <script>
-var fi=document.getElementById('fileInput'),ua=document.getElementById('uploadArea'),pb=document.getElementById('processBtn'),pw=document.getElementById('progressWrap'),pf=document.getElementById('progressFill'),pt=document.getElementById('progressText'),ra=document.getElementById('resultArea'),ri=document.getElementById('resultInfo'),db=document.getElementById('downloadBtn');
-var blob=null,fname='';
-ua.addEventListener('dragover',function(e){e.preventDefault();ua.classList.add('drag-over');});
-ua.addEventListener('dragleave',function(){ua.classList.remove('drag-over');});
-ua.addEventListener('drop',function(e){e.preventDefault();ua.classList.remove('drag-over');if(e.dataTransfer.files.length){fi.files=e.dataTransfer.files;handleFile(e.dataTransfer.files[0]);}});
-fi.addEventListener('change',function(){if(this.files.length)handleFile(this.files[0]);});
-function handleFile(f){fname=f.name;pb.disabled=false;ra.classList.remove('active');
-document.getElementById('fileList').innerHTML='<div class=file-item><span class=file-item-name>'+f.name+'</span><span class=file-item-size>'+(f.size<1048576?(f.size/1024).toFixed(1)+' KB':(f.size/1048576).toFixed(2)+' MB')+'</span></div>';}
-pb.addEventListener('click',async function(){
-pb.disabled=true;pw.classList.add('active');pf.style.width='20%';pt.textContent='Loading FFmpeg...';
-try{
-if(!window.FFmpeg){pt.textContent='FFmpeg library not loaded. Please refresh.';return;}
-var ffmpeg=FFmpeg.createFFmpeg({log:false});await ffmpeg.load();
-pf.style.width='40%';pt.textContent='Reading file...';
-var data=new Uint8Array(await fi.files[0].arrayBuffer());
-ffmpeg.FS('writeFile','input',data);
-pf.style.width='60%';pt.textContent='Processing...';
-var outExt='.mp3';
-var outName='output'+outExt;
-await ffmpeg.run('-i','input',outName);
-pf.style.width='90%';
-var out=ffmpeg.FS('readFile',outName);
-blob=new Blob([out.buffer],{type:'audio/mpeg'});
-pf.style.width='100%';pt.textContent='Done!';
-fname=fname.replace(/\.[^.]+$/,outExt);
-ri.textContent='Processed: '+fname+' ('+(blob.size/1024).toFixed(1)+' KB)';
-ra.classList.add('active');
-}catch(e){pt.textContent='Error processing file. Try a different file.';}
-pb.disabled=false;});
-db.addEventListener('click',function(){if(!blob)return;var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fname;a.click();URL.revokeObjectURL(u);});
+<script src="../js/search.js"></script>
+<script src="../js/server-tool.js"></script>
+<script>
+(function () {
+  var fi = document.getElementById('fileInput');
+  var ua = document.getElementById('uploadArea');
+  var pb = document.getElementById('processBtn');
+  var ra = document.getElementById('resultArea');
+  var ri = document.getElementById('resultInfo');
+  var db = document.getElementById('downloadBtn');
+  var fl = document.getElementById('fileList');
+  var workspace = document.querySelector('.tool-workspace');
+  var selectedFile = null, resultBlob = null, resultName = '';
+
+  function formatSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(2) + ' MB';
+  }
+  function handleFile(f) {
+    if (!f) return;
+    selectedFile = f;
+    if (pb) pb.disabled = false;
+    if (ra) ra.classList.remove('active');
+    if (workspace && window.ToolzspanServer) ToolzspanServer.hideMessages(workspace);
+    if (fl) fl.innerHTML = '<div class="file-item"><span class="file-item-name">' + f.name + '</span><span class="file-item-size">' + formatSize(f.size) + '</span></div>';
+  }
+  if (ua) {
+    ua.addEventListener('dragover', function (e) { e.preventDefault(); ua.classList.add('drag-over'); });
+    ua.addEventListener('dragleave', function () { ua.classList.remove('drag-over'); });
+    ua.addEventListener('drop', function (e) {
+      e.preventDefault(); ua.classList.remove('drag-over');
+      if (e.dataTransfer.files.length) { fi.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
+  }
+  if (fi) fi.addEventListener('change', function () { if (this.files.length) handleFile(this.files[0]); });
+
+  if (pb) pb.addEventListener('click', async function () {
+    if (!selectedFile) return;
+    pb.disabled = true;
+    try {
+      var res = await ToolzspanServer.run({
+        endpoint: '/.netlify/functions/ogg-to-mp3',
+        file: selectedFile,
+        fields: {},
+        container: workspace,
+        fallbackName: selectedFile.name.replace(/\.[^.]+$/, '') + '.mp3'
+      });
+      resultBlob = res.blob;
+      resultName = res.filename;
+      if (ri) ri.textContent = 'Processed: ' + resultName + ' (' + formatSize(resultBlob.size) + ')';
+      if (ra) ra.classList.add('active');
+    } catch (e) { /* error already displayed */ }
+    finally { pb.disabled = false; }
+  });
+
+  if (db) db.addEventListener('click', function () {
+    if (!resultBlob) return;
+    ToolzspanServer.downloadBlob(resultBlob, resultName);
+  });
+})();
 </script>
 </body>
 </html>
