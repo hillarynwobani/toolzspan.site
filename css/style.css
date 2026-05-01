@@ -1970,11 +1970,27 @@ main {
      because sticky requires a scrollable ancestor — without one the header
      falls back to its in-flow position, which can be scrolled off-screen. */
   body.menu-open .site-header {
-    position: fixed;
-    top: 0;
+    position: fixed !important;
+    top: 0 !important;
     left: 0;
     right: 0;
     z-index: 1100;
+  }
+
+  /* Belt-and-suspenders: pin the close (X) button directly to the viewport
+     so it is always tappable even if iOS Safari quirks affect the sticky->fixed
+     switch above. This guarantees a way out of the drawer at every level. */
+  body.menu-open .menu-toggle {
+    position: fixed !important;
+    top: 14px;
+    right: 16px;
+    z-index: 1200;
+    background: var(--white);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    box-shadow: 0 2px 12px rgba(10, 22, 40, 0.18);
   }
 
   .nav-menu {
