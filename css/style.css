@@ -2015,7 +2015,12 @@ main {
     gap: 0;
   }
 
-  /* L1 row: a tab */
+  /* L1 row: a tab.
+     IMPORTANT: do NOT make this position: relative on mobile. The child
+     .mega-dropdown (L2 panel) is position: absolute and must use .nav-menu
+     (the transformed ancestor) as its containing block so it fills the full
+     drawer. If .nav-tab is a positioned ancestor, the L2 panel would only
+     span the ~50px tab row and sibling tabs would leak through. */
   .nav-tab {
     width: 100%;
     padding: 18px 22px;
@@ -2025,7 +2030,7 @@ main {
     font-size: 16px;
     color: var(--deep-navy);
     cursor: pointer;
-    position: relative;
+    position: static;
     display: flex;
     align-items: center;
     justify-content: space-between;

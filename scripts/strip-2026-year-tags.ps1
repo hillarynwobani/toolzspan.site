@@ -22,8 +22,9 @@ Write-Host "Scanning $($files.Count) blog files in $blogDir" -ForegroundColor Cy
 #   - "blog-card-date">April N, 2026<" (index cards)
 
 $patterns = @(
-    # 1. " (2026 Guide)" and " (2026)" parenthetical year badges (anywhere, incl. titles/headings)
-    @{ Find = '\s*\(2026(?:\s+Guide)?\)'; Replace = ''; Desc = 'strip (2026) / (2026 Guide) parenthetical' }
+    # 1. Any "( ... 2026 ... )" parenthetical badge: "(2026)", "(2026 Guide)",
+    #    "(2026 Step-by-Step Guide)", "(in 2026)", etc. Capped at 40 chars to stay safe.
+    @{ Find = '\s*\([^)]{0,4}2026[^)]{0,40}\)'; Replace = ''; Desc = 'strip (...2026...) parenthetical' }
 
     # 2. " — Complete Guide (2026)" style is already handled by #1 since we only match the parenthetical
 
