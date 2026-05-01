@@ -317,7 +317,22 @@ main {
   height: 2.5px;
   background: var(--deep-navy);
   border-radius: 2px;
-  transition: var(--transition);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+/* Hamburger -> X animation when nav drawer is open */
+.menu-toggle.is-open span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-toggle.is-open span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* === FOOTER === */
@@ -1580,6 +1595,14 @@ main {
   color: var(--primary-blue) !important;
 }
 
+/* Drill-back buttons are injected by JS into every mega-dropdown and mega-col
+   for the mobile 3-level drawer. They must be hidden on desktop, otherwise
+   they render as plain "Back..." text on top of each column. Only the mobile
+   @media block re-enables them. */
+.drill-back {
+  display: none;
+}
+
 /* === BREADCRUMB === */
 .breadcrumb {
   padding: 12px 20px;
@@ -2020,10 +2043,13 @@ main {
     transition: none;
   }
 
-  /* L2: mega-dropdown becomes a fixed full-screen panel that slides in */
+  /* L2: mega-dropdown becomes an absolute full-drawer panel that slides in.
+     Use position: absolute because .nav-menu has transform (which would make
+     position: fixed descendants relative to .nav-menu anyway — and cause a
+     64px gap exposing the L1 tabs). Absolute + top:0 cleanly covers L1. */
   .mega-dropdown {
-    position: fixed;
-    top: 64px;
+    position: absolute;
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;
@@ -2133,10 +2159,13 @@ main {
     display: none;
   }
 
-  /* L3: mega-col becomes a fixed full-screen panel */
+  /* L3: mega-col becomes an absolute full-drawer panel.
+     Same rationale as L2 — .mega-dropdown ancestor has transform, so we use
+     absolute positioning + top:0 to fully cover L2 instead of leaking a 64px
+     strip. */
   .mega-col.is-active {
-    position: fixed;
-    top: 64px;
+    position: absolute;
+    top: 0;
     right: 0;
     bottom: 0;
     left: 0;

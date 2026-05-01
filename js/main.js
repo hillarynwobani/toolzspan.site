@@ -15,6 +15,8 @@
     if (!navMenu) return;
     navMenu.classList.remove('active');
     document.body.classList.remove('menu-open');
+    var toggle = document.getElementById('menuToggle');
+    if (toggle) toggle.classList.remove('is-open');
     document.querySelectorAll('.nav-tab.is-active').forEach(function (t) {
       t.classList.remove('is-active');
     });
@@ -79,15 +81,21 @@
 
     injectDrillBacks();
 
-    // Hamburger toggle
+    // Hamburger toggle (also acts as X close button when open)
+    menuToggle.setAttribute('aria-expanded', 'false');
     menuToggle.addEventListener('click', function (e) {
       e.stopPropagation();
       var willOpen = !navMenu.classList.contains('active');
       if (willOpen) {
         navMenu.classList.add('active');
+        menuToggle.classList.add('is-open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', 'Close navigation');
         if (isMobile()) document.body.classList.add('menu-open');
       } else {
         closeMenu();
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation');
       }
     });
 
