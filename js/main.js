@@ -5,14 +5,41 @@
 
 (function () {
   var MOBILE_BREAKPOINT = 768;
+  var savedScrollY = 0;
 
   function isMobile() {
     return window.innerWidth <= MOBILE_BREAKPOINT;
   }
 
+  // iOS-safe scroll lock: `body { overflow: hidden }` alone does NOT lock scroll on
+  // iOS Safari, and position:fixed children can render against the layout viewport
+  // instead of the visual viewport, making the close (X) button invisible. The fix
+  // is to pin the body itself at the current scroll offset so the drawer and its X
+  // button always sit against the visible viewport.
+  function lockBodyScroll() {
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    var body = document.body;
+    body.style.position = 'fixed';
+    body.style.top = '-' + savedScrollY + 'px';
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+  }
+
+  function unlockBodyScroll() {
+    var body = document.body;
+    body.style.position = '';
+    body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
+    body.style.width = '';
+    window.scrollTo(0, savedScrollY);
+  }
+
   function closeMenu() {
     var navMenu = document.getElementById('navMenu');
     if (!navMenu) return;
+    var wasOpen = document.body.classList.contains('menu-open');
     navMenu.classList.remove('active');
     document.body.classList.remove('menu-open');
     var toggle = document.getElementById('menuToggle');
@@ -23,6 +50,7 @@
     document.querySelectorAll('.mega-col.is-active').forEach(function (c) {
       c.classList.remove('is-active');
     });
+    if (wasOpen) unlockBodyScroll();
   }
 
   function getTabLabel(tab) {
@@ -87,6 +115,11 @@
       e.stopPropagation();
       var willOpen = !navMenu.classList.contains('active');
       if (willOpen) {
+        // Lock body scroll BEFORE adding .menu-open so the scrollY captured by
+        // lockBodyScroll() is the pre-open position. Without this order, the
+        // CSS rule `body.menu-open { overflow: hidden }` could fire first and
+        // briefly reset scroll on some mobile browsers.
+        if (isMobile()) lockBodyScroll();
         navMenu.classList.add('active');
         menuToggle.classList.add('is-open');
         menuToggle.setAttribute('aria-expanded', 'true');
