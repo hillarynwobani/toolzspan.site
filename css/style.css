@@ -1964,6 +1964,19 @@ main {
     overflow: hidden;
   }
 
+  /* When the drawer is open, force the header to fixed positioning so the
+     close (X) button is always pinned to the top of the viewport. The default
+     `position: sticky` breaks once `body.menu-open` sets `overflow: hidden`
+     because sticky requires a scrollable ancestor — without one the header
+     falls back to its in-flow position, which can be scrolled off-screen. */
+  body.menu-open .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+  }
+
   .nav-menu {
     position: fixed;
     top: 64px;
