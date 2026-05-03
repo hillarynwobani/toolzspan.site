@@ -21,7 +21,7 @@ const MIME_BY_EXT = {
 
 exports.handler = makeFfmpegHandler({
   allowedExtensions: ['mp3', 'wav', 'ogg', 'flac', 'm4a', 'aac'],
-  maxBytes: 30 * 1024 * 1024,
+  maxBytes: 200 * 1024 * 1024,
   outputExt: (fields) => {
     const requested = (fields.output || 'mp3').toLowerCase();
     return CODEC_BY_EXT[requested] ? requested : 'mp3';

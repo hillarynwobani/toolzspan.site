@@ -14,7 +14,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return jsonError(405, 'Method not allowed');
 
   let parsed;
-  try { parsed = await parseMultipart(event, { maxBytes: 30 * 1024 * 1024 }); }
+  try { parsed = await parseMultipart(event, { maxBytes: 500 * 1024 * 1024 }); }
   catch (err) { return jsonError(400, err.message); }
 
   const { file, fields } = parsed;

@@ -5,7 +5,7 @@ exports.handler = makeFfmpegHandler({
   allowedExtensions: ['mp4'],
   outputExt: 'mp4',
   outputMime: 'video/mp4',
-  maxBytes: 50 * 1024 * 1024,
+  maxBytes: 500 * 1024 * 1024,
   buildArgs: (file, fields) => {
     const crfNum = parseInt(fields.crf, 10);
     const crf = (crfNum >= 18 && crfNum <= 32) ? String(crfNum) : '28';

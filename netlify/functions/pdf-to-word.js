@@ -18,7 +18,7 @@ exports.handler = async (event) => {
   }
 
   let parsed;
-  try { parsed = await parseMultipart(event, { maxBytes: 20 * 1024 * 1024 }); }
+  try { parsed = await parseMultipart(event, { maxBytes: 100 * 1024 * 1024 }); }
   catch (err) { return jsonError(400, err.message); }
 
   const { file } = parsed;
