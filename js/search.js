@@ -22,7 +22,7 @@
     { name: 'Remove Password from PDF', url: '/tools/remove-password-pdf.html', tags: ['password', 'unlock', 'remove', 'decrypt', 'open', 'pdf', 'unprotect'], cat: 'PDF', icon: '🔓' },
     { name: 'Sign PDF', url: '/tools/sign-pdf.html', tags: ['sign', 'signature', 'draw', 'write', 'pdf', 'autograph', 'initial', 'esign'], cat: 'PDF', icon: '🖊️' },
     { name: 'OCR PDF', url: '/tools/ocr-pdf.html', tags: ['ocr', 'text', 'recognition', 'scan', 'read', 'extract', 'pdf', 'searchable'], cat: 'PDF', icon: '🔍' },
-    { name: 'Scan Image', url: '/tools/scan-image.html', tags: ['scan', 'ocr', 'text', 'read', 'image', 'extract', 'recognize', 'photo'], cat: 'PDF', icon: '📷' },
+    { name: 'Image to Text (OCR)', url: '/tools/scan-image.html', tags: ['image to text', 'ocr', 'extract text', 'scan image', 'read', 'photo to text', 'recognize', 'optical character recognition'], cat: 'PDF', icon: '📷' },
     { name: 'PDF to Word', url: '/tools/pdf-to-word.html', tags: ['pdf', 'word', 'docx', 'doc', 'document', 'convert', 'office', 'microsoft'], cat: 'Convert', icon: '📝' },
     { name: 'Word to PDF', url: '/tools/word-to-pdf.html', tags: ['word', 'pdf', 'docx', 'doc', 'document', 'convert', 'office', 'microsoft'], cat: 'Convert', icon: '📄' },
     { name: 'PowerPoint to PDF', url: '/tools/powerpoint-to-pdf.html', tags: ['powerpoint', 'pptx', 'ppt', 'pdf', 'slides', 'presentation', 'convert', 'office'], cat: 'Convert', icon: '📊' },
