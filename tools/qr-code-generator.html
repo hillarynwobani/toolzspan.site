@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"QR Code Generator","description":"Generate QR codes for any URL, text, or contact info free online. Customizable QR codes, no sign-up.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://toolzspan.site/tools/qr-code-generator.html","provider":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"General Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"QR Code Generator","item":"https://toolzspan.site/tools/qr-code-generator.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Qr Code Generator free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, Qr Code Generator on Toolzspan is completely free. No sign-up or account required."}},{"@type":"Question","name":"Is my file safe when I use Qr Code Generator?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your file never leaves your device — all processing happens in your browser."}},{"@type":"Question","name":"What file size can I upload?","acceptedAnswer":{"@type":"Answer","text":"You can upload files up to 50MB for optimal performance in the browser."}},{"@type":"Question","name":"Does Qr Code Generator work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Qr Code Generator works on all devices including mobile phones and tablets. No app download needed."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is QR Code Generator free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free — no sign-up, no watermark, no usage limits. Generate as many QR codes as you like with no hidden costs or restrictions."}},{"@type":"Question","name":"Is my data safe when I use QR Code Generator?","acceptedAnswer":{"@type":"Answer","text":"Yes. The generator runs entirely in your browser — nothing is uploaded or stored on a server. Your URLs and text stay private on your device."}},{"@type":"Question","name":"What can I encode in a QR code?","acceptedAnswer":{"@type":"Answer","text":"URLs, plain text, contact info (vCard), Wi-Fi credentials, email addresses, and phone numbers. Each type uses the appropriate QR code format."}},{"@type":"Question","name":"Does QR Code Generator work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, QR Code Generator works on all modern mobile browsers. No app install needed — generate QR codes directly on your phone or tablet."}},{"@type":"Question","name":"What format is the QR code saved in?","acceptedAnswer":{"@type":"Answer","text":"PNG by default, with optional SVG export. PNG is best for printing and sharing. SVG scales infinitely without losing quality — ideal for large prints."}},{"@type":"Question","name":"Can I customize the QR code colours?","acceptedAnswer":{"@type":"Answer","text":"Yes. Choose any foreground and background colours to match your brand. Maintain enough contrast so phone cameras can scan it reliably."}},{"@type":"Question","name":"Will my QR code work after I print it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Export the QR code at high resolution (or as SVG) and print at any size. Make sure the printed code is at least 2cm wide for easy scanning."}},{"@type":"Question","name":"Do QR codes expire?","acceptedAnswer":{"@type":"Answer","text":"No. QR codes generated here are static and never expire. They’ll work forever as long as the destination URL or content remains valid."}}]}</script>
 </head>
 <body>
     <header class="site-header">
@@ -119,6 +119,7 @@
               <a href="qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
               <a href="word-counter.html"><span class="dot"></span>Word Counter</a>
               <a href="color-picker.html"><span class="dot"></span>Color Picker</a>
+              <a href="base64-encoder.html"><span class="dot"></span>Base64 Encoder</a>
               <a href="units-converter.html"><span class="dot"></span>Units Converter</a>
               <a href="time-converter.html"><span class="dot"></span>Time Converter</a>
               <a href="trim-audio.html"><span class="dot"></span>Trim Audio</a>
@@ -188,20 +189,36 @@
       </ul>
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
-        <button class="faq-question">Is Qr Code Generator free to use?</button>
-        <div class="faq-answer"><p>Yes, Qr Code Generator on Toolzspan is completely free. No sign-up or account required.</p></div>
+        <button class="faq-question">Is QR Code Generator free to use?</button>
+        <div class="faq-answer"><p>Yes, completely free — no sign-up, no watermark, no usage limits. Generate as many QR codes as you like with no hidden costs or restrictions.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question">Is my file safe when I use Qr Code Generator?</button>
-        <div class="faq-answer"><p>Yes. Your file never leaves your device — all processing happens in your browser.</p></div>
+        <button class="faq-question">Is my data safe when I use QR Code Generator?</button>
+        <div class="faq-answer"><p>Yes. The generator runs entirely in your browser — nothing is uploaded or stored on a server. Your URLs and text stay private on your device.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question">What file size can I upload?</button>
-        <div class="faq-answer"><p>You can upload files up to 50MB for optimal performance in the browser.</p></div>
+        <button class="faq-question">What can I encode in a QR code?</button>
+        <div class="faq-answer"><p>URLs, plain text, contact info (vCard), Wi-Fi credentials, email addresses, and phone numbers. Each type uses the appropriate QR code format.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question">Does Qr Code Generator work on mobile?</button>
-        <div class="faq-answer"><p>Yes, Qr Code Generator works on all devices including mobile phones and tablets. No app download needed.</p></div>
+        <button class="faq-question">Does QR Code Generator work on mobile?</button>
+        <div class="faq-answer"><p>Yes, QR Code Generator works on all modern mobile browsers. No app install needed — generate QR codes directly on your phone or tablet.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What format is the QR code saved in?</button>
+        <div class="faq-answer"><p>PNG by default, with optional SVG export. PNG is best for printing and sharing. SVG scales infinitely without losing quality — ideal for large prints.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Can I customize the QR code colours?</button>
+        <div class="faq-answer"><p>Yes. Choose any foreground and background colours to match your brand. Maintain enough contrast so phone cameras can scan it reliably.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Will my QR code work after I print it?</button>
+        <div class="faq-answer"><p>Yes. Export the QR code at high resolution (or as SVG) and print at any size. Make sure the printed code is at least 2cm wide for easy scanning.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do QR codes expire?</button>
+        <div class="faq-answer"><p>No. QR codes generated here are static and never expire. They’ll work forever as long as the destination URL or content remains valid.</p></div>
       </div>
     </div>
   

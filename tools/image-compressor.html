@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Compressor","description":"Free online image compressor. Reduce JPG, PNG, and WebP file sizes without losing visible quality.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://toolzspan.site/tools/image-compressor.html","provider":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"Image Tools","item":"https://toolzspan.site/tools/all-tools.html#image"},{"@type":"ListItem","position":3,"name":"Image Compressor","item":"https://toolzspan.site/tools/image-compressor.html"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Image Compressor free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, Image Compressor on Toolzspan is completely free. No sign-up or account required."}},{"@type":"Question","name":"Is my file safe when I use Image Compressor?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your file never leaves your device — all processing happens in your browser."}},{"@type":"Question","name":"What file size can I upload?","acceptedAnswer":{"@type":"Answer","text":"You can upload files up to 50MB for optimal performance in the browser."}},{"@type":"Question","name":"Does Image Compressor work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Image Compressor works on all devices including mobile phones and tablets. No app download needed."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Image Compressor free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free — no sign-up, no watermark, no usage limits. Compress as many images as you like with no hidden costs or restrictions."}},{"@type":"Question","name":"Is my file safe when I use Image Compressor?","acceptedAnswer":{"@type":"Answer","text":"Yes. Files are processed entirely in your browser — they never leave your device. Nothing is uploaded to a server, and nothing is stored after you close the tab."}},{"@type":"Question","name":"What file size can I upload?","acceptedAnswer":{"@type":"Answer","text":"You can compress images up to 50MB each. Most photos from phones and cameras are well under this limit."}},{"@type":"Question","name":"Does Image Compressor work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Image Compressor works on all modern mobile browsers. No app install needed — open the page in Safari or Chrome on your phone or tablet and compress images just like on desktop."}},{"@type":"Question","name":"How much can I reduce my image file size?","acceptedAnswer":{"@type":"Answer","text":"Typical reduction is 40–80% depending on the image. Photos with lots of detail compress less; flat-colour images compress more aggressively without visible quality loss."}},{"@type":"Question","name":"Will my image lose visible quality?","acceptedAnswer":{"@type":"Answer","text":"At moderate compression, no. The tool uses smart algorithms to remove invisible data while preserving the visual appearance. Aggressive settings may show minor artefacts."}},{"@type":"Question","name":"What image formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, and WebP are supported. Each format is optimised using its own most efficient compression method, preserving transparency where applicable."}},{"@type":"Question","name":"Can I batch compress multiple images?","acceptedAnswer":{"@type":"Answer","text":"Yes. Upload multiple images and compress them all in the same session, then download each compressed file individually or as a ZIP."}}]}</script>
 </head>
 <body>
     <header class="site-header">
@@ -119,6 +119,7 @@
               <a href="qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
               <a href="word-counter.html"><span class="dot"></span>Word Counter</a>
               <a href="color-picker.html"><span class="dot"></span>Color Picker</a>
+              <a href="base64-encoder.html"><span class="dot"></span>Base64 Encoder</a>
               <a href="units-converter.html"><span class="dot"></span>Units Converter</a>
               <a href="time-converter.html"><span class="dot"></span>Time Converter</a>
               <a href="trim-audio.html"><span class="dot"></span>Trim Audio</a>
@@ -188,19 +189,35 @@
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
         <button class="faq-question">Is Image Compressor free to use?</button>
-        <div class="faq-answer"><p>Yes, Image Compressor on Toolzspan is completely free. No sign-up or account required.</p></div>
+        <div class="faq-answer"><p>Yes, completely free — no sign-up, no watermark, no usage limits. Compress as many images as you like with no hidden costs or restrictions.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">Is my file safe when I use Image Compressor?</button>
-        <div class="faq-answer"><p>Yes. Your file never leaves your device — all processing happens in your browser.</p></div>
+        <div class="faq-answer"><p>Yes. Files are processed entirely in your browser — they never leave your device. Nothing is uploaded to a server, and nothing is stored after you close the tab.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">What file size can I upload?</button>
-        <div class="faq-answer"><p>You can upload files up to 50MB for optimal performance in the browser.</p></div>
+        <div class="faq-answer"><p>You can compress images up to 50MB each. Most photos from phones and cameras are well under this limit.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">Does Image Compressor work on mobile?</button>
-        <div class="faq-answer"><p>Yes, Image Compressor works on all devices including mobile phones and tablets. No app download needed.</p></div>
+        <div class="faq-answer"><p>Yes, Image Compressor works on all modern mobile browsers. No app install needed — open the page in Safari or Chrome on your phone or tablet and compress images just like on desktop.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">How much can I reduce my image file size?</button>
+        <div class="faq-answer"><p>Typical reduction is 40–80% depending on the image. Photos with lots of detail compress less; flat-colour images compress more aggressively without visible quality loss.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Will my image lose visible quality?</button>
+        <div class="faq-answer"><p>At moderate compression, no. The tool uses smart algorithms to remove invisible data while preserving the visual appearance. Aggressive settings may show minor artefacts.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What image formats are supported?</button>
+        <div class="faq-answer"><p>JPG, PNG, and WebP are supported. Each format is optimised using its own most efficient compression method, preserving transparency where applicable.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Can I batch compress multiple images?</button>
+        <div class="faq-answer"><p>Yes. Upload multiple images and compress them all in the same session, then download each compressed file individually or as a ZIP.</p></div>
       </div>
     </div>
   

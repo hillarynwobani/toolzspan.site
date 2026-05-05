@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder &amp; Decoder — Free Online | Toolzspan</title>
+  <meta name="description" content="Encode or decode Base64 text online for free. Convert plain text to Base64 and back instantly. Works in your browser — no sign-up, no upload.">
+  <link rel="canonical" href="https://toolzspan.site/tools/base64-encoder.html">
+  <meta property="og:title" content="Base64 Encoder &amp; Decoder — Free Online | Toolzspan">
+  <meta property="og:description" content="Encode or decode Base64 text online for free. Convert plain text to Base64 and back instantly.">
+  <meta property="og:url" content="https://toolzspan.site/tools/base64-encoder.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://toolzspan.site/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Base64 Encoder &amp; Decoder — Free Online | Toolzspan">
+  <meta name="twitter:description" content="Encode or decode Base64 text online for free. Convert plain text to Base64 and back instantly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Base64 Encoder & Decoder","description":"Free online Base64 encoder and decoder. Convert text to Base64 and back instantly in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://toolzspan.site/tools/base64-encoder.html","provider":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"General Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"Base64 Encoder","item":"https://toolzspan.site/tools/base64-encoder.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Base64 Encoder free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free — no sign-up, no watermark, no usage limits. Encode and decode as much text as you like with no hidden costs or restrictions."}},{"@type":"Question","name":"Is my data safe when I use Base64 Encoder?","acceptedAnswer":{"@type":"Answer","text":"Yes. Base64 Encoder runs entirely in your browser — nothing is uploaded or stored on a server. Your text and files stay private on your device."}},{"@type":"Question","name":"What can I encode with this tool?","acceptedAnswer":{"@type":"Answer","text":"Any plain text — including UTF-8 characters, emojis, JSON, source code, API keys, and credentials. The tool also supports Base64 decoding back to readable text."}},{"@type":"Question","name":"Does Base64 Encoder work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Base64 Encoder works on all modern mobile browsers. No app install needed — encode and decode directly on your phone or tablet just like on desktop."}},{"@type":"Question","name":"What is Base64 used for?","acceptedAnswer":{"@type":"Answer","text":"Base64 is used to safely transmit binary data over text-only systems — email attachments, embedding images in CSS or HTML (data URIs), API authentication headers (Basic Auth), JWT tokens, and JSON payloads carrying binary fields."}},{"@type":"Question","name":"Is Base64 encryption?","acceptedAnswer":{"@type":"Answer","text":"No. Base64 is encoding, not encryption. Anyone can decode a Base64 string back to its original content with no key required. Never use Base64 to hide passwords or sensitive data — use proper encryption instead."}},{"@type":"Question","name":"Why is the encoded output longer than the input?","acceptedAnswer":{"@type":"Answer","text":"Base64 represents every 3 bytes of input as 4 characters of output, so the encoded text is roughly 33% larger than the original. Padding characters (=) may add 1–2 more bytes."}},{"@type":"Question","name":"Does it support Unicode and emojis?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool encodes and decodes full UTF-8, including non-Latin scripts (Chinese, Arabic, Japanese), accents, and emojis — they round-trip without corruption."}}]}</script>
+  <style>
+    .b64-mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
+    .b64-mode-btn{flex:1;padding:12px 20px;border:1px solid var(--border-color);border-radius:var(--radius-sm);background:var(--white);font-family:var(--font-body);font-weight:600;cursor:pointer;color:var(--mid-gray);transition:all 0.15s;}
+    .b64-mode-btn.active{background:var(--primary-blue);color:var(--white);border-color:var(--primary-blue);}
+    .b64-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+    @media(max-width:768px){.b64-grid{grid-template-columns:1fr;}}
+    .b64-field{background:var(--off-white);padding:16px;border-radius:var(--radius-sm);}
+    .b64-field-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .b64-field label{font-weight:600;font-size:0.85rem;color:var(--mid-gray);text-transform:uppercase;letter-spacing:0.05em;margin:0;}
+    .b64-field textarea{width:100%;min-height:200px;padding:12px;border:1px solid var(--border-color);border-radius:var(--radius-sm);font-family:'Courier New',monospace;font-size:0.9rem;background:var(--white);resize:vertical;line-height:1.5;}
+    .b64-field textarea:focus{outline:none;border-color:var(--primary-blue);}
+    .b64-icon-btn{background:none;border:none;color:var(--primary-blue);font-weight:600;font-size:0.8rem;cursor:pointer;padding:4px 8px;border-radius:4px;transition:background 0.15s;}
+    .b64-icon-btn:hover{background:rgba(30,111,255,0.1);}
+    .b64-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+    .b64-actions .btn{flex:1;min-width:120px;}
+    .b64-stats{font-size:0.85rem;color:var(--mid-gray);margin-top:8px;}
+    .b64-error{color:#d33;font-size:0.85rem;margin-top:8px;display:none;}
+  </style>
+</head>
+<body>
+    <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="header-logo" aria-label="Toolzspan Home">
+        <img src="../toolzspan-logo-v2.svg" alt="Toolzspan —  All-in-One Free Online Tools" width="180" height="45" loading="eager">
+        <span class="logo-tagline">50 Free Online Tools</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation" id="menuToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <div class="nav-tab" id="navConvert">Convert <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video &amp; Audio</div>
+              <a href="mp4-converter.html"><span class="dot"></span>MP4 Converter</a>
+              <a href="mp3-converter.html"><span class="dot"></span>MP3 Converter</a>
+              <a href="mp4-to-mp3.html"><span class="dot"></span>MP4 to MP3</a>
+              <a href="mp3-to-mp4.html"><span class="dot"></span>MP3 to MP4</a>
+              <a href="avi-to-mp4.html"><span class="dot"></span>AVI to MP4</a>
+              <a href="mov-to-mp4.html"><span class="dot"></span>MOV to MP4</a>
+              <a href="webm-to-mp4.html"><span class="dot"></span>WebM to MP4</a>
+              <a href="wav-to-mp3.html"><span class="dot"></span>WAV to MP3</a>
+              <a href="ogg-to-mp3.html"><span class="dot"></span>OGG to MP3</a>
+              <a href="all-tools.html#video-audio" class="mega-view-all">&rarr; View All Video &amp; Audio</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="image-to-pdf.html"><span class="dot"></span>Image to PDF</a>
+              <a href="pdf-to-image.html"><span class="dot"></span>PDF to Image</a>
+              <a href="jpg-to-png.html"><span class="dot"></span>JPG to PNG</a>
+              <a href="png-to-jpg.html"><span class="dot"></span>PNG to JPG</a>
+              <a href="webp-to-jpg.html"><span class="dot"></span>WEBP to JPG</a>
+              <a href="webp-to-png.html"><span class="dot"></span>WEBP to PNG</a>
+              <a href="jpg-to-webp.html"><span class="dot"></span>JPG to WEBP</a>
+              <a href="png-to-webp.html"><span class="dot"></span>PNG to WEBP</a>
+              <a href="heic-to-jpg.html"><span class="dot"></span>HEIC to JPG</a>
+              <a href="all-tools.html#image" class="mega-view-all">&rarr; View All Image Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF &amp; Documents</div>
+              <a href="pdf-to-word.html"><span class="dot"></span>PDF to Word</a>
+              <a href="word-to-pdf.html"><span class="dot"></span>Word to PDF</a>
+              <a href="powerpoint-to-pdf.html"><span class="dot"></span>PowerPoint to PDF</a>
+              <a href="excel-to-pdf.html"><span class="dot"></span>Excel to PDF</a>
+              <a href="pdf-editor.html"><span class="dot"></span>PDF Editor</a>
+              <a href="all-tools.html#pdf" class="mega-view-all">&rarr; View All PDF &amp; Docs</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-tab" id="navCompress">Compress <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">Video &amp; Audio</div>
+              <a href="video-compressor.html"><span class="dot"></span>Video Compressor</a>
+              <a href="compress-mp4.html"><span class="dot"></span>Compress MP4</a>
+              <a href="audio-compressor.html"><span class="dot"></span>Audio Compressor</a>
+              <a href="compress-mp3.html"><span class="dot"></span>Compress MP3</a>
+              <a href="all-tools.html#compress" class="mega-view-all">&rarr; View All Compressors</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">Image</div>
+              <a href="image-compressor.html"><span class="dot"></span>Image Compressor</a>
+              <a href="gif-compressor.html"><span class="dot"></span>GIF Compressor</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF</div>
+              <a href="pdf-compressor.html"><span class="dot"></span>PDF Compressor</a>
+            </div>
+          </div>
+        </div>
+        <div class="nav-tab" id="navTools">Tools <span class="arrow">&#9660;</span>
+          <div class="mega-dropdown">
+            <div class="mega-col">
+              <div class="mega-col-heading">PDF Tools</div>
+              <a href="pdf-merger.html"><span class="dot"></span>PDF Merger</a>
+              <a href="pdf-splitter.html"><span class="dot"></span>PDF Splitter</a>
+              <a href="pdf-page-rotator.html"><span class="dot"></span>PDF Page Rotator</a>
+              <a href="pdf-page-remover.html"><span class="dot"></span>PDF Page Remover</a>
+              <a href="add-watermark-pdf.html"><span class="dot"></span>Add Watermark</a>
+              <a href="add-password-pdf.html"><span class="dot"></span>Add Password</a>
+              <a href="remove-password-pdf.html"><span class="dot"></span>Remove Password</a>
+              <a href="sign-pdf.html"><span class="dot"></span>Sign PDF</a>
+              <a href="ocr-pdf.html"><span class="dot"></span>OCR PDF</a>
+              <a href="scan-image.html"><span class="dot"></span>Scan Image</a>
+              <a href="all-tools.html#pdf-tools" class="mega-view-all">&rarr; View All PDF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">GIF Tools</div>
+              <a href="gif-maker.html"><span class="dot"></span>GIF Maker</a>
+              <a href="gif-converter.html"><span class="dot"></span>GIF Converter</a>
+              <a href="all-tools.html#gif" class="mega-view-all">&rarr; View All GIF Tools</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-heading">General</div>
+              <a href="qr-code-generator.html"><span class="dot"></span>QR Code Generator</a>
+              <a href="word-counter.html"><span class="dot"></span>Word Counter</a>
+              <a href="color-picker.html"><span class="dot"></span>Color Picker</a>
+              <a href="base64-encoder.html"><span class="dot"></span>Base64 Encoder</a>
+              <a href="units-converter.html"><span class="dot"></span>Units Converter</a>
+              <a href="time-converter.html"><span class="dot"></span>Time Converter</a>
+              <a href="trim-audio.html"><span class="dot"></span>Trim Audio</a>
+              <a href="all-tools.html#general" class="mega-view-all">&rarr; View All General Tools</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <div class="search-btn">&#128269;</div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="all-tools.html#general">General Tools</a><span>›</span>Base64 Encoder</div>
+    <section class="tool-hero"><h1>Base64 Encoder &amp; Decoder</h1><p>Encode any text into Base64 or decode Base64 back to readable text. Useful for embedding images in CSS, debugging API tokens, encoding email attachments, and working with JWT or Basic Auth.</p></section>
+    <div class="adsense-placeholder adsense-top">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+    <div class="tool-workspace">
+      <div class="b64-mode-toggle" role="tablist">
+        <button class="b64-mode-btn active" data-mode="encode" role="tab" aria-selected="true">Encode &rarr; Base64</button>
+        <button class="b64-mode-btn" data-mode="decode" role="tab" aria-selected="false">Decode &larr; Base64</button>
+      </div>
+      <div class="b64-grid">
+        <div class="b64-field">
+          <div class="b64-field-header">
+            <label for="b64Input" id="inputLabel">Plain Text Input</label>
+            <button class="b64-icon-btn" id="clearBtn" type="button">Clear</button>
+          </div>
+          <textarea id="b64Input" placeholder="Type or paste text here..." spellcheck="false" autocomplete="off"></textarea>
+          <div class="b64-stats" id="inputStats">0 characters</div>
+        </div>
+        <div class="b64-field">
+          <div class="b64-field-header">
+            <label for="b64Output" id="outputLabel">Base64 Output</label>
+            <button class="b64-icon-btn" id="copyBtn" type="button">Copy</button>
+          </div>
+          <textarea id="b64Output" placeholder="Result will appear here..." spellcheck="false" readonly></textarea>
+          <div class="b64-stats" id="outputStats">0 characters</div>
+          <div class="b64-error" id="errorMsg"></div>
+        </div>
+      </div>
+      <div class="b64-actions">
+        <button class="btn btn-secondary" id="swapBtn" type="button">&#8645; Swap Input &amp; Output</button>
+      </div>
+      <p class="no-signup-note"><strong>No sign-up required.</strong> Everything runs in your browser — your text never leaves your device.</p>
+      <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="qr-code-generator.html" class="related-tool-link">QR Code Generator</a><a href="word-counter.html" class="related-tool-link">Word Counter</a><a href="color-picker.html" class="related-tool-link">Color Picker</a><a href="units-converter.html" class="related-tool-link">Units Converter</a></div></div>
+    </div>
+
+    <div class="adsense-placeholder adsense-mid">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+    <div class="tool-info-section">
+      <h2>How to Use Base64 Encoder &amp; Decoder</h2>
+      <ol>
+        <li>Choose a mode at the top — <strong>Encode</strong> to convert text to Base64, or <strong>Decode</strong> to reverse Base64 back to plain text.</li>
+        <li>Type or paste your text into the left input field. The result updates instantly in the right field.</li>
+        <li>Click <strong>Copy</strong> to put the result on your clipboard, ready to paste into your code, terminal, or API tool.</li>
+        <li>Use <strong>Swap</strong> to move the output back into the input field — handy for round-trip testing.</li>
+        <li>Hit <strong>Clear</strong> to start over at any time.</li>
+      </ol>
+      <h2>Why Use Toolzspan Base64 Encoder?</h2>
+      <ul>
+        <li><strong>100% Private</strong> — All encoding and decoding happens in your browser. Your text never reaches a server.</li>
+        <li><strong>Instant Results</strong> — Auto-converts as you type, no &ldquo;Process&rdquo; button needed.</li>
+        <li><strong>Full Unicode Support</strong> — Works with emojis, accents, and non-Latin scripts (Chinese, Arabic, Japanese).</li>
+        <li><strong>Clear Error Messages</strong> — Pasting invalid Base64? You&rsquo;ll see exactly what went wrong.</li>
+        <li><strong>Cross-Platform</strong> — Works on desktop, tablet, and mobile browsers. No installation, no extension.</li>
+      </ul>
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <button class="faq-question">Is Base64 Encoder free to use?</button>
+        <div class="faq-answer"><p>Yes, completely free — no sign-up, no watermark, no usage limits. Encode and decode as much text as you like with no hidden costs or restrictions.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is my data safe when I use Base64 Encoder?</button>
+        <div class="faq-answer"><p>Yes. Base64 Encoder runs entirely in your browser — nothing is uploaded or stored on a server. Your text and files stay private on your device.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What can I encode with this tool?</button>
+        <div class="faq-answer"><p>Any plain text — including UTF-8 characters, emojis, JSON, source code, API keys, and credentials. The tool also supports Base64 decoding back to readable text.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Does Base64 Encoder work on mobile?</button>
+        <div class="faq-answer"><p>Yes, Base64 Encoder works on all modern mobile browsers. No app install needed — encode and decode directly on your phone or tablet just like on desktop.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What is Base64 used for?</button>
+        <div class="faq-answer"><p>Base64 is used to safely transmit binary data over text-only systems — email attachments, embedding images in CSS or HTML (data URIs), API authentication headers (Basic Auth), JWT tokens, and JSON payloads carrying binary fields.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is Base64 encryption?</button>
+        <div class="faq-answer"><p>No. Base64 is encoding, not encryption. Anyone can decode a Base64 string back to its original content with no key required. Never use Base64 to hide passwords or sensitive data — use proper encryption instead.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Why is the encoded output longer than the input?</button>
+        <div class="faq-answer"><p>Base64 represents every 3 bytes of input as 4 characters of output, so the encoded text is roughly 33% larger than the original. Padding characters (=) may add 1–2 more bytes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Does it support Unicode and emojis?</button>
+        <div class="faq-answer"><p>Yes. The tool encodes and decodes full UTF-8, including non-Latin scripts (Chinese, Arabic, Japanese), accents, and emojis — they round-trip without corruption.</p></div>
+      </div>
+    </div>
+
+    <div class="adsense-placeholder adsense-bottom">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+  </main>
+    <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text">
+            <span class="toolz" style="color:#fff;">Toolz</span><span class="span">span</span>
+          </span>
+          <p>All-in-one free online tools for PDF, video, audio, and image processing. No sign-up. No limits.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Company</div>
+          <a href="/about.html">About</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Resources</div>
+          <a href="/blog/">Blog</a>
+          <a href="/tools/all-tools.html">All Tools</a>
+          <a href="/sitemap.xml">Sitemap</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-heading">Legal</div>
+          <a href="/privacy-policy.html">Privacy Policy</a>
+          <a href="/terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="copy">&copy; 2026 Toolzspan. All rights reserved.</span>
+        <div class="footer-badges">
+          <span class="badge">&#128274; Secure</span>
+          <span class="badge">&#9889; Fast</span>
+          <span class="badge">&#9989; Free</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      const input=document.getElementById('b64Input'),
+            output=document.getElementById('b64Output'),
+            inputLabel=document.getElementById('inputLabel'),
+            outputLabel=document.getElementById('outputLabel'),
+            inputStats=document.getElementById('inputStats'),
+            outputStats=document.getElementById('outputStats'),
+            errorMsg=document.getElementById('errorMsg'),
+            copyBtn=document.getElementById('copyBtn'),
+            clearBtn=document.getElementById('clearBtn'),
+            swapBtn=document.getElementById('swapBtn'),
+            modeBtns=document.querySelectorAll('.b64-mode-btn');
+      let mode='encode';
+
+      function utf8Encode(str){
+        // Use TextEncoder for proper UTF-8 byte conversion
+        const bytes=new TextEncoder().encode(str);
+        let bin='';
+        for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
+        return btoa(bin);
+      }
+
+      function utf8Decode(b64){
+        // Strip whitespace, validate, then decode UTF-8
+        const cleaned=b64.replace(/\s/g,'');
+        if(cleaned.length===0) return '';
+        if(!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)){
+          throw new Error('Invalid Base64: contains characters outside the Base64 alphabet (A-Z, a-z, 0-9, +, /, =).');
+        }
+        const bin=atob(cleaned);
+        const bytes=new Uint8Array(bin.length);
+        for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+        return new TextDecoder('utf-8',{fatal:true}).decode(bytes);
+      }
+
+      function process(){
+        errorMsg.style.display='none';
+        const v=input.value;
+        if(!v){ output.value=''; updateStats(); return; }
+        try{
+          output.value=mode==='encode'?utf8Encode(v):utf8Decode(v);
+        }catch(e){
+          output.value='';
+          errorMsg.textContent=e.message||'Invalid input for current mode.';
+          errorMsg.style.display='block';
+        }
+        updateStats();
+      }
+
+      function updateStats(){
+        inputStats.textContent=input.value.length+' character'+(input.value.length===1?'':'s');
+        outputStats.textContent=output.value.length+' character'+(output.value.length===1?'':'s');
+      }
+
+      function setMode(m){
+        mode=m;
+        modeBtns.forEach(b=>{
+          const active=b.dataset.mode===m;
+          b.classList.toggle('active',active);
+          b.setAttribute('aria-selected',active?'true':'false');
+        });
+        if(m==='encode'){
+          inputLabel.textContent='Plain Text Input';
+          outputLabel.textContent='Base64 Output';
+          input.placeholder='Type or paste text here...';
+          output.placeholder='Base64 result will appear here...';
+        }else{
+          inputLabel.textContent='Base64 Input';
+          outputLabel.textContent='Decoded Text Output';
+          input.placeholder='Paste Base64 here...';
+          output.placeholder='Decoded text will appear here...';
+        }
+        process();
+      }
+
+      input.addEventListener('input',process);
+      modeBtns.forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+      clearBtn.addEventListener('click',()=>{input.value='';output.value='';errorMsg.style.display='none';updateStats();input.focus();});
+      copyBtn.addEventListener('click',()=>{
+        if(!output.value) return;
+        navigator.clipboard.writeText(output.value).then(()=>{
+          copyBtn.textContent='Copied!';
+          setTimeout(()=>copyBtn.textContent='Copy',1500);
+        });
+      });
+      swapBtn.addEventListener('click',()=>{
+        // Swap output to input, then re-process under current mode (or flip mode)
+        const newInput=output.value;
+        if(!newInput) return;
+        // Auto-flip mode: makes Swap behave as a round-trip toggle
+        setMode(mode==='encode'?'decode':'encode');
+        input.value=newInput;
+        process();
+      });
+
+      // Init with a friendly demo
+      input.value='Hello, World!';
+      process();
+    })();
+  </script>
+  <script src="../js/main.js"></script>
+  <script src="../js/search.js"></script>
+</body>
+</html>

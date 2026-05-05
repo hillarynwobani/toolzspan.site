@@ -65,6 +65,7 @@
     { name: 'QR Code Generator', url: '/tools/qr-code-generator.html', tags: ['qr', 'code', 'generate', 'barcode', 'scan', 'link', 'url', 'share'], cat: 'General', icon: '📲' },
     { name: 'Word Counter', url: '/tools/word-counter.html', tags: ['word', 'count', 'character', 'letter', 'text', 'paragraph', 'sentence', 'essay', 'writing'], cat: 'General', icon: '🔢' },
     { name: 'Color Picker', url: '/tools/color-picker.html', tags: ['color', 'colour', 'pick', 'hex', 'rgb', 'hsl', 'palette', 'design', 'eyedropper'], cat: 'General', icon: '🎨' },
+    { name: 'Base64 Encoder', url: '/tools/base64-encoder.html', tags: ['base64', 'encode', 'decode', 'encoder', 'decoder', 'data uri', 'jwt', 'basic auth', 'mime', 'developer', 'crypto'], cat: 'General', icon: '🔤' },
     { name: 'Units Converter', url: '/tools/units-converter.html', tags: ['unit', 'convert', 'length', 'weight', 'temperature', 'meter', 'feet', 'kg', 'pound', 'celsius', 'fahrenheit', 'volume', 'speed', 'metric', 'imperial'], cat: 'General', icon: '📏' },
     { name: 'Time Converter', url: '/tools/time-converter.html', tags: ['time', 'zone', 'timezone', 'convert', 'clock', 'gmt', 'utc', 'est', 'pst', 'world', 'city', 'country'], cat: 'General', icon: '🕐' },
     { name: 'Trim Audio', url: '/tools/trim-audio.html', tags: ['trim', 'cut', 'audio', 'clip', 'ringtone', 'snippet', 'mp3', 'wav', 'ogg', 'waveform', 'crop', 'split', 'section'], cat: 'General', icon: '✂️' }
