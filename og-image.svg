@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="100%" style="stop-color:#1a2d4a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E6FFF"/>
+      <stop offset="100%" style="stop-color:#00C6A7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative shapes -->
+  <circle cx="1000" cy="100" r="300" fill="#1E6FFF" opacity="0.08"/>
+  <circle cx="150" cy="550" r="250" fill="#00C6A7" opacity="0.06"/>
+  <circle cx="1050" cy="500" r="180" fill="#FF6B35" opacity="0.05"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="6" fill="url(#accentGrad)"/>
+
+  <!-- Logo area -->
+  <text x="100" y="120" font-family="'Space Grotesk', Arial, sans-serif" font-size="48" font-weight="700" fill="#ffffff">
+    <tspan fill="#1E6FFF">Toolz</tspan><tspan fill="#00C6A7">span</tspan>
+  </text>
+
+  <!-- Main headline -->
+  <text x="100" y="280" font-family="'Space Grotesk', Arial, sans-serif" font-size="72" font-weight="700" fill="#ffffff">
+    50 Free Online Tools
+  </text>
+
+  <!-- Subheadline -->
+  <text x="100" y="350" font-family="'DM Sans', Arial, sans-serif" font-size="32" font-weight="400" fill="#a0b3d0">
+    Convert, Compress & Edit — No Sign-Up Required
+  </text>
+
+  <!-- Tool category badges -->
+  <g transform="translate(100, 420)">
+    <rect x="0" y="0" width="140" height="44" rx="22" fill="#1E6FFF" opacity="0.2" stroke="#1E6FFF" stroke-width="1.5"/>
+    <text x="70" y="29" font-family="'DM Sans', Arial, sans-serif" font-size="16" font-weight="600" fill="#1E6FFF" text-anchor="middle">PDF Tools</text>
+
+    <rect x="160" y="0" width="160" height="44" rx="22" fill="#00C6A7" opacity="0.2" stroke="#00C6A7" stroke-width="1.5"/>
+    <text x="240" y="29" font-family="'DM Sans', Arial, sans-serif" font-size="16" font-weight="600" fill="#00C6A7" text-anchor="middle">Video & Audio</text>
+
+    <rect x="340" y="0" width="150" height="44" rx="22" fill="#FF6B35" opacity="0.2" stroke="#FF6B35" stroke-width="1.5"/>
+    <text x="415" y="29" font-family="'DM Sans', Arial, sans-serif" font-size="16" font-weight="600" fill="#FF6B35" text-anchor="middle">Image Tools</text>
+
+    <rect x="510" y="0" width="140" height="44" rx="22" fill="#FFD93D" opacity="0.2" stroke="#FFD93D" stroke-width="1.5"/>
+    <text x="580" y="29" font-family="'DM Sans', Arial, sans-serif" font-size="16" font-weight="600" fill="#FFD93D" text-anchor="middle">GIF Tools</text>
+  </g>
+
+  <!-- Bottom trust signals -->
+  <text x="100" y="560" font-family="'DM Sans', Arial, sans-serif" font-size="18" font-weight="500" fill="#6b7f9e">
+    Fast  •  Secure  •  Works on Any Device  •  100% Free Forever
+  </text>
+
+  <!-- URL -->
+  <text x="1100" y="590" font-family="'DM Sans', Arial, sans-serif" font-size="20" font-weight="600" fill="#00C6A7" text-anchor="end">
+    toolzspan.site
+  </text>
+
+  <!-- Right side decorative icon cluster -->
+  <g transform="translate(920, 200)" opacity="0.15">
+    <rect x="0" y="0" width="80" height="100" rx="8" fill="#1E6FFF"/>
+    <rect x="100" y="30" width="80" height="70" rx="8" fill="#00C6A7"/>
+    <rect x="50" y="120" width="100" height="80" rx="8" fill="#FF6B35"/>
+    <rect x="20" y="220" width="90" height="60" rx="8" fill="#FFD93D"/>
+    <rect x="130" y="200" width="70" height="90" rx="8" fill="#1E6FFF"/>
+  </g>
+</svg>
