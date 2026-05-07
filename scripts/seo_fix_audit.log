@@ -1,0 +1,321 @@
+================================================================================
+TOOLZSPAN SEO FIX AUDIT (Fixes 1-11 + Long-tail Keywords)
+Per Toolzspan_SEO_Fix_Instructions.md
+================================================================================
+
+[LONG-TAIL KEYWORDS IN TITLES]
+Required modifiers: "free", "online", and either "no sign-up" or "no watermark"
+--------------------------------------------------------------------------------
+STRONG (free + online + no-sign-up/no-watermark): 31
+PARTIAL (2 of 3): 46
+MISSING (<2 modifiers): 27
+
+--- STRONG ---
+  [OK] tools/add-password-pdf.html :: Add Password to PDF Free Online — No Sign-Up | Toolzspan
+  [OK] tools/add-watermark-pdf.html :: Add Watermark to PDF Free Online — No Sign-Up | Toolzspan
+  [OK] tools/audio-compressor.html :: Compress Audio Free Online — No Sign-Up | Toolzspan
+  [OK] tools/avi-to-mp4.html :: AVI to MP4 Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/base64-encoder.html :: Base64 Encode & Decode Free Online — No Sign-Up | Toolzspan
+  [OK] tools/excel-to-pdf.html :: Convert Excel to PDF Free Online — No Sign-Up | Toolzspan
+  [OK] tools/gif-converter.html :: GIF Converter Free Online — No Sign-Up | Toolzspan
+  [OK] tools/image-compressor.html :: Compress Images Free Online — No Sign-Up | Toolzspan
+  [OK] tools/image-resizer.html :: Resize Images Free Online — No Sign-Up | Toolzspan
+  [OK] tools/image-to-pdf.html :: Convert Image to PDF Free Online — No Sign-Up | Toolzspan
+  [OK] tools/mov-to-mp4.html :: MOV to MP4 Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/mp3-converter.html :: MP3 Converter Free Online — No Sign-Up | Toolzspan
+  [OK] tools/mp4-converter.html :: MP4 Converter Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-compressor.html :: Compress PDF Files Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-editor.html :: Edit PDF Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/pdf-merger.html :: Merge PDF Files Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-page-remover.html :: Remove PDF Pages Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-page-rotator.html :: Rotate PDF Pages Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-splitter.html :: Split PDF Pages Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-to-image.html :: Convert PDF to Image Free Online — No Sign-Up | Toolzspan
+  [OK] tools/pdf-to-word.html :: PDF to Word Free Online — No Watermark | Toolzspan
+  [OK] tools/powerpoint-to-pdf.html :: PowerPoint to PDF Free Online — No Sign-Up | Toolzspan
+  [OK] tools/qr-code-generator.html :: Free QR Code Generator Online — No Sign-Up | Toolzspan
+  [OK] tools/scan-image.html :: Image to Text (OCR) Free Online — No Sign-Up | Toolzspan
+  [OK] tools/sign-pdf.html :: Sign PDF Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/time-converter.html :: Time Zone Converter Free Online — No Sign-Up | Toolzspan
+  [OK] tools/trim-audio.html :: Trim Audio Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/units-converter.html :: Units Converter Free Online — No Sign-Up | Toolzspan
+  [OK] tools/video-compressor.html :: Compress Video Free Online — No Sign-Up | Toolzspan
+  [OK] tools/webm-to-mp4.html :: WebM to MP4 Free Online — No Sign-Up Required | Toolzspan
+  [OK] tools/word-to-pdf.html :: Convert Word to PDF Free Online — No Sign-Up | Toolzspan
+
+--- PARTIAL ---
+  [WARN] tools/all-tools.html :: All Free Online Tools — PDF, Video, Image & More | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/color-picker.html :: Color Picker Free Online — HEX, RGB & HSL | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/compress-mp3.html :: Compress MP3 Free Online — Reduce Audio Size | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/compress-mp4.html :: Compress MP4 Free Online — Reduce Video Size | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/gif-compressor.html :: Compress GIF Free Online — Reduce GIF Size | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/gif-maker.html :: Make GIF Free Online — From Video or Images | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/heic-to-jpg.html :: HEIC to JPG Free Online — Convert iPhone Photos | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/jpg-to-png.html :: JPG to PNG Free Online — Convert Images | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/jpg-to-webp.html :: JPG to WEBP Free Online — Smaller Files | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/mp3-to-mp4.html :: MP3 to MP4 Free Online — Add Audio to Video | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/mp4-to-mp3.html :: MP4 to MP3 Free Online — Extract Audio | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/ocr-pdf.html :: OCR PDF Free Online — Extract Text from Scans | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/ogg-to-mp3.html :: OGG to MP3 Free Online — Convert Audio | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/png-to-jpg.html :: PNG to JPG Free Online — Convert Images | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/png-to-webp.html :: PNG to WEBP Free Online — Smaller Files | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/remove-password-pdf.html :: Unlock & Remove Password from PDF Free Online | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/wav-to-mp3.html :: WAV to MP3 Free Online — Compress Audio | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/webp-to-jpg.html :: WEBP to JPG Free Online — Convert Images | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/webp-to-png.html :: WEBP to PNG Free Online — Lossless Convert | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] tools/word-counter.html :: Word Counter Free Online — Instant Text Stats | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/best-free-online-unit-converters-2026.html :: Best Free Online Unit Converters Compared | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/best-free-online-video-compressors-2026.html :: Best Free Online Video Compressors Compared | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-compress-gif-file-online.html :: How to Compress a GIF File Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-avi-to-mp4-online-free.html :: How to Convert AVI to MP4 Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-flac-to-mp3-online-free.html :: How to Convert FLAC to MP3 Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-heic-to-jpg-online-free.html :: How to Convert HEIC to JPG Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-jpg-to-png-online-free.html :: How to Convert JPG to PNG Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-jpg-to-webp-online-free.html :: How to Convert JPG to WEBP Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-mov-to-mp4-online-free.html :: How to Convert MOV to MP4 Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-mp3-to-flac-online-free.html :: How to Convert MP3 to FLAC Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-mp3-to-wav-online-free.html :: How to Convert MP3 to WAV Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-mp4-to-mp3-online-free.html :: How to Convert MP4 to MP3 Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-ogg-to-mp3-online-free.html :: How to Convert OGG to MP3 Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-png-to-jpg-online-free.html :: How to Convert PNG to JPG Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-png-to-webp-online-free.html :: How to Convert PNG to WEBP Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-time-zones-online-free.html :: How to Convert Time Zones Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-convert-wav-to-mp3-online-free.html :: How to Convert WAV to MP3 Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-encode-decode-base64-online-free.html :: Encode and Decode Base64 Online for Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-make-gif-from-video-online-free.html :: How to Make a GIF from a Video Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/how-to-trim-audio-online-free.html :: How to Trim Audio Online for Free Easily | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/webp-to-jpg-convert-webp-images-online-free.html :: How to Convert WEBP to JPG Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] blog/webp-to-png-convert-webp-to-png-online-free.html :: How to Convert WEBP to PNG Online Free | Toolzspan Blog
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] index.html :: Toolzspan — 50 Free Online Tools | Convert, Compress
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] 404.html :: 404 Page Not Found — Browse Free Online Tools | Toolzspan
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] about.html :: About Toolzspan — Explore Free Online Tools & Resources
+         free=True online=True no-sign-up=False no-watermark=False
+  [WARN] contact.html :: Contact Us — Toolzspan Support & Free Online Tools Help
+         free=True online=True no-sign-up=False no-watermark=False
+
+--- MISSING ---
+  [FAIL] blog/how-to-compress-video-without-losing-quality.html :: Compress a Video Without Losing Quality | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/index.html :: Blog — Free Tool Tips, Guides &amp; How-Tos | Toolzspan
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/mp3-vs-mp4-difference-and-how-to-convert.html :: MP3 vs MP4: Difference and How to Convert | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-01.html :: How to Compress a PDF Without Quality Loss | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-02.html :: Best Free PDF Tools You Can Use Right Now | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-03.html :: How to Merge Multiple PDFs Into One File | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-04.html :: How to Split a PDF Into Separate Pages | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-05.html :: How to Convert PDF to JPG or PNG for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-06.html :: How to Convert Images Into a PDF File | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-07.html :: How to Add a Password to a PDF to Secure It | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-08.html :: How to Remove a Password From a PDF File | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-09.html :: How to Add a Watermark to a PDF for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-10.html :: How to Sign a PDF Without Printing It | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-11.html :: What Is OCR and How Does It Work on PDFs? | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-12.html :: Convert a Scanned Image Into Editable Text | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-13.html :: Convert Word Documents to PDF for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-14.html :: Convert PDF to Word and Keep the Formatting | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-15.html :: Convert PowerPoint Presentations to PDF | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-16.html :: Convert Excel Spreadsheets to PDF for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-17.html :: How to Rotate Pages in a PDF File for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-18.html :: Remove Pages From a PDF Without Software | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-19.html :: PDF File Too Large? Here Is How to Fix It | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-20.html :: PDF Compression vs Optimization Explained | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-21.html :: How to Compress Images for the Web | Toolzspan Blog
+         free=False online=False no-sign-up=False no-watermark=False
+  [FAIL] blog/post-22.html :: How to Generate QR Codes for Free | Toolzspan Blog
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] privacy-policy.html :: Privacy Policy — Toolzspan Free Tools Data Protection
+         free=True online=False no-sign-up=False no-watermark=False
+  [FAIL] terms-of-service.html :: Terms of Service — Toolzspan Free Tools Usage Policy
+         free=True online=False no-sign-up=False no-watermark=False
+
+================================================================================
+FIX 1 - about.html: Tool Count & Meta Description
+================================================================================
+1A Body says "50 free online tools": PASS
+1B Meta desc 155-165 chars + mentions "50 free online tools": PASS
+     length=155 content="Learn about Toolzspan and our mission to provide 50 free online tools for PDF, video, audio, and image files. No sign-up, no limits. Fast, secure, private."
+
+================================================================================
+FIX 2 - Tool Page Titles (50-60 chars + free/online/no-sign-up)
+================================================================================
+PASS: 31/51 | FAIL: 20
+  [WARN] tools/all-tools.html (60 chars) :: All Free Online Tools — PDF, Video, Image & More | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/color-picker.html (53 chars) :: Color Picker Free Online — HEX, RGB & HSL | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/compress-mp3.html (56 chars) :: Compress MP3 Free Online — Reduce Audio Size | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/compress-mp4.html (56 chars) :: Compress MP4 Free Online — Reduce Video Size | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/gif-compressor.html (54 chars) :: Compress GIF Free Online — Reduce GIF Size | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/gif-maker.html (55 chars) :: Make GIF Free Online — From Video or Images | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/heic-to-jpg.html (59 chars) :: HEIC to JPG Free Online — Convert iPhone Photos | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/jpg-to-png.html (51 chars) :: JPG to PNG Free Online — Convert Images | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/jpg-to-webp.html (51 chars) :: JPG to WEBP Free Online — Smaller Files | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/mp3-to-mp4.html (55 chars) :: MP3 to MP4 Free Online — Add Audio to Video | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/mp4-to-mp3.html (50 chars) :: MP4 to MP3 Free Online — Extract Audio | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/ocr-pdf.html (57 chars) :: OCR PDF Free Online — Extract Text from Scans | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/ogg-to-mp3.html (50 chars) :: OGG to MP3 Free Online — Convert Audio | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/png-to-jpg.html (51 chars) :: PNG to JPG Free Online — Convert Images | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/png-to-webp.html (51 chars) :: PNG to WEBP Free Online — Smaller Files | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/remove-password-pdf.html (57 chars) :: Unlock & Remove Password from PDF Free Online | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/wav-to-mp3.html (51 chars) :: WAV to MP3 Free Online — Compress Audio | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/webp-to-jpg.html (52 chars) :: WEBP to JPG Free Online — Convert Images | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/webp-to-png.html (54 chars) :: WEBP to PNG Free Online — Lossless Convert | Toolzspan
+         length_ok=True free=True online=True modifier=False
+  [WARN] tools/word-counter.html (57 chars) :: Word Counter Free Online — Instant Text Stats | Toolzspan
+         length_ok=True free=True online=True modifier=False
+
+================================================================================
+FIX 3 - Tool Page Meta Descriptions (155-165 chars)
+================================================================================
+PASS (150-165 chars): 51/51 | FAIL: 0
+
+================================================================================
+FIX 4 - Answer Block (<p class="tool-summary">) Under H1
+================================================================================
+PASS: 50/51 | FAIL: 1
+  [WARN] tools/all-tools.html :: missing <p class="tool-summary">
+
+================================================================================
+FIX 5 - H2 Headings (intent-matched, not generic)
+================================================================================
+PASS (no generic H2): 51/51 | FAIL: 0
+
+================================================================================
+FIX 6 - FAQ Section (8+ questions)
+================================================================================
+PASS (>=8 FAQs): 50/51 | FAIL: 1
+  [WARN] tools/all-tools.html :: only 0 FAQ questions detected
+
+================================================================================
+FIX 7 - Related Tools (5-6) + 1 Blog Link per Tool Page
+================================================================================
+7A Related tools >=5: 50/51 pass | 1 fail
+  [WARN] tools/all-tools.html :: 0 related-tool links
+
+7B At least 1 blog link: 50/51 pass | 1 fail
+  [WARN] tools/all-tools.html :: no /blog/ link found
+
+================================================================================
+FIX 8 - JSON-LD Schema (SoftwareApplication + BreadcrumbList + FAQPage)
+================================================================================
+PASS (all 3 schemas): 50/51 | FAIL: 1
+  [WARN] tools/all-tools.html :: SoftwareApplication=False BreadcrumbList=False FAQPage=False
+
+================================================================================
+FIX 9 - scan-image.html visible text == "Image to Text (OCR)"
+================================================================================
+  Title contains "Image to Text": PASS :: Image to Text (OCR) Free Online — No Sign-Up | Toolzspan
+  H1 contains "Image to Text":    PASS :: Image to Text (OCR)
+  Meta desc OCR-focused:           PASS :: Extract text from images online for free. OCR image to text in your browser. No sign-up, no upload, fast and accurate text extraction. No sign-up, fast and secu
+
+================================================================================
+FIX 10 - Homepage Hero (no sign-up + no watermark + no limits)
+================================================================================
+  "no sign-up" in hero: PASS
+  "no watermark" in hero: PASS
+  "no limits" in hero: PASS
+
+================================================================================
+FIX 11 - Image Alt Text (sitewide)
+================================================================================
+<img> tags missing alt attribute entirely: 0
+<img> tags with empty alt on content-like src (logo/hero/banner/preview): 0
+
+================================================================================
+SUMMARY
+================================================================================
+Long-tail titles STRONG/PARTIAL/MISSING : 31/46/27
+Fix 1A about.html tool count            : PASS
+Fix 1B about.html meta desc 155-165     : PASS
+Fix 2  tool titles 50-60 + modifiers    : 31/51
+Fix 3  tool meta desc 150-165           : 51/51
+Fix 4  answer block under H1            : 50/51
+Fix 5  H2 not generic                   : 51/51
+Fix 6  FAQ >= 8 questions               : 50/51
+Fix 7A related tools >= 5               : 50/51
+Fix 7B blog link present                : 50/51
+Fix 8  schema (SW + BC + FAQ)           : 50/51
+Fix 9  scan-image visible text          : title=True h1=True meta=True
+Fix 10 hero copy phrases (3)            : 3/3
+Fix 11 imgs missing alt entirely        : 0
