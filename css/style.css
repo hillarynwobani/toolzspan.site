@@ -1482,19 +1482,21 @@ main {
   user-select: none;
 }
 
-.nav-tab:hover {
-  color: var(--primary-blue);
-}
-
 .nav-tab .arrow {
   font-size: 10px;
   transition: transform 0.2s;
   color: var(--muted);
 }
 
-.nav-tab:hover .arrow {
-  transform: rotate(180deg);
-  color: var(--primary-blue);
+@media (hover: hover) and (pointer: fine) {
+  .nav-tab:hover {
+    color: var(--primary-blue);
+  }
+
+  .nav-tab:hover .arrow {
+    transform: rotate(180deg);
+    color: var(--primary-blue);
+  }
 }
 
 .nav-tab::after {
@@ -1510,8 +1512,10 @@ main {
   transition: transform 0.2s;
 }
 
-.nav-tab:hover::after {
-  transform: scaleX(1);
+@media (hover: hover) and (pointer: fine) {
+  .nav-tab:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .mega-dropdown {
@@ -1533,10 +1537,12 @@ main {
   gap: 24px;
 }
 
-.nav-tab:hover>.mega-dropdown {
-  opacity: 1;
-  pointer-events: all;
-  transform: translateX(-50%) translateY(0);
+@media (hover: hover) and (pointer: fine) {
+  .nav-tab:hover>.mega-dropdown {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .mega-col {
@@ -2005,7 +2011,7 @@ main {
     left: 0;
     background: var(--white);
     flex-direction: column;
-    padding: 0;
+    padding: 0 0 env(safe-area-inset-bottom) 0;
     gap: 0;
     border-top: 1px solid var(--border);
     box-shadow: none;
@@ -2014,6 +2020,7 @@ main {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     transform: translateX(100%);
     transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     visibility: hidden;
@@ -2085,7 +2092,7 @@ main {
   .nav-tab .arrow {
     font-size: 14px;
     color: var(--muted);
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
     display: inline-block;
     transition: none;
   }
@@ -2116,10 +2123,12 @@ main {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     opacity: 1;
     pointer-events: none;
     gap: 0;
     visibility: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .nav-tab:hover > .mega-dropdown {
@@ -2149,6 +2158,17 @@ main {
     cursor: pointer;
     text-align: left;
     font-family: inherit;
+  }
+
+  /* L3 drill-back lives inside every .mega-col, but must only render when
+     that column is the active L3 panel. Otherwise it leaks into the L2
+     categories list. Generic .drill-back rule above is overridden here. */
+  .mega-col > .drill-back {
+    display: none;
+  }
+
+  .mega-col.is-active > .drill-back {
+    display: flex;
   }
 
   .drill-back::before {
@@ -2221,10 +2241,11 @@ main {
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     transform: translateX(0);
     animation: drill-slide-in 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     margin: 0;
-    padding: 0;
+    padding: 0 0 env(safe-area-inset-bottom) 0;
     border: none;
     cursor: default;
   }

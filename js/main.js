@@ -50,6 +50,7 @@
     document.querySelectorAll('.mega-col.is-active').forEach(function (c) {
       c.classList.remove('is-active');
     });
+    syncAriaExpanded();
     if (wasOpen) unlockBodyScroll();
   }
 
@@ -71,7 +72,7 @@
       btn.type = 'button';
       btn.className = 'drill-back';
       btn.setAttribute('aria-label', 'Back to menu');
-      btn.innerHTML = 'Back<span class="drill-back-title">' + (label || 'Menu') + '</span>';
+      btn.innerHTML = 'Back <span class="drill-back-title">' + (label || 'Menu') + '</span>';
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         // Close any L3 first; if none open, close this L2
@@ -81,6 +82,7 @@
         } else {
           panel.parentElement.classList.remove('is-active');
         }
+        syncAriaExpanded();
       });
       panel.insertBefore(btn, panel.firstChild);
     });
@@ -93,12 +95,59 @@
       btn.type = 'button';
       btn.className = 'drill-back';
       btn.setAttribute('aria-label', 'Back to categories');
-      btn.innerHTML = 'Back<span class="drill-back-title">' + label + '</span>';
+      btn.innerHTML = 'Back <span class="drill-back-title">' + label + '</span>';
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         col.classList.remove('is-active');
+        syncAriaExpanded();
       });
       col.insertBefore(btn, col.firstChild);
+    });
+  }
+
+  // a11y: .nav-tab and .mega-col-heading are <div>s with click handlers.
+  // Without role/tabindex/aria-expanded, screen readers (TalkBack on Android,
+  // VoiceOver on iOS) cannot tell they are interactive. We add them at runtime
+  // so no HTML markup changes are needed across 80+ pages.
+  function annotateMenuA11y() {
+    document.querySelectorAll('.nav-tab').forEach(function (tab) {
+      tab.setAttribute('role', 'button');
+      tab.setAttribute('tabindex', '0');
+      tab.setAttribute('aria-haspopup', 'true');
+      tab.setAttribute('aria-expanded', tab.classList.contains('is-active') ? 'true' : 'false');
+      // Activate via Enter / Space when focused (keyboard parity with click)
+      tab.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+        if (e.target.closest('.mega-dropdown')) return;
+        if (e.target.tagName === 'A') return;
+        e.preventDefault();
+        tab.click();
+      });
+    });
+
+    document.querySelectorAll('.mega-col-heading').forEach(function (heading) {
+      var col = heading.closest('.mega-col');
+      heading.setAttribute('role', 'button');
+      heading.setAttribute('tabindex', '0');
+      heading.setAttribute('aria-haspopup', 'true');
+      heading.setAttribute('aria-expanded', col && col.classList.contains('is-active') ? 'true' : 'false');
+      heading.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+        e.preventDefault();
+        heading.click();
+      });
+    });
+  }
+
+  // Keep aria-expanded in sync with .is-active state changes.
+  function syncAriaExpanded() {
+    document.querySelectorAll('.nav-tab').forEach(function (tab) {
+      tab.setAttribute('aria-expanded', tab.classList.contains('is-active') ? 'true' : 'false');
+    });
+    document.querySelectorAll('.mega-col').forEach(function (col) {
+      var heading = col.querySelector(':scope > .mega-col-heading');
+      if (!heading) return;
+      heading.setAttribute('aria-expanded', col.classList.contains('is-active') ? 'true' : 'false');
     });
   }
 
@@ -108,6 +157,7 @@
     if (!menuToggle || !navMenu) return;
 
     injectDrillBacks();
+    annotateMenuA11y();
 
     // Hamburger toggle (also acts as X close button when open)
     menuToggle.setAttribute('aria-expanded', 'false');
@@ -150,6 +200,7 @@
           c.classList.remove('is-active');
         });
         tab.classList.add('is-active');
+        syncAriaExpanded();
       });
     });
 
@@ -166,6 +217,7 @@
           if (c !== col) c.classList.remove('is-active');
         });
         col.classList.add('is-active');
+        syncAriaExpanded();
       });
     });
 
@@ -175,9 +227,9 @@
       if (!navMenu.classList.contains('active')) return;
       // Drill back step-by-step on Escape
       var openCol = document.querySelector('.mega-col.is-active');
-      if (openCol) { openCol.classList.remove('is-active'); return; }
+      if (openCol) { openCol.classList.remove('is-active'); syncAriaExpanded(); return; }
       var openTab = document.querySelector('.nav-tab.is-active');
-      if (openTab) { openTab.classList.remove('is-active'); return; }
+      if (openTab) { openTab.classList.remove('is-active'); syncAriaExpanded(); return; }
       closeMenu();
     });
 
