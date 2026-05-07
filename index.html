@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1E6FFF">
   <title>Toolzspan — 50 Free Online Tools | Convert, Compress</title>
   <meta name="description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 50 tools, no sign-up required. Fast, secure, works on any device.">
   <link rel="canonical" href="https://toolzspan.site/">
@@ -11,11 +12,13 @@
   <meta property="og:description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 50 tools, no sign-up required. Fast, secure, works on any device.">
   <meta property="og:url" content="https://toolzspan.site/">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
   <meta property="og:image" content="https://toolzspan.site/og-image.png">
   <meta property="og:site_name" content="Toolzspan">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Toolzspan — 50 Free Online Tools | Convert, Compress">
   <meta name="twitter:description" content="Free online tools to convert, compress, and edit PDF, video, audio, image, and GIF files. 50 tools, no sign-up required. Fast, secure, works on any device.">
+  <meta property="twitter:image" content="https://toolzspan.site/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -45,6 +48,9 @@
     "logo": "https://toolzspan.site/toolzspan-logo-v2.svg",
     "description": "All-in-One Free Online Tools — PDF, video, image, audio tools with no sign-up required."
   }
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ItemList","name":"Popular Tools","numberOfItems":6,"itemListOrder":"https://schema.org/ItemListOrderManual","itemListElement":[{"@type":"ListItem","position":1,"name":"PDF Compressor","url":"https://toolzspan.site/tools/pdf-compressor.html"},{"@type":"ListItem","position":2,"name":"MP4 to MP3","url":"https://toolzspan.site/tools/mp4-to-mp3.html"},{"@type":"ListItem","position":3,"name":"Image Compressor","url":"https://toolzspan.site/tools/image-compressor.html"},{"@type":"ListItem","position":4,"name":"PDF Merger","url":"https://toolzspan.site/tools/pdf-merger.html"},{"@type":"ListItem","position":5,"name":"HEIC to JPG","url":"https://toolzspan.site/tools/heic-to-jpg.html"},{"@type":"ListItem","position":6,"name":"QR Code Generator","url":"https://toolzspan.site/tools/qr-code-generator.html"}]}
   </script>
 </head>
 <body>
@@ -169,7 +175,7 @@
 
       </nav>
       <div class="nav-right">
-        <div class="search-btn">🔍</div>
+        <button class="search-btn" type="button" aria-label="Open search">🔍</button>
       </div>
     </div>
   </header>
@@ -182,7 +188,7 @@
       <div class="hero-tagline">50 Free Online Tools — Convert, Compress & More</div>
       <p>Convert, compress, and edit PDF, video, audio, and image files — free online, no sign-up, no watermark, no limits. Works on any device, right in your browser.</p>
       <div class="hero-search">
-        <input type="text" placeholder="Search tools — e.g. compress PDF, MP4 to MP3..." id="heroSearch">
+        <input type="text" id="heroSearch" aria-label="Search tools" placeholder="Search tools — e.g. compress PDF, MP4 to MP3...">
         <button id="heroSearchBtn">Search</button>
       </div>
       <div class="hero-stats">

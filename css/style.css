@@ -286,13 +286,16 @@ main {
 .search-btn {
   width: 36px;
   height: 36px;
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--light-bg);
+  color: inherit;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  font: inherit;
   font-size: 15px;
   transition: all 0.2s;
 }

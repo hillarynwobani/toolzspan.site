@@ -213,6 +213,24 @@
     if (parent) parent.appendChild(dropdown);
     else input.parentElement.appendChild(dropdown);
 
+    // Handle ?q= URL parameter (WebSite SearchAction sitelinks search box)
+    try {
+      var urlParams = new URLSearchParams(window.location.search);
+      var qParam = urlParams.get('q');
+      if (qParam && qParam.trim()) {
+        input.value = qParam;
+        var qResults = search(qParam);
+        if (qResults.length > 0 && qResults[0].score >= 800) {
+          window.location.href = qResults[0].tool.url;
+          return;
+        }
+        setTimeout(function() {
+          renderResults(dropdown, qResults, qParam);
+          input.focus();
+        }, 50);
+      }
+    } catch (e) { /* URLSearchParams unsupported (very old browsers) */ }
+
     var debounce = null;
     input.addEventListener('input', function() {
       clearTimeout(debounce);
