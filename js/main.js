@@ -257,8 +257,27 @@
     });
   }
 
+  function initLazySearch() {
+    var searchBtn = document.querySelector('.search-btn');
+    if (!searchBtn) return;
+    searchBtn.addEventListener('click', function (e) {
+      if (window.searchLoaded) return;
+      e.stopImmediatePropagation();
+      window.searchLoaded = true;
+      var s = document.createElement('script');
+      var isDeep = location.pathname.indexOf('/tools/') > -1 || location.pathname.indexOf('/blog/') > -1;
+      s.src = isDeep ? '../js/search.js' : 'js/search.js';
+      s.onload = function () {
+        var event = new MouseEvent('click', { bubbles: true, cancelable: true });
+        searchBtn.dispatchEvent(event);
+      };
+      document.body.appendChild(s);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initMenu();
     initFaq();
+    initLazySearch();
   });
 })();
