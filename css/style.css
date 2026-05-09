@@ -1772,7 +1772,15 @@ main {
 }
 
 .faq-item.open .faq-question::after {
-  content: 'âˆ’';
+  content: '−';
+}
+
+.faq-question-heading {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 .faq-answer {
