@@ -11,7 +11,8 @@
   <meta property="twitter:image" content="https://toolzspan.site/og-image.png"><meta property="og:type" content="website"><meta property="og:site_name" content="Toolzspan">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Units Converter Free Online — No Sign-Up | Toolzspan"><meta name="twitter:description" content="Convert units of length, weight, temperature, area, volume, and more online for free. Instant accurate conversions - no sign-up, no upload, works on any device.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Units Converter","description":"Convert units of length, weight, temperature, volume, and more free online. Accurate conversions.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://toolzspan.site/tools/units-converter.html","provider":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"General Tools","item":"https://toolzspan.site/tools/all-tools.html#general"},{"@type":"ListItem","position":3,"name":"Units Converter","item":"https://toolzspan.site/tools/units-converter.html"}]}</script>
@@ -224,8 +225,8 @@
     </div>
   </footer>
   
-  <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/search.js" defer></script>
   <script>
 var units={length:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.34,yd:0.9144,ft:0.3048,in:0.0254},weight:{kg:1,g:0.001,mg:0.000001,lb:0.453592,oz:0.0283495,t:1000},temperature:{},volume:{l:1,ml:0.001,gal:3.78541,qt:0.946353,pt:0.473176,cup:0.236588,floz:0.0295735},area:{sqm:1,sqkm:1e6,sqft:0.092903,sqyd:0.836127,acre:4046.86,hectare:10000},speed:{mps:1,kph:0.277778,mph:0.44704,knot:0.514444}};
 var cat=document.getElementById('unitCat'),uf=document.getElementById('unitFrom'),ut=document.getElementById('unitTo'),uv=document.getElementById('unitVal'),ur=document.getElementById('unitResult');

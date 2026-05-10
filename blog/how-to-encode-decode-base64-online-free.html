@@ -11,7 +11,8 @@
   <meta property="twitter:image" content="https://toolzspan.site/og-image.png"><meta property="og:type" content="article"><meta property="og:site_name" content="Toolzspan">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How to Encode and Decode Base64 Online for Free | Toolzspan Blog"><meta name="twitter:description" content="Learn how to encode and decode Base64 online for free. A developer's guide covering data URIs, JWT, Basic Auth, email attachments, and Unicode safely.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap"></noscript>
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Encode and Decode Base64 Online for Free","datePublished":"2026-05-05","author":{"@type":"Organization","name":"Toolzspan Editorial Team"},"publisher":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"},"mainEntityOfPage":"https://toolzspan.site/blog/how-to-encode-decode-base64-online-free.html"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the best free online Base64 encoder?","acceptedAnswer":{"@type":"Answer","text":"Toolzspan Base64 Encoder is one of the best free options. It runs entirely in your browser, supports full UTF-8 (including emojis and non-Latin scripts), auto-converts as you type, and requires no account or installation."}},{"@type":"Question","name":"Is Base64 encoding the same as encryption?","acceptedAnswer":{"@type":"Answer","text":"No. Base64 is a binary-to-text encoding scheme — it represents data in 64 printable characters. Anyone can decode it without a key. Never use Base64 to hide passwords or secrets; use proper encryption like AES instead."}},{"@type":"Question","name":"Why does my decoded text look garbled?","acceptedAnswer":{"@type":"Answer","text":"Garbled output usually means the original data was encoded with a different character set (e.g., Latin-1 or Windows-1252). The Toolzspan tool decodes as UTF-8, which works for the vast majority of modern data."}},{"@type":"Question","name":"How much does Base64 increase file size?","acceptedAnswer":{"@type":"Answer","text":"Base64 makes data approximately 33% larger because every 3 bytes of input become 4 characters of output. Padding may add 1–2 more bytes. For a 100KB file, expect roughly 133KB of Base64 output."}}]}</script>
@@ -324,7 +325,7 @@
     </div>
   </footer>
   
-  <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/search.js" defer></script>
 </body>
 </html>
