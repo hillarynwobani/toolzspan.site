@@ -11,11 +11,6 @@
 /* === CSS VARIABLES === */
 :root {
   --primary-blue: #1E6FFF;
-  /* Accessible variant of --primary-blue for text on white/light backgrounds.
-     5.68:1 contrast on #FFFFFF, comfortably above WCAG AA 4.5:1. Use this
-     anywhere blue is rendered as TEXT (links, descriptions, etc.). Keep
-     --primary-blue itself for backgrounds, gradients, icon fills. */
-  --primary-blue-text: #0F5FE0;
   --accent-teal: #00C6A7;
   --deep-navy: #0A1628;
   --accent-yellow: #FFD93D;
@@ -189,7 +184,7 @@ main {
 /* === TOPBAR === */
 .topbar {
   background: var(--deep-navy);
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
   text-align: center;
   padding: 7px 0;
@@ -613,7 +608,7 @@ main {
 
 .see-all {
   font-size: 13.5px;
-  color: var(--primary-blue-text);
+  color: var(--primary-blue);
   font-weight: 600;
   text-decoration: none;
   display: flex;
@@ -1862,7 +1857,7 @@ main {
 
 .popular-tool-tile p {
   font-size: 12px;
-  color: var(--primary-blue-text);
+  color: var(--primary-blue);
   margin-top: 5px;
   font-weight: 500;
   margin-bottom: 0;
