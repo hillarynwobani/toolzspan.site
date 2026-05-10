@@ -20,7 +20,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="preload" href="../css/style.css" as="style">
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"JPG to WEBP","description":"Convert JPG to WEBP format free online. Reduce image file size by up to 35% with no visible quality loss.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://toolzspan.site/tools/jpg-to-webp.html","provider":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"}}
@@ -256,7 +255,9 @@
       </div>
     </div>
   </footer>
-  <script src="../js/main.js" defer></script>
+  
+  <script src="../js/main.js"></script>
+  <script src="../js/search.js"></script>
   <script>
     var fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),convertBtn=document.getElementById('convertBtn'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadBtn=document.getElementById('downloadBtn'),preview=document.getElementById('preview'),previewImg=document.getElementById('previewImg'),convertedBlob=null,fileName='';
     uploadArea.addEventListener('dragover',function(e){e.preventDefault();uploadArea.classList.add('drag-over');});
