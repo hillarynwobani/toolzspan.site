@@ -4,5 +4,6 @@ Disallow: /netlify/
 Disallow: /package.json
 Disallow: /netlify.toml
 Disallow: /.gitattributes
+Disallow: /terms.html
 
 Sitemap: https://toolzspan.site/sitemap.xml
