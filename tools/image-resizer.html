@@ -330,19 +330,24 @@
         const img=new Image();
         img.onload=()=>{
           const canvas=document.createElement('canvas');
-          canvas.width=tw;canvas.height=th;
           const ctx=canvas.getContext('2d');
-          ctx.fillStyle='#000';
-          ctx.fillRect(0,0,tw,th);
-          let dw=tw,dh=th,dx=0,dy=0;
           if(maintain){
-            const ratio=img.width/img.height;
+            const ratio=img.naturalWidth/img.naturalHeight;
+            const h=Math.round(tw/ratio);
+            canvas.width=tw;canvas.height=h;
+            ctx.drawImage(img,0,0,tw,h);
+          }else{
+            canvas.width=tw;canvas.height=th;
+            const ratio=img.naturalWidth/img.naturalHeight;
+            let dw,dh;
             if(tw/th>ratio){dw=Math.round(th*ratio);dh=th;}
             else{dh=Math.round(tw/ratio);dw=tw;}
-            dx=Math.round((tw-dw)/2);
-            dy=Math.round((th-dh)/2);
+            const dx=Math.round((tw-dw)/2);
+            const dy=Math.round((th-dh)/2);
+            ctx.fillStyle='#000';
+            ctx.fillRect(0,0,tw,th);
+            ctx.drawImage(img,dx,dy,dw,dh);
           }
-          ctx.drawImage(img,dx,dy,dw,dh);
           const mime=file.type||'image/png';
           canvas.toBlob(blob=>resolve(blob),mime,0.92);
         };
