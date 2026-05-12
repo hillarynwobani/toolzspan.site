@@ -281,7 +281,30 @@
     uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
     uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));});
     fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
-    function addFiles(files){files.forEach(f=>selectedFiles.push(f));renderFileList();resizeBtn.disabled=selectedFiles.length===0;optionsArea.style.display=selectedFiles.length?'block':'none';}
+    let originalRatio=1;
+    function addFiles(files){
+      files.forEach(f=>selectedFiles.push(f));
+      renderFileList();
+      resizeBtn.disabled=selectedFiles.length===0;
+      optionsArea.style.display=selectedFiles.length?'block':'none';
+      if(selectedFiles.length){loadOriginalDimensions(selectedFiles[0]);}
+    }
+    function loadOriginalDimensions(file){
+      const img=new Image();
+      img.onload=()=>{
+        resizeWidth.value=img.naturalWidth;
+        resizeHeight.value=img.naturalHeight;
+        originalRatio=img.naturalWidth/img.naturalHeight;
+        URL.revokeObjectURL(img.src);
+      };
+      img.src=URL.createObjectURL(file);
+    }
+    resizeWidth.addEventListener('input',()=>{
+      if(keepRatio.checked&&originalRatio){resizeHeight.value=Math.round(parseInt(resizeWidth.value)/originalRatio)||'';}
+    });
+    resizeHeight.addEventListener('input',()=>{
+      if(keepRatio.checked&&originalRatio){resizeWidth.value=Math.round(parseInt(resizeHeight.value)*originalRatio)||'';}
+    });
     function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();resizeBtn.disabled=selectedFiles.length===0;});});}
 
     resizeBtn.addEventListener('click',async()=>{
