@@ -321,7 +321,7 @@
 
   try{fromSearch.setByValue(Intl.DateTimeFormat().resolvedOptions().timeZone);}catch(e){fromSearch.setByValue('UTC');}
   toSearch.setByValue('UTC');
-  di.value=new Date().toISOString().slice(0,16);
+  var now=new Date();di.value=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,16);
 
   function parseInTimezone(dtStr,tz){
     var p=dtStr.split(/[-T:]/);
