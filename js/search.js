@@ -6,7 +6,7 @@
 (function() {
   'use strict';
 
-  // All 50 tools with keyword aliases for fuzzy matching
+  // All 50+ tools with keyword aliases for fuzzy matching
   var tools = [
     // PDF Tools
     { name: 'PDF Compressor', url: '/tools/pdf-compressor.html', tags: ['compress', 'shrink', 'reduce', 'smaller', 'size', 'pdf', 'squeeze'], cat: 'PDF', icon: '📄' },
@@ -303,7 +303,7 @@
 
     var navInput = document.createElement('input');
     navInput.type = 'text';
-    navInput.placeholder = 'Search 50 tools...';
+    navInput.placeholder = 'Search 50+ tools...';
     navInput.style.cssText = 'flex:1;border:none;outline:none;padding:14px 12px;font-size:16px;font-family:inherit;color:#1A2340;background:transparent;';
     navInput.id = 'navSearchInput';
 
