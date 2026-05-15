@@ -251,11 +251,14 @@
 (function(){
   var tzs=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['UTC','America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Europe/London','Europe/Paris','Europe/Berlin','Asia/Tokyo','Asia/Shanghai','Asia/Kolkata','Australia/Sydney','Pacific/Auckland','Africa/Lagos','Africa/Cairo'];
 
+  var aliases={'Africa/Casablanca':'Morocco','Africa/Lagos':'Nigeria','Africa/Cairo':'Egypt','Africa/Johannesburg':'South Africa','Africa/Nairobi':'Kenya','Africa/Accra':'Ghana','Africa/Algiers':'Algeria','Africa/Tunis':'Tunisia','Africa/Dar_es_Salaam':'Tanzania','Africa/Kampala':'Uganda','America/New_York':'USA East','America/Chicago':'USA Central','America/Denver':'USA Mountain','America/Los_Angeles':'USA West','America/Toronto':'Canada East','America/Vancouver':'Canada West','America/Mexico_City':'Mexico','America/Sao_Paulo':'Brazil','America/Argentina/Buenos_Aires':'Argentina','America/Bogota':'Colombia','America/Lima':'Peru','America/Santiago':'Chile','Europe/London':'UK England','Europe/Paris':'France','Europe/Berlin':'Germany','Europe/Madrid':'Spain','Europe/Rome':'Italy','Europe/Amsterdam':'Netherlands','Europe/Brussels':'Belgium','Europe/Zurich':'Switzerland','Europe/Moscow':'Russia','Europe/Istanbul':'Turkey','Europe/Warsaw':'Poland','Europe/Stockholm':'Sweden','Europe/Oslo':'Norway','Europe/Helsinki':'Finland','Europe/Athens':'Greece','Europe/Vienna':'Austria','Europe/Lisbon':'Portugal','Europe/Dublin':'Ireland','Europe/Prague':'Czech Republic','Europe/Budapest':'Hungary','Europe/Bucharest':'Romania','Asia/Tokyo':'Japan','Asia/Shanghai':'China','Asia/Kolkata':'India','Asia/Dubai':'UAE Emirates','Asia/Riyadh':'Saudi Arabia','Asia/Singapore':'Singapore','Asia/Seoul':'South Korea','Asia/Bangkok':'Thailand','Asia/Jakarta':'Indonesia','Asia/Manila':'Philippines','Asia/Karachi':'Pakistan','Asia/Dhaka':'Bangladesh','Asia/Kuala_Lumpur':'Malaysia','Asia/Ho_Chi_Minh':'Vietnam','Asia/Taipei':'Taiwan','Asia/Hong_Kong':'Hong Kong','Asia/Tehran':'Iran','Asia/Baghdad':'Iraq','Asia/Beirut':'Lebanon','Asia/Jerusalem':'Israel','Australia/Sydney':'Australia East','Australia/Perth':'Australia West','Pacific/Auckland':'New Zealand','Pacific/Fiji':'Fiji','Pacific/Honolulu':'Hawaii'};
+
   function formatTz(tz){
     var parts=tz.split('/');
     var city=(parts[parts.length-1]||'').replace(/_/g,' ');
     var region=parts.length>1?parts.slice(0,-1).join('/').replace(/_/g,' '):'';
-    return {city:city,region:region,label:city+(region?' ('+region+')':''),value:tz};
+    var aka=aliases[tz]||'';
+    return {city:city,region:region,aka:aka,label:city+(region?' ('+region+')':''),value:tz};
   }
   var tzData=tzs.map(formatTz);
 
@@ -269,12 +272,12 @@
     function render(filter){
       drop.innerHTML='';activeIdx=-1;
       var q=(filter||'').toLowerCase();
-      var matches=q?tzData.filter(function(t){return t.value.toLowerCase().indexOf(q)>-1||t.city.toLowerCase().indexOf(q)>-1||t.region.toLowerCase().indexOf(q)>-1;}):tzData;
+      var matches=q?tzData.filter(function(t){return t.value.toLowerCase().indexOf(q)>-1||t.city.toLowerCase().indexOf(q)>-1||t.region.toLowerCase().indexOf(q)>-1||t.aka.toLowerCase().indexOf(q)>-1;}):tzData;
       if(!matches.length){drop.innerHTML='<div class="tz-option" style="color:#6B7A99;">No results</div>';drop.classList.add('open');return;}
       matches.slice(0,50).forEach(function(t,i){
         var div=document.createElement('div');
         div.className='tz-option';
-        div.innerHTML='<span class="tz-city">'+t.city+'</span>'+(t.region?'<span class="tz-region">'+t.region+'</span>':'');
+        div.innerHTML='<span class="tz-city">'+t.city+'</span>'+(t.aka?'<span class="tz-region">'+t.aka+'</span>':t.region?'<span class="tz-region">'+t.region+'</span>':'');
         div.addEventListener('mousedown',function(e){e.preventDefault();select(t);});
         drop.appendChild(div);
       });
