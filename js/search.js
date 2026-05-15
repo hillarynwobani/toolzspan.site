@@ -334,7 +334,7 @@
       }, 10);
       navInput.value = '';
       navInput.focus();
-      navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50 free tools...</div>';
+      navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50+ free tools...</div>';
     }
 
     function closeSearch() {
@@ -371,7 +371,7 @@
         if (val.trim().length >= 2) {
           renderResults(navDropdown, results, val);
         } else {
-          navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50 free tools...</div>';
+          navDropdown.innerHTML = '<div style="padding:16px 20px;color:#6B7A99;font-size:13px;">Type to search across 50+ free tools...</div>';
         }
       }, 150);
     });
