@@ -144,10 +144,31 @@
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
     <div class="tool-workspace"><div class="tool-options">
-<label>From Time Zone</label><select id="tzFrom"></select>
-<label>To Time Zone</label><select id="tzTo"></select>
-<label>Date & Time</label><input type="datetime-local" id="dtInput">
+<label>From Time Zone</label>
+<div class="tz-search-wrap" id="tzFromWrap">
+  <input type="text" class="tz-search-input" id="tzFromInput" placeholder="Search city or timezone..." autocomplete="off">
+  <input type="hidden" id="tzFrom">
+  <div class="tz-dropdown" id="tzFromDrop"></div>
+</div>
+<label>To Time Zone</label>
+<div class="tz-search-wrap" id="tzToWrap">
+  <input type="text" class="tz-search-input" id="tzToInput" placeholder="Search city or timezone..." autocomplete="off">
+  <input type="hidden" id="tzTo">
+  <div class="tz-dropdown" id="tzToDrop"></div>
+</div>
+<label>Date &amp; Time</label><input type="datetime-local" id="dtInput">
 <div class="result-area active" style="display:block;margin-top:16px;"><h3 id="tzResult">—</h3></div>
+<style>
+.tz-search-wrap{position:relative;}
+.tz-search-input{width:100%;padding:10px 12px;border:1.5px solid #d1d9e6;border-radius:8px;font-size:15px;font-family:inherit;color:#1A2340;background:#fff;box-sizing:border-box;}
+.tz-search-input:focus{outline:none;border-color:#1E6FFF;box-shadow:0 0 0 3px rgba(30,111,255,0.1);}
+.tz-dropdown{display:none;position:absolute;left:0;right:0;top:100%;max-height:220px;overflow-y:auto;background:#fff;border:1.5px solid #d1d9e6;border-top:none;border-radius:0 0 8px 8px;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,0.1);}
+.tz-dropdown.open{display:block;}
+.tz-option{padding:9px 14px;cursor:pointer;font-size:14px;color:#1A2340;transition:background .1s;}
+.tz-option:hover,.tz-option.active{background:#EBF2FF;color:#1E6FFF;}
+.tz-option .tz-city{font-weight:600;}
+.tz-option .tz-region{color:#6B7A99;font-size:12px;margin-left:6px;}
+</style>
 </div><p class="no-signup-note"><strong>No sign-up required.</strong> Works entirely in your browser.</p>
 <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="units-converter.html" class="related-tool-link">Units Converter</a><a href="word-counter.html" class="related-tool-link">Word Counter</a><a href="color-picker.html" class="related-tool-link">Color Picker</a><a href="qr-code-generator.html" class="related-tool-link">QR Code Generator</a><a href="base64-encoder.html" class="related-tool-link">Base64 Encoder</a><a href="image-resizer.html" class="related-tool-link">Image Resizer</a></div></div></div>
 
@@ -227,30 +248,98 @@
   <script src="../js/main.js" defer></script>
   <script src="../js/search.js" defer></script>
   <script>
-var tzs=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['UTC','America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Europe/London','Europe/Paris','Europe/Berlin','Asia/Tokyo','Asia/Shanghai','Asia/Kolkata','Australia/Sydney','Pacific/Auckland','Africa/Lagos','Africa/Cairo'];
-var tf=document.getElementById('tzFrom'),tt=document.getElementById('tzTo'),di=document.getElementById('dtInput'),tr=document.getElementById('tzResult');
-var frag1=document.createDocumentFragment(),frag2=document.createDocumentFragment();
-tzs.forEach(function(z){var o1=document.createElement('option');o1.value=z;o1.textContent=z.replace(/_/g,' ');frag1.appendChild(o1);var o2=o1.cloneNode(true);frag2.appendChild(o2);});
-tf.appendChild(frag1);tt.appendChild(frag2);
-try{tf.value=Intl.DateTimeFormat().resolvedOptions().timeZone;}catch(e){}
-tt.value='UTC';if(!tt.value)tt.selectedIndex=0;
-di.value=new Date().toISOString().slice(0,16);
-function parseInTimezone(dtStr,tz){
-  var p=dtStr.split(/[-T:]/);
-  var utc=new Date(Date.UTC(+p[0],+p[1]-1,+p[2],+p[3],+p[4]));
-  var inTz=new Date(utc.toLocaleString('en-US',{timeZone:tz}));
-  return new Date(utc.getTime()+(utc.getTime()-inTz.getTime()));
-}
-function calc(){
-  if(!di.value)return;
-  var d=parseInTimezone(di.value,tf.value);
-  if(isNaN(d))return;
-  var fmt={year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true};
-  var fromStr=d.toLocaleString('en-US',Object.assign({},fmt,{timeZone:tf.value}));
-  var toStr=d.toLocaleString('en-US',Object.assign({},fmt,{timeZone:tt.value}));
-  tr.textContent=fromStr+' ('+tf.value.replace(/_/g,' ')+') = '+toStr+' ('+tt.value.replace(/_/g,' ')+')';
-}
-tf.addEventListener('change',calc);tt.addEventListener('change',calc);di.addEventListener('input',calc);calc();
+(function(){
+  var tzs=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['UTC','America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Europe/London','Europe/Paris','Europe/Berlin','Asia/Tokyo','Asia/Shanghai','Asia/Kolkata','Australia/Sydney','Pacific/Auckland','Africa/Lagos','Africa/Cairo'];
+
+  function formatTz(tz){
+    var parts=tz.split('/');
+    var city=(parts[parts.length-1]||'').replace(/_/g,' ');
+    var region=parts.length>1?parts.slice(0,-1).join('/').replace(/_/g,' '):'';
+    return {city:city,region:region,label:city+(region?' ('+region+')':''),value:tz};
+  }
+  var tzData=tzs.map(formatTz);
+
+  function initSearchable(inputId,hiddenId,dropId,wrapId){
+    var input=document.getElementById(inputId);
+    var hidden=document.getElementById(hiddenId);
+    var drop=document.getElementById(dropId);
+    var wrap=document.getElementById(wrapId);
+    var activeIdx=-1;
+
+    function render(filter){
+      drop.innerHTML='';activeIdx=-1;
+      var q=(filter||'').toLowerCase();
+      var matches=q?tzData.filter(function(t){return t.value.toLowerCase().indexOf(q)>-1||t.city.toLowerCase().indexOf(q)>-1||t.region.toLowerCase().indexOf(q)>-1;}):tzData;
+      if(!matches.length){drop.innerHTML='<div class="tz-option" style="color:#6B7A99;">No results</div>';drop.classList.add('open');return;}
+      matches.slice(0,50).forEach(function(t,i){
+        var div=document.createElement('div');
+        div.className='tz-option';
+        div.innerHTML='<span class="tz-city">'+t.city+'</span>'+(t.region?'<span class="tz-region">'+t.region+'</span>':'');
+        div.addEventListener('mousedown',function(e){e.preventDefault();select(t);});
+        drop.appendChild(div);
+      });
+      drop.classList.add('open');
+    }
+
+    function select(t){
+      hidden.value=t.value;
+      input.value=t.label;
+      drop.classList.remove('open');
+      calc();
+    }
+
+    function highlightIdx(idx){
+      var items=drop.querySelectorAll('.tz-option');
+      items.forEach(function(el){el.classList.remove('active');});
+      if(idx>=0&&idx<items.length){items[idx].classList.add('active');items[idx].scrollIntoView({block:'nearest'});}
+    }
+
+    input.addEventListener('focus',function(){render(input.value);});
+    input.addEventListener('input',function(){render(input.value);});
+    input.addEventListener('blur',function(){setTimeout(function(){drop.classList.remove('open');},150);});
+    input.addEventListener('keydown',function(e){
+      var items=drop.querySelectorAll('.tz-option');
+      if(e.key==='ArrowDown'){e.preventDefault();activeIdx=Math.min(activeIdx+1,items.length-1);highlightIdx(activeIdx);}
+      else if(e.key==='ArrowUp'){e.preventDefault();activeIdx=Math.max(activeIdx-1,0);highlightIdx(activeIdx);}
+      else if(e.key==='Enter'){e.preventDefault();if(activeIdx>=0&&items[activeIdx]){items[activeIdx].dispatchEvent(new MouseEvent('mousedown'));}}
+      else if(e.key==='Escape'){drop.classList.remove('open');input.blur();}
+    });
+
+    return {select:select,setByValue:function(val){var t=tzData.find(function(x){return x.value===val;});if(t)select(t);}};
+  }
+
+  var fromSearch=initSearchable('tzFromInput','tzFrom','tzFromDrop','tzFromWrap');
+  var toSearch=initSearchable('tzToInput','tzTo','tzToDrop','tzToWrap');
+
+  var tf=document.getElementById('tzFrom');
+  var tt=document.getElementById('tzTo');
+  var di=document.getElementById('dtInput');
+  var tr=document.getElementById('tzResult');
+
+  try{fromSearch.setByValue(Intl.DateTimeFormat().resolvedOptions().timeZone);}catch(e){fromSearch.setByValue('UTC');}
+  toSearch.setByValue('UTC');
+  di.value=new Date().toISOString().slice(0,16);
+
+  function parseInTimezone(dtStr,tz){
+    var p=dtStr.split(/[-T:]/);
+    var utc=new Date(Date.UTC(+p[0],+p[1]-1,+p[2],+p[3],+p[4]));
+    var inTz=new Date(utc.toLocaleString('en-US',{timeZone:tz}));
+    return new Date(utc.getTime()+(utc.getTime()-inTz.getTime()));
+  }
+
+  function calc(){
+    if(!di.value||!tf.value||!tt.value)return;
+    var d=parseInTimezone(di.value,tf.value);
+    if(isNaN(d))return;
+    var fmt={year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true};
+    var fromStr=d.toLocaleString('en-US',Object.assign({},fmt,{timeZone:tf.value}));
+    var toStr=d.toLocaleString('en-US',Object.assign({},fmt,{timeZone:tt.value}));
+    tr.textContent=fromStr+' ('+tf.value.replace(/_/g,' ')+') = '+toStr+' ('+tt.value.replace(/_/g,' ')+')';
+  }
+
+  di.addEventListener('input',calc);
+  calc();
+})();
 </script>
 </body>
 </html>
