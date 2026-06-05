@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +32,7 @@
 </head>
 <body>
     <header class="site-header">
+  <div class="topbar">ðŸŽ‰ All tools are <span>100% free</span> â€” No sign-up required. Your privacy is our priority.</div>
     <div class="header-inner">
       <a href="/" class="header-logo" aria-label="Toolzspan Home">
         <img src="../toolzspan-logo-v2.svg" alt="Toolzspan — Free Online Tools" width="180" height="45" loading="eager">
@@ -138,7 +139,7 @@
         </div>
       </nav>
       <div class="nav-right">
-        <div class="search-btn">&#128269;</div>
+        <button class="search-btn" type="button" aria-label="Open search">ðŸ”</button>
       </div>
     </div>
   </header>
@@ -175,7 +176,7 @@
 </div>
     <div class="tool-info-section">
       <h2>How to Convert PDF to Word Online (3 Easy Steps)</h2>
-      <ol><li>Upload your PDF file using the area above.</li><li>Click "Convert to Word" to extract text.</li><li>Wait while the PDF pages are processed.</li><li>Download your Word document (.doc) file.</li></ol>
+      <ol><li>Upload your PDF file using the area above.</li><li>Click "Convert to Word" to extract text.</li><li>Download your Word document (.docx) file.</li></ol>
       <h2>Why Convert PDF to Word? (And When You Need To)</h2>
       <ul><li><strong>100% Free</strong> — No hidden fees or limits.</li><li><strong>Fast Processing</strong> — Get your result in seconds.</li><li><strong>Private & Secure</strong> — Your files stay on your device.</li><li><strong>Cross-Platform</strong> — Works seamlessly on desktop, tablet, and mobile.</li></ul>
       <h2>PDF to Word — Frequently Asked Questions</h2>
@@ -238,7 +239,7 @@
   
   <script src="../js/main.js" defer></script>
   <script src="../js/search.js" defer></script>
-<script src="../js/server-tool.js"></script>
+  <script src="../js/server-tool.js" defer></script>
 <script>
 (function () {
   var fi = document.getElementById('fileInput');
@@ -276,8 +277,8 @@
 
   if (pb) pb.addEventListener('click', async function () {
     if (!selectedFile) return;
-    var err = "";
-    if (err) { ToolzspanServer.showError(workspace, err); return; }
+
+
     pb.disabled = true;
     try {
       var res = await ToolzspanServer.run({

@@ -1375,7 +1375,6 @@ main {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .page-404 p {

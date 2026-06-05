@@ -91,29 +91,29 @@
       var w = words[i];
       if (w.length < 2) continue;
 
-      // Exact word in name
-      if (name.indexOf(w) !== -1) s += 100;
-      // Exact word in tags
-      else if (allTags.indexOf(w) !== -1) s += 50;
-      // Fuzzy: 2+ chars match start of a tag
+      var matchedWord = false;
+      if (name.indexOf(w) !== -1) { s += 100; matchedWord = true; }
+      else if (allTags.indexOf(w) !== -1) { s += 50; matchedWord = true; }
       else {
         for (var j = 0; j < tool.tags.length; j++) {
           if (tool.tags[j].indexOf(w) === 0 || (w.length >= 3 && tool.tags[j].indexOf(w) !== -1)) {
             s += 30;
+            matchedWord = true;
             break;
           }
         }
       }
-      // Levenshtein-light: allow 1 typo for words 4+ chars
-      if (s === 0 && w.length >= 4) {
+
+      if (!matchedWord && w.length >= 4) {
+        var fuzzyMatched = false;
         for (var k = 0; k < tool.tags.length; k++) {
           if (tool.tags[k].length >= 3 && levenshtein1(w, tool.tags[k])) {
             s += 15;
+            fuzzyMatched = true;
             break;
           }
         }
-        if (s === 0) {
-          // Check against name words
+        if (!fuzzyMatched) {
           var nameWords = name.split(/\s+/);
           for (var m = 0; m < nameWords.length; m++) {
             if (nameWords[m].length >= 3 && levenshtein1(w, nameWords[m])) {
