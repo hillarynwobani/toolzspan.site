@@ -27,11 +27,9 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap"></noscript>
   <link rel="stylesheet" href="../css/style.css">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Article","headline":"What Is OCR and How Does It Work on PDFs?","datePublished":"2026-04-11","dateModified":"2026-04-11","author":{"@type":"Organization","name":"Toolzspan Editorial Team"},"publisher":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"},"description":"Understand OCR (Optical Character Recognition) and how it turns scanned PDFs into searchable, editable text. A beginner-friendly guide with practical tips.","mainEntityOfPage":"https://toolzspan.site/blog/what-is-ocr-how-it-works-on-pdfs.html"}
-  </script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How accurate is OCR on a scanned PDF?","acceptedAnswer":{"@type":"Answer","text":"Modern OCR engines achieve 95-99% accuracy on clean, high-resolution scans with standard fonts. Accuracy drops on handwriting, low-resolution images, or unusual layouts."}},{"@type":"Question","name":"What languages does OCR support?","acceptedAnswer":{"@type":"Answer","text":"Most modern OCR engines support dozens of languages including English, Spanish, French, German, Chinese, Japanese, and Arabic. Browser-based tools typically default to English with multi-language options available."}},{"@type":"Question","name":"Can OCR read handwritten text?","acceptedAnswer":{"@type":"Answer","text":"OCR works best on printed text. Some engines have handwriting recognition (HTR), but accuracy is much lower than for typed text - often 60-80%, especially with cursive."}},{"@type":"Question","name":"Does OCR work on photos taken with a phone?","acceptedAnswer":{"@type":"Answer","text":"Yes, but quality matters. For best results, take photos in good lighting, hold the camera parallel to the page, and avoid blur. The Image to Text (OCR) tool is optimized for phone-camera input."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://toolzspan.site/blog/"},{"@type":"ListItem","position":3,"name":"What Is OCR and How Does It Work on PDFs? | Toolzspan Blog","item":"https://toolzspan.site/blog/what-is-ocr-how-it-works-on-pdfs.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What Is OCR and How Does It Work on PDFs?","datePublished":"2026-04-11","author":{"@type":"Organization","name":"Toolzspan Editorial Team"},"publisher":{"@type":"Organization","name":"Toolzspan","url":"https://toolzspan.site"},"mainEntityOfPage":"https://toolzspan.site/blog/what-is-ocr-how-it-works-on-pdfs.html"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How accurate is OCR on a scanned PDF?","acceptedAnswer":{"@type":"Answer","text":"Modern OCR engines achieve 95-99% accuracy on clean, high-resolution scans with standard fonts. Accuracy drops on handwriting, low-resolution images, or unusual layouts."}},{"@type":"Question","name":"What languages does OCR support?","acceptedAnswer":{"@type":"Answer","text":"Most modern OCR engines support dozens of languages including English, Spanish, French, German, Chinese, Japanese, and Arabic. Browser-based tools typically default to English with multi-language options available."}},{"@type":"Question","name":"Can OCR read handwritten text?","acceptedAnswer":{"@type":"Answer","text":"OCR works best on printed text. Some engines have handwriting recognition (HTR), but accuracy is much lower than for typed text - often 60-80%, especially with cursive."}},{"@type":"Question","name":"Does OCR work on photos taken with a phone?","acceptedAnswer":{"@type":"Answer","text":"Yes, but quality matters. For best results, take photos in good lighting, hold the camera parallel to the page, and avoid blur. The Image to Text (OCR) tool is optimized for phone-camera input."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://toolzspan.site/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://toolzspan.site/blog/"},{"@type":"ListItem","position":3,"name":"What Is OCR and How Does It Work on PDFs? | Toolzspan Blog","item":"https://toolzspan.site/blog/what-is-ocr-how-it-works-on-pdfs.html"}]}</script>
 </head>
 <body>
     <header class="site-header">
@@ -154,12 +152,27 @@
       <div class="blog-post-content">
         <p>You have probably encountered this frustration: you open a PDF, try to select some text, and nothing happens. The cursor just draws a box instead of highlighting words. That is because the PDF is actually an image — a photograph or scan of a document — rather than a text-based file. The text is there visually, but to your computer, it is just pixels.</p>
         <p>This is where OCR comes in. The free <a href="/tools/ocr-pdf.html">OCR PDF</a> tool extracts text from any scanned PDF in your browser — no sign-up required.</p>
+        
+        <nav class="toc">
+          <h2>Table of Contents</h2>
+          <ol>
+            <li><a href="#what">What Is OCR?</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#scanned-pdfs">OCR on Scanned PDFs</a></li>
+            <li><a href="#tools">Free vs. Paid Tools</a></li>
+            <li><a href="#accuracy">How Accurate Is It?</a></li>
+            <li><a href="#image-vs-pdf">Image vs. PDF OCR</a></li>
+            <li><a href="#use-cases">Common Use Cases</a></li>
+            <li><a href="#final">Final Verdict</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+          </ol>
+        </nav>
 
-        <h2>What Is OCR?</h2>
+        <h2 id="what">What Is OCR?</h2>
         <p>OCR stands for Optical Character Recognition. It is a technology that analyzes images of text — scanned documents, photographs of pages, screenshots — and converts the visual characters into actual, machine-readable text that you can select, copy, search, and edit.</p>
         <p>Think of it as teaching a computer to read. The OCR engine looks at the shapes in the image, identifies them as letters and numbers, and outputs the corresponding text.</p>
 
-        <h2>How Does OCR Work?</h2>
+        <h2 id="how">How Does OCR Work?</h2>
         <p>Modern OCR engines go through several steps to convert an image into text:</p>
         <ol>
           <li><strong>Image preprocessing.</strong> The image is cleaned up — contrast is enhanced, the page is straightened if tilted, and noise is reduced. This step significantly improves accuracy.</li>
@@ -169,16 +182,16 @@
           <li><strong>Post-processing.</strong> The raw output is refined using language models and dictionaries to correct likely errors — for example, changing "rn" to "m" when the context suggests it.</li>
         </ol>
 
-        <h2>OCR on Scanned PDFs</h2>
+        <h2 id="scanned-pdfs">OCR on Scanned PDFs</h2>
         <p>When you scan a paper document, the scanner creates a picture of each page. If you save those pictures as a PDF, you get a file that looks like a normal document but is actually just a stack of images. You cannot search for a word, copy a paragraph, or edit the text.</p>
         <p>Running OCR on this PDF converts those images into selectable, searchable text. You can try it yourself with this <a href="/tools/ocr-pdf.html">OCR PDF</a> tool — upload a scanned PDF and extract the text instantly.</p>
 
-        <h2>Free vs. Paid OCR Tools</h2>
+        <h2 id="tools">Free vs. Paid OCR Tools</h2>
         <p>Paid OCR tools like Adobe Acrobat Pro and ABBYY FineReader offer advanced features: batch processing of hundreds of files, layout preservation, table recognition, and support for dozens of languages. They are worth the investment if OCR is a core part of your daily workflow.</p>
         <p>Free browser-based OCR tools are ideal for occasional use — when you need to extract text from a few pages and do not want to install software or create an account. The accuracy of free tools has improved dramatically in recent years thanks to advances in machine learning, and for most standard documents, they produce results comparable to paid alternatives.</p>
         <p>A key advantage of browser-based OCR is privacy. Since your files are processed entirely in your browser using JavaScript, the documents never leave your computer. No server sees your files, and nothing is stored anywhere. This makes browser-based OCR the safest option for sensitive documents like contracts, financial records, or personal correspondence.</p>
 
-        <h2>How Accurate Is OCR?</h2>
+        <h2 id="accuracy">How Accurate Is OCR?</h2>
         <p>Modern OCR engines achieve 95 to 99 percent accuracy on clean, well-scanned documents with standard fonts. However, accuracy drops when dealing with:</p>
         <ul>
           <li>Handwritten text — especially cursive or messy handwriting</li>
@@ -189,10 +202,10 @@
         </ul>
         <p>For best results, use high-quality scans at 200 to 300 DPI with good lighting and contrast.</p>
 
-        <h2>OCR for Images vs. PDFs</h2>
+        <h2 id="image-vs-pdf">OCR for Images vs. PDFs</h2>
         <p>OCR works on both individual images and PDFs. If you have a photo of a document rather than a PDF, you can use the <a href="/tools/scan-image.html">Image to Text (OCR)</a> tool to extract text from the photo directly. For multi-page scanned PDFs, use the OCR PDF tool which processes each page sequentially.</p>
 
-        <h2>Common Use Cases for OCR</h2>
+        <h2 id="use-cases">Common Use Cases for OCR</h2>
         <ul>
           <li><strong>Digitizing old documents.</strong> Convert paper archives into searchable digital files.</li>
           <li><strong>Making scanned contracts editable.</strong> Extract text from a scanned contract so you can edit it in Word.</li>
@@ -201,7 +214,7 @@
           <li><strong>Data entry.</strong> Extract data from scanned forms, receipts, or invoices instead of retyping everything manually.</li>
         </ul>
 
-        <h2>Final Thoughts</h2>
+        <h2 id="final">Final Thoughts</h2>
         <p>OCR is one of those technologies that feels like magic when you first use it. A page that was just a picture suddenly becomes editable text. Whether you are digitizing old files, extracting data from scans, or making documents searchable, OCR saves hours of manual work. And with free browser-based tools available today, you do not need any special software to use it.</p>
         <p>For a practical walkthrough, check out our guide on <a href="how-to-convert-scanned-image-to-text-ocr.html">how to convert a scanned image into editable text</a>.</p>
       </div>
