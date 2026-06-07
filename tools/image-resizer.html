@@ -501,21 +501,65 @@
           const img = new Image();
           const objUrl = URL.createObjectURL(file);
           img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
             let finalW = tw, finalH = th;
-            
             if (maintain) {
               const ratio = img.naturalWidth / img.naturalHeight;
               finalH = Math.round(tw / ratio);
             }
-            
-            canvas.width = finalW;
-            canvas.height = finalH;
+
+            // Multi-step downscaling: halve the image size on each pass
+            // until we reach the target. This prevents blurriness caused
+            // by single-step large-ratio downscaling.
+            let srcW = img.naturalWidth;
+            let srcH = img.naturalHeight;
+
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
-            ctx.drawImage(img, 0, 0, finalW, finalH);
-            
+
+            // If upscaling or same size, do it in one step
+            if (finalW >= srcW || finalH >= srcH) {
+              canvas.width = finalW;
+              canvas.height = finalH;
+              ctx.drawImage(img, 0, 0, finalW, finalH);
+            } else {
+              // Step-down: draw onto a series of intermediate canvases,
+              // each half the size of the previous, until we are within
+              // 2x of the target, then do a final precise draw.
+              canvas.width = srcW;
+              canvas.height = srcH;
+              ctx.drawImage(img, 0, 0, srcW, srcH);
+
+              while (srcW * 0.5 > finalW || srcH * 0.5 > finalH) {
+                const stepW = Math.max(Math.round(srcW * 0.5), finalW);
+                const stepH = Math.max(Math.round(srcH * 0.5), finalH);
+
+                const stepCanvas = document.createElement('canvas');
+                stepCanvas.width = stepW;
+                stepCanvas.height = stepH;
+                const stepCtx = stepCanvas.getContext('2d');
+                stepCtx.imageSmoothingEnabled = true;
+                stepCtx.imageSmoothingQuality = 'high';
+                stepCtx.drawImage(canvas, 0, 0, stepW, stepH);
+
+                canvas = stepCanvas;
+                ctx = stepCtx;
+                srcW = stepW;
+                srcH = stepH;
+              }
+
+              // Final precise draw to exact target dimensions
+              const finalCanvas = document.createElement('canvas');
+              finalCanvas.width = finalW;
+              finalCanvas.height = finalH;
+              const finalCtx = finalCanvas.getContext('2d');
+              finalCtx.imageSmoothingEnabled = true;
+              finalCtx.imageSmoothingQuality = 'high';
+              finalCtx.drawImage(canvas, 0, 0, finalW, finalH);
+              canvas = finalCanvas;
+            }
+
             canvas.toBlob(blob => {
               URL.revokeObjectURL(objUrl);
               resolve(blob);
