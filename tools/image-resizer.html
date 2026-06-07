@@ -496,10 +496,61 @@
         setControlState(false);
       });
 
+      // Applies a gentle unsharp-mask sharpening convolution to a canvas.
+      // This compensates for the inherent softness of canvas bilinear resampling.
+      function applySharpen(canvas) {
+        const w = canvas.width;
+        const h = canvas.height;
+        // Skip for very large images to prevent browser freeze
+        if (w * h > 3000000) return;
+
+        const ctx = canvas.getContext('2d');
+        const src = ctx.getImageData(0, 0, w, h);
+        const dst = ctx.createImageData(w, h);
+        const s = src.data;
+        const d = dst.data;
+
+        // Blended sharpening kernel at 35% strength:
+        // center = 0.35*5 + 0.65*1 = 2.40
+        // neighbors = 0.35*(-1) = -0.35
+        // Sum = 2.40 + 4*(-0.35) = 1.0 (brightness preserved)
+        const K_CENTER = 2.40;
+        const K_EDGE   = -0.35;
+
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const i = (y * w + x) * 4;
+
+            // Border pixels: copy as-is
+            if (x === 0 || x === w - 1 || y === 0 || y === h - 1) {
+              d[i] = s[i]; d[i+1] = s[i+1]; d[i+2] = s[i+2]; d[i+3] = s[i+3];
+              continue;
+            }
+
+            const top    = ((y - 1) * w + x) * 4;
+            const bottom = ((y + 1) * w + x) * 4;
+            const left   = (y * w + (x - 1)) * 4;
+            const right  = (y * w + (x + 1)) * 4;
+
+            for (let c = 0; c < 3; c++) {
+              const v = K_CENTER * s[i + c]
+                      + K_EDGE   * s[top    + c]
+                      + K_EDGE   * s[bottom + c]
+                      + K_EDGE   * s[left   + c]
+                      + K_EDGE   * s[right  + c];
+              d[i + c] = Math.min(255, Math.max(0, Math.round(v)));
+            }
+            d[i + 3] = s[i + 3]; // Preserve alpha
+          }
+        }
+        ctx.putImageData(dst, 0, 0);
+      }
+
       function processImage(file, tw, th, maintain) {
         return new Promise(resolve => {
           const img = new Image();
           const objUrl = URL.createObjectURL(file);
+
           img.onload = () => {
             let finalW = tw, finalH = th;
             if (maintain) {
@@ -507,68 +558,60 @@
               finalH = Math.round(tw / ratio);
             }
 
-            // Multi-step downscaling: halve the image size on each pass
-            // until we reach the target. This prevents blurriness caused
-            // by single-step large-ratio downscaling.
+            const mimeType = file.type || 'image/png';
+            const fillBackground = (mimeType === 'image/jpeg' || mimeType === 'image/jpg');
+
+            function makeCanvas(w, h) {
+              const c = document.createElement('canvas');
+              c.width = w;
+              c.height = h;
+              const cx = c.getContext('2d');
+              cx.imageSmoothingEnabled = true;
+              cx.imageSmoothingQuality = 'high';
+              if (fillBackground) {
+                cx.fillStyle = '#ffffff';
+                cx.fillRect(0, 0, w, h);
+              }
+              return { canvas: c, ctx: cx };
+            }
+
             let srcW = img.naturalWidth;
             let srcH = img.naturalHeight;
 
-            let canvas = document.createElement('canvas');
-            let ctx = canvas.getContext('2d');
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
+            let { canvas, ctx } = makeCanvas(srcW, srcH);
+            ctx.drawImage(img, 0, 0, srcW, srcH);
 
-            // If upscaling or same size, do it in one step
-            if (finalW >= srcW || finalH >= srcH) {
-              canvas.width = finalW;
-              canvas.height = finalH;
-              ctx.drawImage(img, 0, 0, finalW, finalH);
-            } else {
-              // Step-down: draw onto a series of intermediate canvases,
-              // each half the size of the previous, until we are within
-              // 2x of the target, then do a final precise draw.
-              canvas.width = srcW;
-              canvas.height = srcH;
-              ctx.drawImage(img, 0, 0, srcW, srcH);
-
+            // Step-down: halve repeatedly until within 2x of target
+            if (finalW < srcW && finalH < srcH) {
               while (srcW * 0.5 > finalW || srcH * 0.5 > finalH) {
                 const stepW = Math.max(Math.round(srcW * 0.5), finalW);
                 const stepH = Math.max(Math.round(srcH * 0.5), finalH);
-
-                const stepCanvas = document.createElement('canvas');
-                stepCanvas.width = stepW;
-                stepCanvas.height = stepH;
-                const stepCtx = stepCanvas.getContext('2d');
-                stepCtx.imageSmoothingEnabled = true;
-                stepCtx.imageSmoothingQuality = 'high';
-                stepCtx.drawImage(canvas, 0, 0, stepW, stepH);
-
-                canvas = stepCanvas;
-                ctx = stepCtx;
+                const step = makeCanvas(stepW, stepH);
+                step.ctx.drawImage(canvas, 0, 0, stepW, stepH);
+                canvas = step.canvas;
                 srcW = stepW;
                 srcH = stepH;
               }
-
-              // Final precise draw to exact target dimensions
-              const finalCanvas = document.createElement('canvas');
-              finalCanvas.width = finalW;
-              finalCanvas.height = finalH;
-              const finalCtx = finalCanvas.getContext('2d');
-              finalCtx.imageSmoothingEnabled = true;
-              finalCtx.imageSmoothingQuality = 'high';
-              finalCtx.drawImage(canvas, 0, 0, finalW, finalH);
-              canvas = finalCanvas;
             }
 
-            canvas.toBlob(blob => {
+            // Final precise draw to exact target dimensions
+            const final = makeCanvas(finalW, finalH);
+            final.ctx.drawImage(canvas, 0, 0, finalW, finalH);
+
+            // Apply sharpening to compensate for canvas bilinear blur
+            applySharpen(final.canvas);
+
+            final.canvas.toBlob(blob => {
               URL.revokeObjectURL(objUrl);
               resolve(blob);
-            }, file.type || 'image/png', 0.92);
+            }, mimeType, 0.92);
           };
+
           img.onerror = () => {
             URL.revokeObjectURL(objUrl);
             resolve(null);
           };
+
           img.src = objUrl;
         });
       }
