@@ -156,18 +156,27 @@
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
     <div class="tool-workspace">
-      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">📐</div><p><strong>Drag and drop images here</strong></p><p>or click to browse (JPG, PNG, WebP)</p><input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple></div>
+      <div class="upload-area" id="uploadArea"><div class="upload-area-icon">📐</div><p><strong>Drag and drop images here</strong></p><p>or click to browse (JPG, PNG, WebP, GIF)</p><input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif" multiple></div>
+      <div id="gifWarning" style="display:none; background:#FFF9E6; border:1px solid #FFE58F; color:#856404; padding:10px 14px; border-radius:8px; margin-top:10px; font-size:13px;">⚠️ <strong>Note:</strong> Resizing animated GIFs will result in a static image.</div>
       <div class="file-list" id="fileList"></div>
       <div class="tool-options" id="optionsArea" style="display:none;">
-        <label for="resizeWidth">Width (px)</label>
-        <input type="number" id="resizeWidth" value="800" min="1" max="10000">
-        <label for="resizeHeight">Height (px)</label>
-        <input type="number" id="resizeHeight" value="600" min="1" max="10000">
-        <label><input type="checkbox" id="keepRatio" checked style="margin-right:8px;"> Maintain aspect ratio</label>
+        <div class="form-group">
+          <label for="resizeWidth">Width (px)</label>
+          <input type="number" id="resizeWidth" value="800" min="1" max="10000">
+        </div>
+        <div class="form-group">
+          <label for="resizeHeight">Height (px)</label>
+          <input type="number" id="resizeHeight" value="600" min="1" max="10000">
+        </div>
+        <label class="checkbox-label"><input type="checkbox" id="keepRatio" checked> Maintain aspect ratio</label>
       </div>
       <button class="btn btn-primary btn-block" id="resizeBtn" disabled>Resize Images</button>
-      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Resizing...</p></div>
-      <div class="result-area" id="resultArea"><h3>Resize Complete</h3><p id="resultInfo"></p><div id="downloadLinks"></div></div>
+      <div class="progress-wrap" id="progressWrap"><div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div><p class="progress-text" id="progressText">Processing...</p></div>
+      <div class="result-area" id="resultArea">
+        <h3>Resize Complete</h3>
+        <div id="resultSummary" style="margin-bottom:15px; font-size:14px;"></div>
+        <div id="downloadLinks"></div>
+      </div>
       <p class="no-signup-note"><strong>No sign-up required.</strong> Your files never leave your browser.</p>
       <div class="related-tools"><h3>Related Tools</h3><div class="related-tools-grid"><a href="image-compressor.html" class="related-tool-link">Image Compressor</a><a href="jpg-to-png.html" class="related-tool-link">JPG to PNG</a><a href="png-to-jpg.html" class="related-tool-link">PNG to JPG</a><a href="image-to-pdf.html" class="related-tool-link">Image to PDF</a><a href="jpg-to-webp.html" class="related-tool-link">JPG to WebP</a><a href="png-to-webp.html" class="related-tool-link">PNG to WebP</a></div></div>
     </div>
@@ -242,6 +251,7 @@
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
+
   </main>
     <footer class="site-footer">
     <div class="footer-inner">
@@ -279,87 +289,246 @@
       </div>
     </div>
   </footer>
+
+  
   <script>
-    let selectedFiles=[];
-    const fileInput=document.getElementById('fileInput'),uploadArea=document.getElementById('uploadArea'),fileList=document.getElementById('fileList'),resizeBtn=document.getElementById('resizeBtn'),optionsArea=document.getElementById('optionsArea'),resizeWidth=document.getElementById('resizeWidth'),resizeHeight=document.getElementById('resizeHeight'),keepRatio=document.getElementById('keepRatio'),progressWrap=document.getElementById('progressWrap'),progressFill=document.getElementById('progressFill'),progressText=document.getElementById('progressText'),resultArea=document.getElementById('resultArea'),resultInfo=document.getElementById('resultInfo'),downloadLinks=document.getElementById('downloadLinks');
-    function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
-    uploadArea.addEventListener('dragover',e=>{e.preventDefault();uploadArea.classList.add('drag-over');});
-    uploadArea.addEventListener('dragleave',()=>uploadArea.classList.remove('drag-over'));
-    uploadArea.addEventListener('drop',e=>{e.preventDefault();uploadArea.classList.remove('drag-over');addFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));});
-    fileInput.addEventListener('change',()=>{addFiles(Array.from(fileInput.files));fileInput.value='';});
-    let originalRatio=1;
-    function addFiles(files){
-      files.forEach(f=>selectedFiles.push(f));
-      renderFileList();
-      resizeBtn.disabled=selectedFiles.length===0;
-      optionsArea.style.display=selectedFiles.length?'block':'none';
-      if(selectedFiles.length){loadOriginalDimensions(selectedFiles[0]);}
-    }
-    function loadOriginalDimensions(file){
-      const img=new Image();
-      img.onload=()=>{
-        resizeWidth.value=img.naturalWidth;
-        resizeHeight.value=img.naturalHeight;
-        originalRatio=img.naturalWidth/img.naturalHeight;
-        URL.revokeObjectURL(img.src);
+    (function() {
+      let selectedFiles = [];
+      let originalRatio = 1;
+      let userHasModified = false;
+
+      const elements = {
+        fileInput: document.getElementById('fileInput'),
+        uploadArea: document.getElementById('uploadArea'),
+        fileList: document.getElementById('fileList'),
+        resizeBtn: document.getElementById('resizeBtn'),
+        optionsArea: document.getElementById('optionsArea'),
+        resizeWidth: document.getElementById('resizeWidth'),
+        resizeHeight: document.getElementById('resizeHeight'),
+        keepRatio: document.getElementById('keepRatio'),
+        progressWrap: document.getElementById('progressWrap'),
+        progressFill: document.getElementById('progressFill'),
+        progressText: document.getElementById('progressText'),
+        resultArea: document.getElementById('resultArea'),
+        resultSummary: document.getElementById('resultSummary'),
+        downloadLinks: document.getElementById('downloadLinks'),
+        gifWarning: document.getElementById('gifWarning')
       };
-      img.src=URL.createObjectURL(file);
-    }
-    resizeWidth.addEventListener('input',()=>{
-      if(keepRatio.checked&&originalRatio){resizeHeight.value=Math.round(parseInt(resizeWidth.value)/originalRatio)||'';}
-    });
-    resizeHeight.addEventListener('input',()=>{
-      if(keepRatio.checked&&originalRatio){resizeWidth.value=Math.round(parseInt(resizeHeight.value)*originalRatio)||'';}
-    });
-    function renderFileList(){fileList.innerHTML=selectedFiles.map((f,i)=>'<div class="file-item"><span class="file-item-name">'+f.name+'</span><span class="file-item-size">'+formatSize(f.size)+'</span><span class="file-item-remove" data-idx="'+i+'">&times;</span></div>').join('');fileList.querySelectorAll('.file-item-remove').forEach(btn=>{btn.addEventListener('click',()=>{selectedFiles.splice(parseInt(btn.dataset.idx),1);renderFileList();resizeBtn.disabled=selectedFiles.length===0;});});}
 
-    resizeBtn.addEventListener('click',async()=>{
-      resizeBtn.disabled=true;progressWrap.classList.add('active');resultArea.classList.remove('active');downloadLinks.innerHTML='';
-      const tw=parseInt(resizeWidth.value),th=parseInt(resizeHeight.value);
-      for(let i=0;i<selectedFiles.length;i++){
-        progressText.textContent='Resizing image '+(i+1)+' of '+selectedFiles.length+'...';
-        progressFill.style.width=((i/selectedFiles.length)*100)+'%';
-        const blob=await resizeImage(selectedFiles[i],tw,th,keepRatio.checked);
-        const ext=selectedFiles[i].name.match(/\.([^.]+)$/)?selectedFiles[i].name.match(/\.([^.]+)$/)[1]:'png';
-        const name=selectedFiles[i].name.replace(/\.[^.]+$/,'-resized.'+ext);
-        const btn=document.createElement('button');btn.className='btn btn-download';btn.style.margin='6px';btn.textContent='Download '+name;
-        btn.addEventListener('click',(function(b,n){return function(){const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=n;a.click();URL.revokeObjectURL(u);};})(blob,name));
-        downloadLinks.appendChild(btn);
+      function formatSize(b) {
+        if (b < 1024) return b + ' B';
+        if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+        return (b / 1048576).toFixed(2) + ' MB';
       }
-      progressFill.style.width='100%';progressText.textContent='Done!';
-      resultInfo.textContent=selectedFiles.length+' image(s) resized.';
-      resultArea.classList.add('active');resizeBtn.disabled=false;
-    });
 
-    function resizeImage(file,tw,th,maintain){
-      return new Promise(resolve=>{
-        const img=new Image();
-        img.onload=()=>{
-          const canvas=document.createElement('canvas');
-          const ctx=canvas.getContext('2d');
-          if(maintain){
-            const ratio=img.naturalWidth/img.naturalHeight;
-            const h=Math.round(tw/ratio);
-            canvas.width=tw;canvas.height=h;
-            ctx.drawImage(img,0,0,tw,h);
-          }else{
-            canvas.width=tw;canvas.height=th;
-            const ratio=img.naturalWidth/img.naturalHeight;
-            let dw,dh;
-            if(tw/th>ratio){dw=Math.round(th*ratio);dh=th;}
-            else{dh=Math.round(tw/ratio);dw=tw;}
-            const dx=Math.round((tw-dw)/2);
-            const dy=Math.round((th-dh)/2);
-            ctx.fillStyle='#000';
-            ctx.fillRect(0,0,tw,th);
-            ctx.drawImage(img,dx,dy,dw,dh);
-          }
-          const mime=file.type||'image/png';
-          canvas.toBlob(blob=>resolve(blob),mime,0.92);
-        };
-        img.src=URL.createObjectURL(file);
+      function setControlState(disabled) {
+        elements.resizeBtn.disabled = disabled;
+        elements.fileInput.disabled = disabled;
+        elements.resizeWidth.disabled = disabled;
+        elements.resizeHeight.disabled = disabled;
+        elements.keepRatio.disabled = disabled;
+        elements.uploadArea.style.opacity = disabled ? '0.5' : '1';
+        elements.uploadArea.style.pointerEvents = disabled ? 'none' : 'auto';
+      }
+
+      // Interaction detection
+      elements.resizeWidth.addEventListener('input', () => { 
+        userHasModified = true; 
+        if (elements.keepRatio.checked && originalRatio) {
+          const val = Math.max(1, parseInt(elements.resizeWidth.value) || 0);
+          if (val) elements.resizeHeight.value = Math.round(val / originalRatio);
+        }
       });
-    }
+
+      elements.resizeHeight.addEventListener('input', () => { 
+        userHasModified = true; 
+        if (elements.keepRatio.checked && originalRatio) {
+          const val = Math.max(1, parseInt(elements.resizeHeight.value) || 0);
+          if (val) elements.resizeWidth.value = Math.round(val * originalRatio);
+        }
+      });
+
+      elements.uploadArea.addEventListener('dragover', e => { e.preventDefault(); elements.uploadArea.classList.add('drag-over'); });
+      elements.uploadArea.addEventListener('dragleave', () => elements.uploadArea.classList.remove('drag-over'));
+      elements.uploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        elements.uploadArea.classList.remove('drag-over');
+        const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+        addFiles(files);
+      });
+
+      elements.fileInput.addEventListener('change', () => {
+        addFiles(Array.from(elements.fileInput.files));
+        elements.fileInput.value = '';
+      });
+
+      function addFiles(files) {
+        const isFirstBatch = selectedFiles.length === 0;
+        files.forEach(f => selectedFiles.push(f));
+        renderFileList();
+        
+        if (selectedFiles.length > 0) {
+          elements.optionsArea.style.display = 'block';
+          elements.resizeBtn.disabled = false;
+          if (isFirstBatch || !userHasModified) {
+            updateReferenceDimensions(selectedFiles[0]);
+          }
+          const hasGif = selectedFiles.some(f => f.type === 'image/gif' || f.name.toLowerCase().endsWith('.gif'));
+          elements.gifWarning.style.display = hasGif ? 'block' : 'none';
+        }
+      }
+
+      function updateReferenceDimensions(file) {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          elements.resizeWidth.value = img.naturalWidth;
+          elements.resizeHeight.value = img.naturalHeight;
+          originalRatio = img.naturalWidth / img.naturalHeight;
+          URL.revokeObjectURL(url);
+        };
+        img.onerror = () => URL.revokeObjectURL(url);
+        img.src = url;
+      }
+
+      function renderFileList() {
+        elements.fileList.innerHTML = '';
+        selectedFiles.forEach((file, i) => {
+          const item = document.createElement('div');
+          item.className = 'file-item';
+          
+          const nameSpan = document.createElement('span');
+          nameSpan.className = 'file-item-name';
+          nameSpan.textContent = file.name; // Safe rendering
+          
+          const sizeSpan = document.createElement('span');
+          sizeSpan.className = 'file-item-size';
+          sizeSpan.textContent = formatSize(file.size);
+          
+          const removeBtn = document.createElement('span');
+          removeBtn.className = 'file-item-remove';
+          removeBtn.innerHTML = '&times;';
+          removeBtn.onclick = () => {
+            selectedFiles.splice(i, 1);
+            if (selectedFiles.length === 0) {
+              elements.optionsArea.style.display = 'none';
+              elements.resizeBtn.disabled = true;
+              elements.gifWarning.style.display = 'none';
+              userHasModified = false;
+            } else if (i === 0) {
+              updateReferenceDimensions(selectedFiles[0]);
+            }
+            renderFileList();
+          };
+          
+          item.appendChild(nameSpan);
+          item.appendChild(sizeSpan);
+          item.appendChild(removeBtn);
+          elements.fileList.appendChild(item);
+        });
+      }
+
+      elements.resizeBtn.addEventListener('click', async () => {
+        const tw = Math.max(1, parseInt(elements.resizeWidth.value) || 0);
+        const th = Math.max(1, parseInt(elements.resizeHeight.value) || 0);
+
+        setControlState(true);
+        elements.progressWrap.classList.add('active');
+        elements.resultArea.classList.remove('active');
+        elements.downloadLinks.innerHTML = '';
+        elements.resultSummary.innerHTML = '';
+        
+        let successCount = 0;
+        let failedFiles = [];
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+          elements.progressText.textContent = `Processing image ${i + 1} of ${selectedFiles.length}...`;
+          elements.progressFill.style.width = `${((i / selectedFiles.length) * 100)}%`;
+          
+          try {
+            const blob = await processImage(selectedFiles[i], tw, th, elements.keepRatio.checked);
+            if (blob) {
+              const originalName = selectedFiles[i].name;
+              const lastDot = originalName.lastIndexOf('.');
+              const ext = lastDot !== -1 ? originalName.substring(lastDot + 1) : 'png';
+              const baseName = lastDot !== -1 ? originalName.substring(0, lastDot) : originalName;
+              const outName = `${baseName}-resized.${ext}`;
+
+              const btn = document.createElement('button');
+              btn.className = 'btn btn-download';
+              btn.style.margin = '6px';
+              btn.textContent = `Download ${outName}`;
+              btn.onclick = () => {
+                const u = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = u;
+                a.download = outName;
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(u), 1500);
+              };
+              elements.downloadLinks.appendChild(btn);
+              successCount++;
+            } else {
+              failedFiles.push(selectedFiles[i].name);
+            }
+          } catch (e) {
+            failedFiles.push(selectedFiles[i].name);
+          }
+        }
+        
+        elements.progressFill.style.width = '100%';
+        elements.progressText.textContent = 'Processing Complete';
+        
+        // Securely render the summary
+        const summaryMsg = document.createElement('div');
+        summaryMsg.textContent = `${successCount} image(s) processed successfully.`;
+        elements.resultSummary.appendChild(summaryMsg);
+
+        if (failedFiles.length > 0) {
+          const errMsg = document.createElement('div');
+          errMsg.style.color = '#E53935';
+          errMsg.style.marginTop = '8px';
+          errMsg.textContent = `Failed to process: ${failedFiles.join(', ')}`;
+          elements.resultSummary.appendChild(errMsg);
+        }
+        
+        elements.resultArea.classList.add('active');
+        setControlState(false);
+      });
+
+      function processImage(file, tw, th, maintain) {
+        return new Promise(resolve => {
+          const img = new Image();
+          const objUrl = URL.createObjectURL(file);
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            let finalW = tw, finalH = th;
+            
+            if (maintain) {
+              const ratio = img.naturalWidth / img.naturalHeight;
+              finalH = Math.round(tw / ratio);
+            }
+            
+            canvas.width = finalW;
+            canvas.height = finalH;
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, finalW, finalH);
+            
+            canvas.toBlob(blob => {
+              URL.revokeObjectURL(objUrl);
+              resolve(blob);
+            }, file.type || 'image/png', 0.92);
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(objUrl);
+            resolve(null);
+          };
+          img.src = objUrl;
+        });
+      }
+    })();
   </script>
   
   <script src="../js/main.js" defer></script>
